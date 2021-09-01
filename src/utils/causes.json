@@ -1,0 +1,75 @@
+[
+  {
+    "id": 0,
+    "title": "Eradicate Poverty In Africa",
+    "targetAmount": 5000000,
+    "raisedAmount": 250000,
+    "cardImg": "https://cdn.pixabay.com/photo/2016/07/29/06/08/man-1550501_960_720.jpg",
+    "cardText": "Join the fight and eradicate poverty in subsaharan african countries, by providing relief materials to war-torn nations of Africa",
+    "btnClass": "btn btn-outline-danger",
+    "linkText": "Donate for this cause now",
+    "partners": 175,
+    "causeText": {
+      "p1": "Extreme poverty anywhere is a threat to human security everywhere. Poverty is the parent of revolution and crime. Poverty is the worst form of violence",
+      "p2": "n a country well governed, poverty is something to be ashamed of. In a country badly governed, wealth is something to be ashamed of.",
+      "p3": "An imbalance between rich and poor is the oldest and most fatal ailment of all republics",
+      "p4": "Saving our planet, lifting people out of poverty, advancing economic growth…these are one and the same fight"
+    },
+
+    "bannerImg": "https://cdn.pixabay.com/photo/2017/04/21/09/38/street-2248101_960_720.jpg",
+    "subImgs": [
+      "https://cdn.pixabay.com/photo/2015/06/28/08/26/xiamen-824233_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2017/09/16/01/41/poor-2754335_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2016/01/13/22/46/boy-1139042_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2017/07/22/20/40/girl-2529907_960_720.jpg"
+    ]
+  },
+  {
+    " id": 1,
+    " title": "Create A Brighter Tomorrow",
+    "targetAmount": 2500000,
+    "raisedAmount": 300000,
+    "cardImg": "https://media.istockphoto.com/photos/two-kids-playong-in-the-beach-picture-id1265227610?s=612x612",
+    "cardText": "Join our cause and give everything you can for a brighter future, for the next generation struggling to make it through life.",
+    "btnClass": "btn btn-outline-success",
+    "linkText": "Donate for this cause now",
+    "partners": 203,
+    "causeText": {
+      "p1": "Your future is bright. Just stop hanging around people who try to dim your light and you will climb up to a higher height! Don't give up on the fight! Stand up for your right! It's within your might",
+      "p2": "That spark you felt ignite inside you, that split-second vision that you had of yourself bright like the Sun -- believe that! Believe that",
+      "p3": "Look beyond the present circumstances, imagine a brighter future",
+      "p4": "If we throw blankets over our children's dreams, we darken their world and extinguish their desire to live"
+    },
+    "bannerImg": "https://cdn.pixabay.com/photo/2016/08/01/06/51/people-1560569_960_720.jpg",
+    "subImgs": [
+      "https://cdn.pixabay.com/photo/2016/12/03/14/20/children-1879907_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2015/09/09/06/24/sisters-931131_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2015/09/25/04/19/children-956676_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2016/11/14/05/00/children-1822662_960_720.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Educate A Child Today",
+    "targetAmount": 10000000,
+    "raisedAmount": 450000,
+    "cardImg": "https://cdn.pixabay.com/photo/2018/02/07/18/30/people-3137670_960_720.jpg",
+    "cardText": "While we yet live, the best legacy we can bequeath to the next generation is the lasting and impartful legacy od education. Give whatever you can to educate an African Child today",
+    "btnClass": "btn btn-outline-warning",
+    "linkText": "Donate for this cause now",
+    "partners": 285,
+    "causeText": {
+      "p1": "Education is the first step for people to gain the knowledge, critical thinking, empowerment and skills they need to make this world a better place",
+      "p2": "It’s important to seize the day, but always make time to go deeper and wider in your learning.",
+      "p3": "The more you learn, the more you want to learn, the more the world becomes more interesting to you, and discovering it becomes more fun.",
+      "p4": "There are many ways you can make an impact on the world. But there is no greater impact that you can make than spreading education, and empowering people who’ll empower and teach people, who, in turn, will empower and teach more"
+    },
+    "bannerImg": "https://cdn.pixabay.com/photo/2016/11/14/03/16/book-1822474_960_720.jpg",
+    "subImgs": [
+      "https://media.istockphoto.com/photos/school-for-african-children-couple-smiling-whilst-learning-picture-id522488077?s=612x612",
+      "https://media.istockphoto.com/photos/portrait-of-south-african-girls-studying-in-a-rural-classroom-picture-id182061552?s=612x612",
+      "https://media.istockphoto.com/photos/elementary-girl-wearing-protective-face-mask-at-school-picture-id1275847596?s=612x612",
+      "https://media.istockphoto.com/photos/african-children-during-english-class-southern-ethiopia-east-africa-picture-id1093177328?s=612x612"
+    ]
+  }
+]
