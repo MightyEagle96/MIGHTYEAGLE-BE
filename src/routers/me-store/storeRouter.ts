@@ -9,9 +9,9 @@ import {
 import { IsLoggedIn, RestricTo } from '../../services/user.service';
 const storeRouter = express.Router();
 
-storeRouter.use(IsLoggedIn);
 storeRouter.get('/', GetItems);
 storeRouter.get('/:id', GetItem);
+storeRouter.use(IsLoggedIn);
 storeRouter.post('/', CreateItem);
 storeRouter.patch('/:id', EditItem);
 storeRouter.delete('/:id', RestricTo('admin', 'storeAdmin'), DeleteItem);

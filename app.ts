@@ -15,6 +15,8 @@ import deliveryRouter from './src/routers/medi-tec/deliveryRouter';
 import recordRouter from './src/routers/medi-tec/recordRouter';
 import wardRouter from './src/routers/medi-tec/wardRouter';
 import storeRouter from './src/routers/me-store/storeRouter';
+import cartRouter from './src/routers/me-store/cartRouter';
+import favoriteRouter from './src/routers/me-store/favoriteRouter';
 
 const app = express();
 const limiter = rateLimit({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -36,6 +38,8 @@ app
   .use('/records', recordRouter)
   .use('/ward', wardRouter)
   .use('/stores', storeRouter)
+  .use('/cart', cartRouter)
+  .use('/favorite', favoriteRouter)
   .use('/donation', donationRouter);
 
 app.use(errorHandler);

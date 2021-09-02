@@ -21,6 +21,8 @@ var deliveryRouter_1 = __importDefault(require("./src/routers/medi-tec/deliveryR
 var recordRouter_1 = __importDefault(require("./src/routers/medi-tec/recordRouter"));
 var wardRouter_1 = __importDefault(require("./src/routers/medi-tec/wardRouter"));
 var storeRouter_1 = __importDefault(require("./src/routers/me-store/storeRouter"));
+var cartRouter_1 = __importDefault(require("./src/routers/me-store/cartRouter"));
+var favoriteRouter_1 = __importDefault(require("./src/routers/me-store/favoriteRouter"));
 var app = express_1.default();
 exports.app = app;
 var limiter = express_rate_limit_1.default({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -40,5 +42,7 @@ app
     .use('/records', recordRouter_1.default)
     .use('/ward', wardRouter_1.default)
     .use('/stores', storeRouter_1.default)
+    .use('/cart', cartRouter_1.default)
+    .use('/favorite', favoriteRouter_1.default)
     .use('/donation', donationRouter_1.default);
 app.use(errorController_1.errorHandler);
