@@ -1,2 +1,4 @@
-export const originUrl = 'http://localhost:3000';
-//export const originUrl = 'http://192.168.1.110:3000';
+export const originUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://hidden-fjord-42920.herokuapp.com"
+    : "http://localhost:3000";

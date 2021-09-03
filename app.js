@@ -29,20 +29,20 @@ var limiter = express_rate_limit_1.default({ windowMs: 2 * 60 * 1000, max: 10 })
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cookie_parser_1.default());
-app.use(morgan_1.default('dev'));
+app.use(morgan_1.default("dev"));
 //app.use(limiter);
 app.use(cors_1.default({ origin: services_1.originUrl, credentials: true }));
 app
-    .use('/auth', authRouter_1.default)
-    .use('/voters', voterRouter_1.router)
-    .use('/users', userRouter_1.userRouter)
-    .use('/causes', causeRouter_1.causeRouter)
-    .use('/patients', patientRouter_1.default)
-    .use('/deliveries', deliveryRouter_1.default)
-    .use('/records', recordRouter_1.default)
-    .use('/ward', wardRouter_1.default)
-    .use('/stores', storeRouter_1.default)
-    .use('/cart', cartRouter_1.default)
-    .use('/favorite', favoriteRouter_1.default)
-    .use('/donation', donationRouter_1.default);
+    .use("/auth", authRouter_1.default)
+    .use("/voters", voterRouter_1.router)
+    .use("/users", userRouter_1.userRouter)
+    .use("/causes", causeRouter_1.causeRouter)
+    .use("/patients", patientRouter_1.default)
+    .use("/deliveries", deliveryRouter_1.default)
+    .use("/records", recordRouter_1.default)
+    .use("/ward", wardRouter_1.default)
+    .use("/stores", storeRouter_1.default)
+    .use("/cart", cartRouter_1.default)
+    .use("/favorite", favoriteRouter_1.default)
+    .use("/donation", donationRouter_1.default);
 app.use(errorController_1.errorHandler);
