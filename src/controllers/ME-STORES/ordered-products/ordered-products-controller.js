@@ -39,19 +39,48 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateOrder = void 0;
+exports.ViewOrders = exports.CreateOrder = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var ordered_products_model_1 = __importDefault(require("./ordered-products-model"));
+var store_management_model_1 = __importDefault(require("../store-management/store-management-model"));
 exports.CreateOrder = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var product;
+    var quantity, remainder, product;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
+            case 0: return [4 /*yield*/, store_management_model_1.default.findOne({ _id: req.body.product })];
+            case 1:
+                quantity = (_a.sent()).quantity;
+                remainder = quantity - req.body.quantity;
+                if (!(remainder > 0)) return [3 /*break*/, 3];
+                return [4 /*yield*/, store_management_model_1.default.findOneAndUpdate({ _id: req.body.product }, { quantity: remainder })];
+            case 2:
+                _a.sent();
+                _a.label = 3;
+            case 3:
+                if (!(remainder < 1)) return [3 /*break*/, 5];
+                return [4 /*yield*/, store_management_model_1.default.findOneAndUpdate({ _id: req.body.product }, { quantity: remainder, out_of_stock: true })];
+            case 4:
+                _a.sent();
+                _a.label = 5;
+            case 5:
+                //create a new order
                 req.body.user = req.user._id;
                 return [4 /*yield*/, ordered_products_model_1.default.create(req.body)];
-            case 1:
+            case 6:
                 product = _a.sent();
                 res.json({ product: product });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.ViewOrders = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var orders;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ordered_products_model_1.default.find(req.query).populate('product')];
+            case 1:
+                orders = _a.sent();
+                res.json({ orders: orders });
                 return [2 /*return*/];
         }
     });

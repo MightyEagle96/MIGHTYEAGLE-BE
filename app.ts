@@ -42,7 +42,10 @@ app
   .use('/cart', cartRouter)
   .use('/favorite', favoriteRouter)
   .use('/order', orderRouter)
-  .use('/donation', donationRouter);
+  .use('/donation', donationRouter)
+  .use('/*', (req: any, res: any) => {
+    res.status(404).json({ message: "Can't find this route on this server" });
+  });
 
 app.use(errorHandler);
 export { app };

@@ -39,9 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteItem = exports.GetItem = exports.GetItems = exports.EditItem = exports.CreateItem = void 0;
+exports.ViewTransactions = exports.DeleteItem = exports.GetItem = exports.GetItems = exports.EditItem = exports.CreateItem = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var store_management_model_1 = __importDefault(require("./store-management-model"));
+var ordered_products_model_1 = __importDefault(require("../ordered-products/ordered-products-model"));
 exports.CreateItem = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var item;
     return __generator(this, function (_a) {
@@ -100,6 +101,31 @@ exports.DeleteItem = catchAsync_1.catchAsync(function (req, res) { return __awai
             case 1:
                 items = _a.sent();
                 res.json({ message: 'Deleted' });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.ViewTransactions = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    function getTotal() {
+        var totalAmount = 0;
+        products.map(function (product) {
+            totalAmount += product.total;
+        });
+        return totalAmount;
+    }
+    var filter, products, total;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                filter = { amount_paid: { $gte: 1 } };
+                return [4 /*yield*/, ordered_products_model_1.default.aggregate([
+                        { $match: filter },
+                        { $group: { _id: '$_id', total: { $sum: '$amount_paid' } } },
+                    ])];
+            case 1:
+                products = _a.sent();
+                total = getTotal();
+                res.json({ total: total });
                 return [2 /*return*/];
         }
     });

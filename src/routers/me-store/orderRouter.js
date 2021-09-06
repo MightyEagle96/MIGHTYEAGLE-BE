@@ -9,4 +9,5 @@ var user_service_1 = require("../../services/user.service");
 var orderRouter = express_1.default.Router();
 orderRouter.use(user_service_1.IsLoggedIn);
 orderRouter.post('/', ordered_products_controller_1.CreateOrder);
+orderRouter.get('/', ordered_products_controller_1.ViewOrders);
 exports.default = orderRouter;

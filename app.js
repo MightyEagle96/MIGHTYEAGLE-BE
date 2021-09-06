@@ -46,5 +46,8 @@ app
     .use('/cart', cartRouter_1.default)
     .use('/favorite', favoriteRouter_1.default)
     .use('/order', orderRouter_1.default)
-    .use('/donation', donationRouter_1.default);
+    .use('/donation', donationRouter_1.default)
+    .use('/*', function (req, res) {
+    res.status(404).json({ message: "Can't find this route on this server" });
+});
 app.use(errorController_1.errorHandler);
