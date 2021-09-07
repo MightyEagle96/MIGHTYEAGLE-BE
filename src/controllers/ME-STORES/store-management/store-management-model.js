@@ -12,4 +12,7 @@ var storeSchema = new mongoose_1.Schema({
     imageUrl: { type: String, trim: true },
     dateAdded: { type: Date, default: Date.now() },
 });
+storeSchema.pre(/^find/, function () {
+    this.price /= 100;
+});
 exports.default = mongoose_1.model('Store', storeSchema);

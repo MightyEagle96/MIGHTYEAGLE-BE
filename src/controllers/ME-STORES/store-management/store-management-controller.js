@@ -49,6 +49,7 @@ exports.CreateItem = catchAsync_1.catchAsync(function (req, res) { return __awai
         switch (_a.label) {
             case 0:
                 req.body.addedBy = req.user._id;
+                req.body.price *= 100; //to convert it to kobo
                 return [4 /*yield*/, store_management_model_1.default.create(req.body)];
             case 1:
                 item = _a.sent();

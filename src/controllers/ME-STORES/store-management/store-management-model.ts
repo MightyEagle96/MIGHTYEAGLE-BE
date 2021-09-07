@@ -13,4 +13,7 @@ const storeSchema = new Schema({
   dateAdded: { type: Date, default: Date.now() },
 });
 
+storeSchema.pre(/^find/, function (this: any) {
+  this.price /= 100;
+});
 export default model('Store', storeSchema);

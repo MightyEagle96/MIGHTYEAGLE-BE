@@ -1,8 +1,10 @@
 import { catchAsync } from '../../../shared/catchAsync';
 import Store from './store-management-model';
 import OrderedProducts from '../ordered-products/ordered-products-model';
+
 export const CreateItem = catchAsync(async (req: any, res: any) => {
   req.body.addedBy = req.user._id;
+  req.body.price *= 100; //to convert it to kobo
   const item = await Store.create(req.body);
   res.json({ item });
 });
