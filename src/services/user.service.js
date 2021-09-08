@@ -61,7 +61,12 @@ exports.SignUp = catchAsync_1.catchAsync(function (req, res) { return __awaiter(
     var user, accessToken, refreshToken;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.create(req.body)];
+            case 0:
+                if (!req.body.email)
+                    return [2 /*return*/, res.status(400).json({ message: 'Email is required' })];
+                if (!req.body.password)
+                    return [2 /*return*/, res.status(400).json({ message: 'Password is required' })];
+                return [4 /*yield*/, user_1.default.create(req.body)];
             case 1:
                 user = _a.sent();
                 accessToken = tokens_1.createAccessToken({ id: user._id });
@@ -168,9 +173,7 @@ var RestricTo = function () {
     return function (req, res, next) {
         // roles ['admin', 'lead-guide']. role='user'
         if (!roles.includes(req.user.role)) {
-            return res
-                .status(403)
-                .json({
+            return res.status(403).json({
                 message: 'You do not have permission to perform this action. \nContact your administrator',
             });
         }

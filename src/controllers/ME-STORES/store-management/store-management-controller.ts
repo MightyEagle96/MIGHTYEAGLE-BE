@@ -42,6 +42,9 @@ export const ViewTransactions = catchAsync(async (req: any, res: any) => {
     });
     return totalAmount;
   }
+  const orders = await OrderedProducts.find()
+    .populate('product')
+    .populate('user');
   const total = getTotal();
-  res.json({ total });
+  res.json({ total, orders });
 });

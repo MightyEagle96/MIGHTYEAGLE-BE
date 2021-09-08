@@ -114,7 +114,7 @@ exports.ViewTransactions = catchAsync_1.catchAsync(function (req, res) { return 
         });
         return totalAmount;
     }
-    var filter, products, total;
+    var filter, products, orders, total;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -125,8 +125,13 @@ exports.ViewTransactions = catchAsync_1.catchAsync(function (req, res) { return 
                     ])];
             case 1:
                 products = _a.sent();
+                return [4 /*yield*/, ordered_products_model_1.default.find()
+                        .populate('product')
+                        .populate('user')];
+            case 2:
+                orders = _a.sent();
                 total = getTotal();
-                res.json({ total: total });
+                res.json({ total: total, orders: orders });
                 return [2 /*return*/];
         }
     });

@@ -22,15 +22,16 @@ export interface UserDocument extends UserInput, Document {
   comparePasswords(candidatePassword: boolean): Promise<boolean>;
 }
 const userSchema = new Schema({
-  firstName: String,
-  lastName: String,
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
   fullName: String,
   email: {
     type: String,
     unique: [true, 'Email address already exists'],
     lowerCase: true,
+    required: true,
   },
-  password: { type: String, default: 'test1234' },
+  password: { type: String, required: true },
   dateOfBirth: String,
   state: String,
   lga: String,
@@ -50,6 +51,7 @@ const userSchema = new Schema({
       'teacher',
       'classTeacher',
     ],
+    default: 'user',
   },
   account_type: {
     type: String,

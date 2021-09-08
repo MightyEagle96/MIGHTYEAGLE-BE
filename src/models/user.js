@@ -42,15 +42,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var userSchema = new mongoose_1.Schema({
-    firstName: String,
-    lastName: String,
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     fullName: String,
     email: {
         type: String,
         unique: [true, 'Email address already exists'],
         lowerCase: true,
+        required: true,
     },
-    password: { type: String, default: 'test1234' },
+    password: { type: String, required: true },
     dateOfBirth: String,
     state: String,
     lga: String,
@@ -70,6 +71,7 @@ var userSchema = new mongoose_1.Schema({
             'teacher',
             'classTeacher',
         ],
+        default: 'user',
     },
     account_type: {
         type: String,

@@ -15,6 +15,10 @@ export const GetUsers = catchAsync(async (req: any, res: any) => {
 });
 
 export const SignUp = catchAsync(async (req: any, res: any) => {
+  if (!req.body.email)
+    return res.status(400).json({ message: 'Email is required' });
+  if (!req.body.password)
+    return res.status(400).json({ message: 'Password is required' });
   const user = await User.create(req.body);
 
   const accessToken = createAccessToken({ id: user._id });
@@ -94,12 +98,10 @@ export const RestricTo = (...roles: any) => {
   return (req: any, res: any, next: any) => {
     // roles ['admin', 'lead-guide']. role='user'
     if (!roles.includes(req.user.role)) {
-      return res
-        .status(403)
-        .json({
-          message:
-            'You do not have permission to perform this action. \nContact your administrator',
-        });
+      return res.status(403).json({
+        message:
+          'You do not have permission to perform this action. \nContact your administrator',
+      });
     }
 
     next();
