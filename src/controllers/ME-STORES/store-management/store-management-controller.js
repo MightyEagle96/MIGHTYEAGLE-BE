@@ -62,7 +62,13 @@ exports.EditItem = catchAsync_1.catchAsync(function (req, res) { return __awaite
     var item;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store_management_model_1.default.findByIdAndUpdate(req.params.id, req.body)];
+            case 0:
+                //to set back out of stock to false
+                if (req.body.quantity < 1)
+                    req.body.out_of_stock = true;
+                if (req.body.quantity >= 1)
+                    req.body.out_of_stock = false;
+                return [4 /*yield*/, store_management_model_1.default.findByIdAndUpdate(req.params.id, req.body)];
             case 1:
                 item = _a.sent();
                 res.json({ item: item });
@@ -118,10 +124,10 @@ exports.ViewTransactions = catchAsync_1.catchAsync(function (req, res) { return 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                filter = { amount_paid: { $gte: 1 } };
+                filter = { amount: { $gte: 1 } };
                 return [4 /*yield*/, ordered_products_model_1.default.aggregate([
                         { $match: filter },
-                        { $group: { _id: '$_id', total: { $sum: '$amount_paid' } } },
+                        { $group: { _id: '$_id', total: { $sum: '$amount' } } },
                     ])];
             case 1:
                 products = _a.sent();
@@ -131,6 +137,7 @@ exports.ViewTransactions = catchAsync_1.catchAsync(function (req, res) { return 
             case 2:
                 orders = _a.sent();
                 total = getTotal();
+                console.log(total);
                 res.json({ total: total, orders: orders });
                 return [2 /*return*/];
         }

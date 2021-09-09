@@ -10,6 +10,9 @@ export const CreateItem = catchAsync(async (req: any, res: any) => {
 });
 
 export const EditItem = catchAsync(async (req: any, res: any) => {
+  //to set back out of stock to false
+  if (req.body.quantity < 1) req.body.out_of_stock = true;
+  if (req.body.quantity >= 1) req.body.out_of_stock = false;
   const item = await Store.findByIdAndUpdate(req.params.id, req.body);
   res.json({ item });
 });
@@ -30,11 +33,12 @@ export const DeleteItem = catchAsync(async (req: any, res: any) => {
 });
 
 export const ViewTransactions = catchAsync(async (req: any, res: any) => {
-  const filter = { amount_paid: { $gte: 1 } };
+  const filter = { amount: { $gte: 1 } };
   const products = await OrderedProducts.aggregate([
     { $match: filter },
-    { $group: { _id: '$_id', total: { $sum: '$amount_paid' } } },
+    { $group: { _id: '$_id', total: { $sum: '$amount' } } },
   ]);
+
   function getTotal() {
     let totalAmount: number = 0;
     products.map((product: any) => {
@@ -46,5 +50,6 @@ export const ViewTransactions = catchAsync(async (req: any, res: any) => {
     .populate('product')
     .populate('user');
   const total = getTotal();
+  console.log(total);
   res.json({ total, orders });
 });

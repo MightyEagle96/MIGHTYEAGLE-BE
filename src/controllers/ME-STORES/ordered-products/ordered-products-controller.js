@@ -65,6 +65,10 @@ exports.CreateOrder = catchAsync_1.catchAsync(function (req, res) { return __awa
             case 5:
                 //create a new order
                 req.body.user = req.user._id;
+                if (req.body.status === 'successful') {
+                    req.body.deliveryStatus = 'awaiting fulfillment';
+                }
+                console.log(req.body);
                 return [4 /*yield*/, ordered_products_model_1.default.create(req.body)];
             case 6:
                 product = _a.sent();

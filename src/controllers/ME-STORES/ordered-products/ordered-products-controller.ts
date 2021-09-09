@@ -20,6 +20,10 @@ export const CreateOrder = catchAsync(async (req: any, res: any) => {
   }
   //create a new order
   req.body.user = req.user._id;
+  if (req.body.status === 'successful') {
+    req.body.deliveryStatus = 'awaiting fulfillment';
+  }
+  console.log(req.body);
   const product = await OrderedProducts.create(req.body);
   res.json({ product });
 });
