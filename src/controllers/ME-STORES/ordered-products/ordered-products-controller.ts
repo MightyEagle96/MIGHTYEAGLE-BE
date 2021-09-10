@@ -23,7 +23,7 @@ export const CreateOrder = catchAsync(async (req: any, res: any) => {
   if (req.body.status === 'successful') {
     req.body.deliveryStatus = 'awaiting fulfillment';
   }
-  console.log(req.body);
+
   const product = await OrderedProducts.create(req.body);
   res.json({ product });
 });
@@ -31,4 +31,22 @@ export const CreateOrder = catchAsync(async (req: any, res: any) => {
 export const ViewOrders = catchAsync(async (req: any, res: any) => {
   const orders = await OrderedProducts.find(req.query).populate('product');
   res.json({ orders });
+});
+
+export const ViewOrder = catchAsync(async (req: any, res: any) => {
+  const order = await OrderedProducts.findOne({ _id: req.params.id }).populate([
+    'product',
+    'user',
+  ]);
+  res.json({ order });
+});
+
+export const FulFillOrder = catchAsync(async (req: any, res: any) => {
+  const body = req.body;
+
+  const order = await OrderedProducts.findOneAndUpdate(
+    { _id: req.params.id },
+    body
+  );
+  res.json({ order });
 });

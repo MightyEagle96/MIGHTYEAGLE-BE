@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewOrders = exports.CreateOrder = void 0;
+exports.FulFillOrder = exports.ViewOrder = exports.ViewOrders = exports.CreateOrder = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var ordered_products_model_1 = __importDefault(require("./ordered-products-model"));
 var store_management_model_1 = __importDefault(require("../store-management/store-management-model"));
@@ -68,7 +68,6 @@ exports.CreateOrder = catchAsync_1.catchAsync(function (req, res) { return __awa
                 if (req.body.status === 'successful') {
                     req.body.deliveryStatus = 'awaiting fulfillment';
                 }
-                console.log(req.body);
                 return [4 /*yield*/, ordered_products_model_1.default.create(req.body)];
             case 6:
                 product = _a.sent();
@@ -85,6 +84,35 @@ exports.ViewOrders = catchAsync_1.catchAsync(function (req, res) { return __awai
             case 1:
                 orders = _a.sent();
                 res.json({ orders: orders });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.ViewOrder = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var order;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ordered_products_model_1.default.findOne({ _id: req.params.id }).populate([
+                    'product',
+                    'user',
+                ])];
+            case 1:
+                order = _a.sent();
+                res.json({ order: order });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.FulFillOrder = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var body, order;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                body = req.body;
+                return [4 /*yield*/, ordered_products_model_1.default.findOneAndUpdate({ _id: req.params.id }, body)];
+            case 1:
+                order = _a.sent();
+                res.json({ order: order });
                 return [2 /*return*/];
         }
     });

@@ -50,6 +50,6 @@ export const ViewTransactions = catchAsync(async (req: any, res: any) => {
     .populate('product')
     .populate('user');
   const total = getTotal();
-  console.log(total);
+
   res.json({ total, orders });
 });

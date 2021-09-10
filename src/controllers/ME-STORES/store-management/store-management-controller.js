@@ -137,7 +137,6 @@ exports.ViewTransactions = catchAsync_1.catchAsync(function (req, res) { return 
             case 2:
                 orders = _a.sent();
                 total = getTotal();
-                console.log(total);
                 res.json({ total: total, orders: orders });
                 return [2 /*return*/];
         }

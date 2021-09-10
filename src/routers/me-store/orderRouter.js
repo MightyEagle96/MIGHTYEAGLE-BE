@@ -10,4 +10,6 @@ var orderRouter = express_1.default.Router();
 orderRouter.use(user_service_1.IsLoggedIn);
 orderRouter.post('/', ordered_products_controller_1.CreateOrder);
 orderRouter.get('/', ordered_products_controller_1.ViewOrders);
+orderRouter.get('/:id', ordered_products_controller_1.ViewOrder);
+orderRouter.patch('/:id', ordered_products_controller_1.FulFillOrder);
 exports.default = orderRouter;
