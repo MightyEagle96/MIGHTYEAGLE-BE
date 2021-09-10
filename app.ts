@@ -18,6 +18,7 @@ import storeRouter from './src/routers/me-store/storeRouter';
 import cartRouter from './src/routers/me-store/cartRouter';
 import favoriteRouter from './src/routers/me-store/favoriteRouter';
 import orderRouter from './src/routers/me-store/orderRouter';
+import agentRouter from './src/routers/me-store/agentRouter';
 
 const app = express();
 const limiter = rateLimit({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -43,6 +44,7 @@ app
   .use('/favorite', favoriteRouter)
   .use('/order', orderRouter)
   .use('/donation', donationRouter)
+  .use('/agents', agentRouter)
   .use('/*', (req: any, res: any) => {
     res.status(404).json({ message: "Can't find this route on this server" });
   });

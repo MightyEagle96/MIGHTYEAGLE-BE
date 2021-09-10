@@ -24,6 +24,7 @@ var storeRouter_1 = __importDefault(require("./src/routers/me-store/storeRouter"
 var cartRouter_1 = __importDefault(require("./src/routers/me-store/cartRouter"));
 var favoriteRouter_1 = __importDefault(require("./src/routers/me-store/favoriteRouter"));
 var orderRouter_1 = __importDefault(require("./src/routers/me-store/orderRouter"));
+var agentRouter_1 = __importDefault(require("./src/routers/me-store/agentRouter"));
 var app = express_1.default();
 exports.app = app;
 var limiter = express_rate_limit_1.default({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -47,6 +48,7 @@ app
     .use('/favorite', favoriteRouter_1.default)
     .use('/order', orderRouter_1.default)
     .use('/donation', donationRouter_1.default)
+    .use('/agents', agentRouter_1.default)
     .use('/*', function (req, res) {
     res.status(404).json({ message: "Can't find this route on this server" });
 });

@@ -39,18 +39,18 @@ const userSchema = new Schema({
   phoneNumber: String,
   role: {
     type: String,
-    enum: [
-      'user',
-      'staff',
-      'admin',
-      'storeAdmin',
-      'doctor',
-      'nurse',
-      'patient',
-      'student',
-      'teacher',
-      'classTeacher',
-    ],
+    // enum: [
+    //   'user',
+    //   'staff',
+    //   'admin',
+    //   'storeAdmin',
+    //   'doctor',
+    //   'nurse',
+    //   'patient',
+    //   'student',
+    //   'teacher',
+    //   'classTeacher',
+    // ],
     default: 'user',
   },
   account_type: {
@@ -58,6 +58,7 @@ const userSchema = new Schema({
     enum: ['me-school', 'medi-tec', 'me-stores'],
   },
   medical_department: String,
+  isAgent: Boolean,
   //  referralId: { type: Schema.Types.ObjectId, ref: 'Account' },
   timeStamps: {
     createdAt: { type: String, default: Date.now() },
