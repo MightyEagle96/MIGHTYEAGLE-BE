@@ -25,6 +25,7 @@ var cartRouter_1 = __importDefault(require("./src/routers/me-store/cartRouter"))
 var favoriteRouter_1 = __importDefault(require("./src/routers/me-store/favoriteRouter"));
 var orderRouter_1 = __importDefault(require("./src/routers/me-store/orderRouter"));
 var agentRouter_1 = __importDefault(require("./src/routers/me-store/agentRouter"));
+var successRouter_1 = __importDefault(require("./src/routers/successRouter"));
 var app = express_1.default();
 exports.app = app;
 var limiter = express_rate_limit_1.default({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -35,6 +36,7 @@ app.use(morgan_1.default('dev'));
 //app.use(limiter);
 app.use(cors_1.default({ origin: services_1.originUrl, credentials: true }));
 app
+    .use('/', successRouter_1.default)
     .use('/auth', authRouter_1.default)
     .use('/voters', voterRouter_1.router)
     .use('/users', userRouter_1.userRouter)

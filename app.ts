@@ -19,6 +19,7 @@ import cartRouter from './src/routers/me-store/cartRouter';
 import favoriteRouter from './src/routers/me-store/favoriteRouter';
 import orderRouter from './src/routers/me-store/orderRouter';
 import agentRouter from './src/routers/me-store/agentRouter';
+import successRouter from './src/routers/successRouter';
 
 const app = express();
 const limiter = rateLimit({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -31,6 +32,7 @@ app.use(morgan('dev'));
 app.use(cors({ origin: originUrl, credentials: true }));
 
 app
+  .use('/', successRouter)
   .use('/auth', authRouter)
   .use('/voters', router)
   .use('/users', userRouter)
