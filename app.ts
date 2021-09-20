@@ -26,6 +26,8 @@ import examsTakenRouter from './src/routers/me-school/examTakenRouter';
 import subjectRouter from './src/routers/me-school/subjectsRouter';
 import levelRouter from './src/routers/me-school/levelRouter';
 import termRouter from './src/routers/me-school/termRouter';
+import testTypeRouter from './src/routers/me-school/testTypeRouter';
+import questionRouter from './src/routers/me-school/questionRouter';
 //import unirest from 'unirest';
 
 const app = express();
@@ -60,6 +62,8 @@ app
   .use('/subjects', subjectRouter)
   .use('/levels', levelRouter)
   .use('/terms', termRouter)
+  .use('/testType', testTypeRouter)
+  .use('/questions', questionRouter)
   .use('/*', (req: any, res: any) => {
     res.status(404).json({ message: "Can't find this route on this server" });
   });

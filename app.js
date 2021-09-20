@@ -32,6 +32,8 @@ var examTakenRouter_1 = __importDefault(require("./src/routers/me-school/examTak
 var subjectsRouter_1 = __importDefault(require("./src/routers/me-school/subjectsRouter"));
 var levelRouter_1 = __importDefault(require("./src/routers/me-school/levelRouter"));
 var termRouter_1 = __importDefault(require("./src/routers/me-school/termRouter"));
+var testTypeRouter_1 = __importDefault(require("./src/routers/me-school/testTypeRouter"));
+var questionRouter_1 = __importDefault(require("./src/routers/me-school/questionRouter"));
 //import unirest from 'unirest';
 var app = express_1.default();
 exports.app = app;
@@ -64,6 +66,8 @@ app
     .use('/subjects', subjectsRouter_1.default)
     .use('/levels', levelRouter_1.default)
     .use('/terms', termRouter_1.default)
+    .use('/testType', testTypeRouter_1.default)
+    .use('/questions', questionRouter_1.default)
     .use('/*', function (req, res) {
     res.status(404).json({ message: "Can't find this route on this server" });
 });

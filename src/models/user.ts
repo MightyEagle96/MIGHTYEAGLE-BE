@@ -65,8 +65,8 @@ const userSchema = new Schema({
     updatedAt: String,
   },
   refreshToken: String,
-  currentTerm: String,
-  currentSession: String,
+  currentTerm: { type: Schema.Types.ObjectId, ref: 'Term' },
+  currentSession: { type: Schema.Types.ObjectId, ref: 'Session' },
 });
 
 //to create a virtual method
