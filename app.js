@@ -26,6 +26,13 @@ var favoriteRouter_1 = __importDefault(require("./src/routers/me-store/favoriteR
 var orderRouter_1 = __importDefault(require("./src/routers/me-store/orderRouter"));
 var agentRouter_1 = __importDefault(require("./src/routers/me-store/agentRouter"));
 var successRouter_1 = __importDefault(require("./src/routers/successRouter"));
+var emailRouter_1 = __importDefault(require("./src/routers/emailRouter"));
+var ratingRouter_1 = __importDefault(require("./src/routers/me-store/ratingRouter"));
+var examTakenRouter_1 = __importDefault(require("./src/routers/me-school/examTakenRouter"));
+var subjectsRouter_1 = __importDefault(require("./src/routers/me-school/subjectsRouter"));
+var levelRouter_1 = __importDefault(require("./src/routers/me-school/levelRouter"));
+var termRouter_1 = __importDefault(require("./src/routers/me-school/termRouter"));
+//import unirest from 'unirest';
 var app = express_1.default();
 exports.app = app;
 var limiter = express_rate_limit_1.default({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -37,6 +44,7 @@ app.use(morgan_1.default('dev'));
 app.use(cors_1.default({ origin: services_1.originUrl, credentials: true }));
 app
     .use('/', successRouter_1.default)
+    .use('/email', emailRouter_1.default)
     .use('/auth', authRouter_1.default)
     .use('/voters', voterRouter_1.router)
     .use('/users', userRouter_1.userRouter)
@@ -51,6 +59,11 @@ app
     .use('/order', orderRouter_1.default)
     .use('/donation', donationRouter_1.default)
     .use('/agents', agentRouter_1.default)
+    .use('/rating', ratingRouter_1.default)
+    .use('/takeExams', examTakenRouter_1.default)
+    .use('/subjects', subjectsRouter_1.default)
+    .use('/levels', levelRouter_1.default)
+    .use('/terms', termRouter_1.default)
     .use('/*', function (req, res) {
     res.status(404).json({ message: "Can't find this route on this server" });
 });

@@ -5,6 +5,7 @@ import {
   EditItem,
   GetItem,
   GetItems,
+  OrdersCount,
   ViewTransactions,
 } from '../../controllers/ME-STORES/store-management/store-management-controller';
 import { IsLoggedIn, RestricTo } from '../../services/user.service';
@@ -20,6 +21,11 @@ storeRouter.get(
   '/store/viewTransactions',
   RestricTo('storeAdmin'),
   ViewTransactions
+);
+storeRouter.get(
+  '/store/orderCount',
+  RestricTo('admin', 'storeAdmin'),
+  OrdersCount
 );
 
 export default storeRouter;

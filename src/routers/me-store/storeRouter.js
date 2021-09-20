@@ -14,4 +14,5 @@ storeRouter.post('/', store_management_controller_1.CreateItem);
 storeRouter.patch('/:id', store_management_controller_1.EditItem);
 storeRouter.delete('/:id', user_service_1.RestricTo('admin', 'storeAdmin'), store_management_controller_1.DeleteItem);
 storeRouter.get('/store/viewTransactions', user_service_1.RestricTo('storeAdmin'), store_management_controller_1.ViewTransactions);
+storeRouter.get('/store/orderCount', user_service_1.RestricTo('admin', 'storeAdmin'), store_management_controller_1.OrdersCount);
 exports.default = storeRouter;

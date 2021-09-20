@@ -53,3 +53,9 @@ export const ViewTransactions = catchAsync(async (req: any, res: any) => {
 
   res.json({ total, orders });
 });
+
+export const OrdersCount = catchAsync(async (req: any, res: any) => {
+  const orders = await OrderedProducts.find();
+  const products = await Store.find();
+  res.json({ orders: orders.length, products: products.length });
+});

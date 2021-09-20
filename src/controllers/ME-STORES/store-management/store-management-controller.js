@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewTransactions = exports.DeleteItem = exports.GetItem = exports.GetItems = exports.EditItem = exports.CreateItem = void 0;
+exports.OrdersCount = exports.ViewTransactions = exports.DeleteItem = exports.GetItem = exports.GetItems = exports.EditItem = exports.CreateItem = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var store_management_model_1 = __importDefault(require("./store-management-model"));
 var ordered_products_model_1 = __importDefault(require("../ordered-products/ordered-products-model"));
@@ -138,6 +138,21 @@ exports.ViewTransactions = catchAsync_1.catchAsync(function (req, res) { return 
                 orders = _a.sent();
                 total = getTotal();
                 res.json({ total: total, orders: orders });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.OrdersCount = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var orders, products;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ordered_products_model_1.default.find()];
+            case 1:
+                orders = _a.sent();
+                return [4 /*yield*/, store_management_model_1.default.find()];
+            case 2:
+                products = _a.sent();
+                res.json({ orders: orders.length, products: products.length });
                 return [2 /*return*/];
         }
     });

@@ -32,7 +32,7 @@ const userSchema = new Schema({
     required: true,
   },
   password: { type: String, required: true },
-  dateOfBirth: String,
+  dateOfBirth: { type: Date },
   state: String,
   lga: String,
   address: String,
@@ -65,6 +65,8 @@ const userSchema = new Schema({
     updatedAt: String,
   },
   refreshToken: String,
+  currentTerm: String,
+  currentSession: String,
 });
 
 //to create a virtual method

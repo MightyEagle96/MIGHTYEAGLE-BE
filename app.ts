@@ -20,6 +20,13 @@ import favoriteRouter from './src/routers/me-store/favoriteRouter';
 import orderRouter from './src/routers/me-store/orderRouter';
 import agentRouter from './src/routers/me-store/agentRouter';
 import successRouter from './src/routers/successRouter';
+import emailRouter from './src/routers/emailRouter';
+import ratingRouter from './src/routers/me-store/ratingRouter';
+import examsTakenRouter from './src/routers/me-school/examTakenRouter';
+import subjectRouter from './src/routers/me-school/subjectsRouter';
+import levelRouter from './src/routers/me-school/levelRouter';
+import termRouter from './src/routers/me-school/termRouter';
+//import unirest from 'unirest';
 
 const app = express();
 const limiter = rateLimit({ windowMs: 2 * 60 * 1000, max: 10 });
@@ -33,6 +40,7 @@ app.use(cors({ origin: originUrl, credentials: true }));
 
 app
   .use('/', successRouter)
+  .use('/email', emailRouter)
   .use('/auth', authRouter)
   .use('/voters', router)
   .use('/users', userRouter)
@@ -47,6 +55,11 @@ app
   .use('/order', orderRouter)
   .use('/donation', donationRouter)
   .use('/agents', agentRouter)
+  .use('/rating', ratingRouter)
+  .use('/takeExams', examsTakenRouter)
+  .use('/subjects', subjectRouter)
+  .use('/levels', levelRouter)
+  .use('/terms', termRouter)
   .use('/*', (req: any, res: any) => {
     res.status(404).json({ message: "Can't find this route on this server" });
   });

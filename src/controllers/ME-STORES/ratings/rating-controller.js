@@ -39,86 +39,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = require("mongoose");
-var bcrypt_1 = __importDefault(require("bcrypt"));
-var userSchema = new mongoose_1.Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    fullName: String,
-    email: {
-        type: String,
-        unique: [true, 'Email address already exists'],
-        lowerCase: true,
-        required: true,
-    },
-    password: { type: String, required: true },
-    dateOfBirth: { type: Date },
-    state: String,
-    lga: String,
-    address: String,
-    phoneNumber: String,
-    role: {
-        type: String,
-        // enum: [
-        //   'user',
-        //   'staff',
-        //   'admin',
-        //   'storeAdmin',
-        //   'doctor',
-        //   'nurse',
-        //   'patient',
-        //   'student',
-        //   'teacher',
-        //   'classTeacher',
-        // ],
-        default: 'user',
-    },
-    account_type: {
-        type: String,
-        enum: ['me-school', 'medi-tec', 'me-stores'],
-    },
-    medical_department: String,
-    isAgent: Boolean,
-    //  referralId: { type: Schema.Types.ObjectId, ref: 'Account' },
-    timeStamps: {
-        createdAt: { type: String, default: Date.now() },
-        updatedAt: String,
-    },
-    refreshToken: String,
-    currentTerm: String,
-    currentSession: String,
-});
-//to create a virtual method
-userSchema.virtual('fullname').get(function () {
-    return this.firstName + " " + this.lastName;
-});
-userSchema.pre('save', function (next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    _a = this;
-                    return [4 /*yield*/, bcrypt_1.default.hash(this.password, 12)];
-                case 1:
-                    _a.password = _b.sent();
-                    next();
-                    return [2 /*return*/];
-            }
-        });
+exports.MakeReview = void 0;
+var catchAsync_1 = require("../../../shared/catchAsync");
+var rating_model_1 = __importDefault(require("./rating-model"));
+exports.MakeReview = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var comment;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                req.body.user = req.user._id;
+                return [4 /*yield*/, rating_model_1.default.create(req.body)];
+            case 1:
+                comment = _a.sent();
+                res.json({ message: 'success' });
+                return [2 /*return*/];
+        }
     });
-});
-userSchema.pre('save', function (next) {
-    this.fullName = this.firstName + " " + this.lastName;
-    next();
-});
-userSchema.methods.comparePasswords = function (candidatePassword) {
-    return __awaiter(this, void 0, void 0, function () {
-        var user;
-        return __generator(this, function (_a) {
-            user = this;
-            return [2 /*return*/, bcrypt_1.default.compare(candidatePassword, user.password).catch(function (e) { return false; })];
-        });
-    });
-};
-exports.default = mongoose_1.model('User', userSchema);
+}); });
