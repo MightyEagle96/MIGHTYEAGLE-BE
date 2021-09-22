@@ -92,3 +92,7 @@ export const DeleteQuestion = catchAsync(async (req: any, res: any) => {
   );
   res.json({ message: 'done' });
 });
+
+export const SetTimer = catchAsync(async (req: any, res: any) => {
+  //const body ={duration}
+});
