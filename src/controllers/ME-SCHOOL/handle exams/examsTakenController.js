@@ -88,7 +88,7 @@ exports.DeletePaperTaken = catchAsync_1.catchAsync(function (req, res) { return 
             case 0: return [4 /*yield*/, examsTakenModel_1.default.findOneAndUpdate({ user: req.user._id }, { $pull: { examsTaken: { _id: req.params.id } } })];
             case 1:
                 _a.sent();
-                res.send({ message: 'success' });
+                res.json({ message: 'success' });
                 return [2 /*return*/];
         }
     });

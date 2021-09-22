@@ -4,7 +4,7 @@ var mongoose_1 = require("mongoose");
 var currentTermSchema = new mongoose_1.Schema({
     term: {
         type: String,
-        unique: [true, 'This subject already exists'],
+        unique: [true, 'This term already exists'],
         trim: true,
     },
 });

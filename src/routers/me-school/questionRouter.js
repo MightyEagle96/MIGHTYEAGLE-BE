@@ -8,4 +8,7 @@ var questionController_1 = require("../../controllers/ME-SCHOOL/question handler
 var questionRouter = express_1.default.Router();
 questionRouter.post('/', questionController_1.CreateQuestion);
 questionRouter.get('/', questionController_1.ViewQuestions);
+questionRouter.get('/:collectionId/:questionId', questionController_1.ViewQuestion);
+questionRouter.patch('/:collectionId/:questionId', questionController_1.UpdateQuestion);
+questionRouter.delete('/:id', questionController_1.DeleteQuestion);
 exports.default = questionRouter;

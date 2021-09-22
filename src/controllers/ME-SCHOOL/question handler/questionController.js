@@ -39,9 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewQuestions = exports.CreateQuestion = void 0;
+exports.DeleteQuestion = exports.UpdateQuestion = exports.ViewQuestion = exports.ViewQuestions = exports.CreateQuestion = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var questionModel_1 = __importDefault(require("./questionModel"));
+//to create a question
 exports.CreateQuestion = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, currentClass, currentTerm, subject, testType, question, createdQuestion;
     return __generator(this, function (_b) {
@@ -81,18 +82,79 @@ exports.CreateQuestion = catchAsync_1.catchAsync(function (req, res) { return __
         }
     });
 }); });
+//to view the list of questions
 exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var questions;
+    var result, questions, count;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, questionModel_1.default.find(req.query).populate([
                     'currentClass',
                     'testType',
                     'subject',
+                    'currentTerm',
                 ])];
             case 1:
-                questions = _a.sent();
-                res.json({ count: questions.length, questions: questions });
+                result = _a.sent();
+                questions = result[0];
+                count = questions.questions.length;
+                res.json({ count: count, questions: questions });
+                return [2 /*return*/];
+        }
+    });
+}); });
+//to view a single question
+exports.ViewQuestion = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, collectionId, questionId, questions, question;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.params, collectionId = _a.collectionId, questionId = _a.questionId;
+                return [4 /*yield*/, questionModel_1.default.findOne({ _id: collectionId })];
+            case 1:
+                questions = (_b.sent()).questions;
+                question = questions.find(function (q) {
+                    return q._id.toString() === questionId.toString();
+                });
+                res.json({ question: question });
+                return [2 /*return*/];
+        }
+    });
+}); });
+//to update a question
+exports.UpdateQuestion = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, collectionId, questionId;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.params, collectionId = _a.collectionId, questionId = _a.questionId;
+                return [4 /*yield*/, questionModel_1.default.updateOne({ _id: collectionId, 'questions._id': questionId }, {
+                        $set: {
+                            'questions.$.question': req.body.question,
+                            'questions.$.optionA': req.body.optionA,
+                            'questions.$.optionB': req.body.optionB,
+                            'questions.$.optionC': req.body.optionC,
+                            'questions.$.optionD': req.body.optionD,
+                            'questions.$.correctAns': req.body.correctAns,
+                        },
+                    })];
+            case 1:
+                _b.sent();
+                res.json({ message: 'done' });
+                return [2 /*return*/];
+        }
+    });
+}); });
+//to delete question
+exports.DeleteQuestion = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: 
+            //to delete a question, you need the id of the question and the id of the collection
+            return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: req.params.id }, { $pull: { questions: { _id: req.body.questionId } } })];
+            case 1:
+                //to delete a question, you need the id of the question and the id of the collection
+                _a.sent();
+                res.json({ message: 'done' });
                 return [2 /*return*/];
         }
     });

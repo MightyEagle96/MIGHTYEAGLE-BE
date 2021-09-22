@@ -34,7 +34,7 @@ export const DeletePaperTaken = catchAsync(async (req: any, res: any) => {
     { user: req.user._id },
     { $pull: { examsTaken: { _id: req.params.id } } }
   );
-  res.send({ message: 'success' });
+  res.json({ message: 'success' });
 });
 
 export const HasTakenPaper = catchAsync(async (req: any, res: any) => {

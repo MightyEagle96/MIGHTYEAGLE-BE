@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const currentTermSchema = new Schema({
   term: {
     type: String,
-    unique: [true, 'This subject already exists'],
+    unique: [true, 'This term already exists'],
     trim: true,
   },
 });
