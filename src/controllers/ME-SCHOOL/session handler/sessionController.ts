@@ -6,7 +6,7 @@ export const CreateSession = catchAsync(async (req: any, res: any) => {
   res.json({ message: 'done' });
 });
 
-export const GetSession = catchAsync(async (req: any, res: any) => {
+export const ListSessions = catchAsync(async (req: any, res: any) => {
   const sessions = await Session.find();
   res.json({ sessions });
 });

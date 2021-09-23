@@ -39,18 +39,18 @@ const userSchema = new Schema({
   phoneNumber: String,
   role: {
     type: String,
-    // enum: [
-    //   'user',
-    //   'staff',
-    //   'admin',
-    //   'storeAdmin',
-    //   'doctor',
-    //   'nurse',
-    //   'patient',
-    //   'student',
-    //   'teacher',
-    //   'classTeacher',
-    // ],
+    enum: [
+      'user',
+      'staff',
+      'admin',
+      'storeAdmin',
+      'doctor',
+      'nurse',
+      'patient',
+      'student',
+      'teacher',
+      'classTeacher',
+    ],
     default: 'user',
   },
   account_type: {
@@ -65,7 +65,8 @@ const userSchema = new Schema({
     updatedAt: String,
   },
   refreshToken: String,
-  currentTerm: { type: Schema.Types.ObjectId, ref: 'Term' },
+  currentTerm: { type: Schema.Types.ObjectId, ref: 'CurrentTerm' },
+  level: { type: Schema.Types.ObjectId, ref: 'Level' },
   currentSession: { type: Schema.Types.ObjectId, ref: 'Session' },
 });
 

@@ -39,87 +39,56 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = require("mongoose");
-var bcrypt_1 = __importDefault(require("bcrypt"));
-var userSchema = new mongoose_1.Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    fullName: String,
-    email: {
-        type: String,
-        unique: [true, 'Email address already exists'],
-        lowerCase: true,
-        required: true,
-    },
-    password: { type: String, required: true },
-    dateOfBirth: { type: Date },
-    state: String,
-    lga: String,
-    address: String,
-    phoneNumber: String,
-    role: {
-        type: String,
-        enum: [
-            'user',
-            'staff',
-            'admin',
-            'storeAdmin',
-            'doctor',
-            'nurse',
-            'patient',
-            'student',
-            'teacher',
-            'classTeacher',
-        ],
-        default: 'user',
-    },
-    account_type: {
-        type: String,
-        enum: ['me-school', 'medi-tec', 'me-stores'],
-    },
-    medical_department: String,
-    isAgent: Boolean,
-    //  referralId: { type: Schema.Types.ObjectId, ref: 'Account' },
-    timeStamps: {
-        createdAt: { type: String, default: Date.now() },
-        updatedAt: String,
-    },
-    refreshToken: String,
-    currentTerm: { type: mongoose_1.Schema.Types.ObjectId, ref: 'CurrentTerm' },
-    level: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Level' },
-    currentSession: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Session' },
-});
-//to create a virtual method
-userSchema.virtual('fullname').get(function () {
-    return this.firstName + " " + this.lastName;
-});
-userSchema.pre('save', function (next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    _a = this;
-                    return [4 /*yield*/, bcrypt_1.default.hash(this.password, 12)];
-                case 1:
-                    _a.password = _b.sent();
-                    next();
-                    return [2 /*return*/];
-            }
-        });
+exports.ViewRegisteredSubjects = exports.RegisterSubjects = void 0;
+var catchAsync_1 = require("../../../shared/catchAsync");
+var subjectsRegister_1 = __importDefault(require("./subjectsRegister"));
+exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var register, data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                req.body.user = req.user._id;
+                return [4 /*yield*/, subjectsRegister_1.default.findOne({
+                        user: req.body.user,
+                        level: req.body.level,
+                    })];
+            case 1:
+                register = _a.sent();
+                if (!register) return [3 /*break*/, 3];
+                return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({ _id: register._id }, { $push: { subjects: req.body } })];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 6];
+            case 3: return [4 /*yield*/, subjectsRegister_1.default.create({
+                    user: req.body.user,
+                    level: req.body.level,
+                })];
+            case 4:
+                data = _a.sent();
+                return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({
+                        _id: data._id,
+                    }, { $push: { subjects: req.body } })];
+            case 5:
+                _a.sent();
+                _a.label = 6;
+            case 6:
+                res.status(201).json({ message: 'success' });
+                return [2 /*return*/];
+        }
     });
-});
-userSchema.pre('save', function (next) {
-    this.fullName = this.firstName + " " + this.lastName;
-    next();
-});
-userSchema.methods.comparePasswords = function (candidatePassword) {
-    return __awaiter(this, void 0, void 0, function () {
-        var user;
-        return __generator(this, function (_a) {
-            user = this;
-            return [2 /*return*/, bcrypt_1.default.compare(candidatePassword, user.password).catch(function (e) { return false; })];
-        });
+}); });
+exports.ViewRegisteredSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var registeredSubject;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({
+                    user: req.user._id,
+                    level: req.user.level,
+                }).populate({ path: 'subjects.subject' })];
+            case 1:
+                registeredSubject = _a.sent();
+                res.json({ registeredSubject: registeredSubject });
+                return [2 /*return*/];
+        }
     });
-};
-exports.default = mongoose_1.model('User', userSchema);
+}); });

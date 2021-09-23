@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetSession = exports.CreateSession = void 0;
+exports.ListSessions = exports.CreateSession = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var sessionModel_1 = __importDefault(require("./sessionModel"));
 exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -53,7 +53,7 @@ exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __a
         }
     });
 }); });
-exports.GetSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.ListSessions = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var sessions;
     return __generator(this, function (_a) {
         switch (_a.label) {
