@@ -50,7 +50,7 @@ export const ViewQuestions = catchAsync(async (req: any, res: any) => {
       res.json({ count, questions: questions });
     }
   } catch (error) {
-    res.json({ message: 'No data found' });
+    res.json({ count: 0, questions: { questions: [] } });
   }
 });
 

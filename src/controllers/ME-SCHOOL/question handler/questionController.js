@@ -105,7 +105,7 @@ exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __a
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
-                res.json({ message: 'No data found' });
+                res.json({ count: 0, questions: { questions: [] } });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

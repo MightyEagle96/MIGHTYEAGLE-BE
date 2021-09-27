@@ -6,7 +6,8 @@ var questionSchema = new mongoose_1.Schema({
     currentTerm: { type: mongoose_1.Schema.Types.ObjectId, ref: 'CurrentTerm' },
     subject: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Subject' },
     testType: { type: mongoose_1.Schema.Types.ObjectId, ref: 'TestType' },
-    duration: Date,
+    duration: Number,
+    activated: { type: Boolean, default: false },
     questions: [
         {
             question: String,

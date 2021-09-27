@@ -6,6 +6,8 @@ export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
   const register = await SubjectsRegister.findOne({
     user: req.body.user,
     level: req.body.level,
+    currentTerm: req.body.currentTerm,
+    session: req.body.session,
   });
 
   if (register) {
@@ -17,6 +19,8 @@ export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
     const data = await SubjectsRegister.create({
       user: req.body.user,
       level: req.body.level,
+      currentTerm: req.body.currentTerm,
+      session: req.body.session,
     });
 
     await SubjectsRegister.findOneAndUpdate(
@@ -31,10 +35,22 @@ export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
 });
 
 export const ViewRegisteredSubjects = catchAsync(async (req: any, res: any) => {
-  const registeredSubject = await SubjectsRegister.findOneAndUpdate({
+  const registeredSubject = await SubjectsRegister.findOne({
+    ...req.query,
     user: req.user._id,
-    level: req.user.level,
-  }).populate({ path: 'subjects.subject' });
+  })
+    .populate({ path: 'subjects.subject' })
+    .populate(['level', 'currentTerm', 'session']);
 
   res.json({ registeredSubject });
 });
+
+export const DeleteRegisteredSubject = catchAsync(
+  async (req: any, res: any) => {
+    await SubjectsRegister.findOneAndUpdate(
+      { _id: req.body.registerId },
+      { $pull: { subjects: { _id: req.body.subjectId } } }
+    );
+    res.json({ message: 'done' });
+  }
+);

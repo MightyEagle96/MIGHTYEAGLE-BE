@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,7 +50,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewRegisteredSubjects = exports.RegisterSubjects = void 0;
+exports.DeleteRegisteredSubject = exports.ViewRegisteredSubjects = exports.RegisterSubjects = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var subjectsRegister_1 = __importDefault(require("./subjectsRegister"));
 exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -51,6 +62,8 @@ exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return 
                 return [4 /*yield*/, subjectsRegister_1.default.findOne({
                         user: req.body.user,
                         level: req.body.level,
+                        currentTerm: req.body.currentTerm,
+                        session: req.body.session,
                     })];
             case 1:
                 register = _a.sent();
@@ -62,6 +75,8 @@ exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return 
             case 3: return [4 /*yield*/, subjectsRegister_1.default.create({
                     user: req.body.user,
                     level: req.body.level,
+                    currentTerm: req.body.currentTerm,
+                    session: req.body.session,
                 })];
             case 4:
                 data = _a.sent();
@@ -81,13 +96,23 @@ exports.ViewRegisteredSubjects = catchAsync_1.catchAsync(function (req, res) { r
     var registeredSubject;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({
-                    user: req.user._id,
-                    level: req.user.level,
-                }).populate({ path: 'subjects.subject' })];
+            case 0: return [4 /*yield*/, subjectsRegister_1.default.findOne(__assign(__assign({}, req.query), { user: req.user._id }))
+                    .populate({ path: 'subjects.subject' })
+                    .populate(['level', 'currentTerm', 'session'])];
             case 1:
                 registeredSubject = _a.sent();
                 res.json({ registeredSubject: registeredSubject });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.DeleteRegisteredSubject = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({ _id: req.body.registerId }, { $pull: { subjects: { _id: req.body.subjectId } } })];
+            case 1:
+                _a.sent();
+                res.json({ message: 'done' });
                 return [2 /*return*/];
         }
     });

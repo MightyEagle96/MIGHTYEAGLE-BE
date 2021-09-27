@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  DeleteRegisteredSubject,
   RegisterSubjects,
   ViewRegisteredSubjects,
 } from '../../controllers/ME-SCHOOL/class registration/subjectsRegisterController';
@@ -14,5 +15,8 @@ classRegistationRouter.post(
   RegisterSubjects
 );
 classRegistationRouter.get('/viewRegisteredSubject', ViewRegisteredSubjects);
-
+classRegistationRouter.delete(
+  '/deleteRegisteredSubject',
+  DeleteRegisteredSubject
+);
 export default classRegistationRouter;

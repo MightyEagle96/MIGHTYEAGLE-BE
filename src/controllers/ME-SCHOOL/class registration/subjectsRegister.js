@@ -4,6 +4,8 @@ var mongoose_1 = require("mongoose");
 var subjectRegister = new mongoose_1.Schema({
     user: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
     level: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Level' },
+    currentTerm: { type: mongoose_1.Schema.Types.ObjectId, ref: 'CurrentTerm' },
+    session: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Session' },
     subjects: [{ subject: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Subject' } }],
 });
 exports.default = mongoose_1.model('SubjectRegister', subjectRegister);
