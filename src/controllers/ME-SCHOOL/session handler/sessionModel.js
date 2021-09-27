@@ -7,5 +7,6 @@ var sessionSchema = new mongoose_1.Schema({
         unique: [true, 'This subject already exists'],
         trim: true,
     },
+    activeSession: { type: Boolean, default: true },
 });
 exports.default = mongoose_1.model('Session', sessionSchema);

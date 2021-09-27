@@ -8,4 +8,5 @@ var levelController_1 = require("../../controllers/ME-SCHOOL/level handler/level
 var levelRouter = express_1.default.Router();
 levelRouter.post('/', levelController_1.CreateLevel);
 levelRouter.get('/', levelController_1.ViewLevels);
+levelRouter.get('/:id', levelController_1.ViewLevel);
 exports.default = levelRouter;

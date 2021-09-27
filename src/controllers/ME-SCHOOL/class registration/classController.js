@@ -35,45 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
+exports.CreateClassRegister = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
-var subjectModel_1 = __importDefault(require("./subjectModel"));
-exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.CreateClassRegister = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, subjectModel_1.default.create(req.body)];
-            case 1:
-                _a.sent();
-                res.status(201).json({ message: 'done' });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var subjects;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, subjectModel_1.default.find()];
-            case 1:
-                subjects = _a.sent();
-                res.send({ subjects: subjects });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.ViewSubject = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var subject;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, subjectModel_1.default.findById(req.params.id)];
-            case 1:
-                subject = _a.sent();
-                res.json({ subject: subject });
-                return [2 /*return*/];
-        }
+        return [2 /*return*/];
     });
 }); });

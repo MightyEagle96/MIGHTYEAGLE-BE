@@ -37,15 +37,21 @@ export const CreateQuestion = catchAsync(async (req: any, res: any) => {
 
 //to view the list of questions
 export const ViewQuestions = catchAsync(async (req: any, res: any) => {
-  const result = await Question.find(req.query).populate([
-    'currentClass',
-    'testType',
-    'subject',
-    'currentTerm',
-  ]);
-  let questions = result[0];
-  const count = questions.questions.length;
-  res.json({ count, questions: questions });
+  try {
+    const result = await Question.find(req.query).populate([
+      'currentClass',
+      'testType',
+      'subject',
+      'currentTerm',
+    ]);
+    if (result) {
+      let questions = result[0];
+      const count = questions.questions.length;
+      res.json({ count, questions: questions });
+    }
+  } catch (error) {
+    res.json({ message: 'No data found' });
+  }
 });
 
 //to view a single question

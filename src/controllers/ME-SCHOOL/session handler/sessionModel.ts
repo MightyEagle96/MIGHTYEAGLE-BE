@@ -6,6 +6,7 @@ const sessionSchema = new Schema({
     unique: [true, 'This subject already exists'],
     trim: true,
   },
+  activeSession: { type: Boolean, default: true },
 });
 
 export default model('Session', sessionSchema);

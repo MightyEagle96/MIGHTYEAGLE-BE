@@ -45,10 +45,16 @@ var sessionModel_1 = __importDefault(require("./sessionModel"));
 exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, sessionModel_1.default.create(req.body)];
+            case 0: 
+            //first of all set all active sessions from true to false
+            return [4 /*yield*/, sessionModel_1.default.updateMany({ activeSession: true }, { activeSession: false })];
             case 1:
+                //first of all set all active sessions from true to false
                 _a.sent();
-                res.json({ message: 'done' });
+                return [4 /*yield*/, sessionModel_1.default.create(req.body)];
+            case 2:
+                _a.sent();
+                res.status(201).json({ message: 'done' });
                 return [2 /*return*/];
         }
     });

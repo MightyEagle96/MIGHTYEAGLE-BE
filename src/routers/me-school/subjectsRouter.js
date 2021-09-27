@@ -8,4 +8,5 @@ var subjectController_1 = require("../../controllers/ME-SCHOOL/subjects/subjectC
 var subjectRouter = express_1.default.Router();
 subjectRouter.post('/', subjectController_1.CreateSubject);
 subjectRouter.get('/', subjectController_1.ViewSubjects);
+subjectRouter.get('/:id', subjectController_1.ViewSubject);
 exports.default = subjectRouter;

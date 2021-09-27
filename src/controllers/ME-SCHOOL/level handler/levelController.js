@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewLevels = exports.CreateLevel = void 0;
+exports.ViewLevel = exports.ViewLevels = exports.CreateLevel = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var levelModel_1 = __importDefault(require("./levelModel"));
 exports.CreateLevel = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -61,6 +61,18 @@ exports.ViewLevels = catchAsync_1.catchAsync(function (req, res) { return __awai
             case 1:
                 levels = _a.sent();
                 res.json({ levels: levels });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.ViewLevel = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var level;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, levelModel_1.default.findById(req.params.id)];
+            case 1:
+                level = _a.sent();
+                res.json({ level: level });
                 return [2 /*return*/];
         }
     });

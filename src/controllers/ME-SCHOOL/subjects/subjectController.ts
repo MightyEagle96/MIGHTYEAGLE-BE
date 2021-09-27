@@ -10,3 +10,8 @@ export const ViewSubjects = catchAsync(async (req: any, res: any) => {
   const subjects = await Subject.find();
   res.send({ subjects });
 });
+
+export const ViewSubject = catchAsync(async (req: any, res: any) => {
+  const subject = await Subject.findById(req.params.id);
+  res.json({ subject });
+});
