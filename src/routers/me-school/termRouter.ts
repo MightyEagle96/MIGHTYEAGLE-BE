@@ -2,7 +2,7 @@ import express from 'express';
 import {
   CreateCurrentTerm,
   ListTerms,
-} from '../../controllers/ME-SCHOOL/termHandler/termController';
+} from '../../controllers/ME-SCHOOL/Admin/termHandler/termController';
 
 const termRouter = express.Router();
 

@@ -1,4 +1,4 @@
-import { catchAsync } from '../../../shared/catchAsync';
+import { catchAsync } from '../../../../shared/catchAsync';
 import CurrentTerm from './termModel';
 
 export const CreateCurrentTerm = catchAsync(async (req: any, res: any) => {

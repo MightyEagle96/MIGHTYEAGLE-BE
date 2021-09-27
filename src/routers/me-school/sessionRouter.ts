@@ -2,7 +2,7 @@ import express from 'express';
 import {
   CreateSession,
   ListSessions,
-} from '../../controllers/ME-SCHOOL/session handler/sessionController';
+} from '../../controllers/ME-SCHOOL/Admin/session handler/sessionController';
 
 const sessionRouter = express.Router();
 

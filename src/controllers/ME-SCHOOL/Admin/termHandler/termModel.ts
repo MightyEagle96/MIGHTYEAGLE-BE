@@ -6,6 +6,7 @@ const currentTermSchema = new Schema({
     unique: [true, 'This term already exists'],
     trim: true,
   },
+  activeTerm: { type: Boolean, default: true },
 });
 
 export default model('CurrentTerm', currentTermSchema);

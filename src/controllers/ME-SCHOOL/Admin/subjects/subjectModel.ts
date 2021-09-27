@@ -6,6 +6,7 @@ const subjectSchema = new Schema({
     unique: [true, 'This subject already exists'],
     trim: true,
   },
+  category: { type: String, enum: ['junior', 'senior', 'both'] },
 });
 
 export default model('Subject', subjectSchema);

@@ -1,4 +1,4 @@
-import { catchAsync } from '../../../shared/catchAsync';
+import { catchAsync } from '../../../../shared/catchAsync';
 import Session from './sessionModel';
 
 export const CreateSession = catchAsync(async (req: any, res: any) => {

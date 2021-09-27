@@ -7,5 +7,6 @@ var subjectSchema = new mongoose_1.Schema({
         unique: [true, 'This subject already exists'],
         trim: true,
     },
+    category: { type: String, enum: ['junior', 'senior', 'both'] },
 });
 exports.default = mongoose_1.model('Subject', subjectSchema);

@@ -1,4 +1,4 @@
-import { catchAsync } from '../../../shared/catchAsync';
+import { catchAsync } from '../../../../shared/catchAsync';
 import Level from './levelModel';
 
 export const CreateLevel = catchAsync(async (req: any, res: any) => {

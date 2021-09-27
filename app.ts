@@ -30,6 +30,7 @@ import testTypeRouter from './src/routers/me-school/testTypeRouter';
 import questionRouter from './src/routers/me-school/questionRouter';
 import sessionRouter from './src/routers/me-school/sessionRouter';
 import classRegistationRouter from './src/routers/me-school/classRegistrationRouter';
+import adminRouter from './src/routers/me-school/Admin/adminRouter';
 //import unirest from 'unirest';
 
 const app = express();
@@ -68,6 +69,7 @@ app
   .use('/testType', testTypeRouter)
   .use('/questions', questionRouter)
   .use('/class', classRegistationRouter)
+  .use('/school/admin', adminRouter)
   .use('/*', (req: any, res: any) => {
     res.status(404).json({ message: "Can't find this route on this server" });
   });

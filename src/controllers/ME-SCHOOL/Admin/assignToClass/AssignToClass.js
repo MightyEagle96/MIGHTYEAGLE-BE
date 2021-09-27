@@ -39,28 +39,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ListTerms = exports.CreateCurrentTerm = void 0;
-var catchAsync_1 = require("../../../shared/catchAsync");
-var termModel_1 = __importDefault(require("./termModel"));
-exports.CreateCurrentTerm = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.AssignToClass = void 0;
+var user_1 = __importDefault(require("../../../../models/user"));
+var catchAsync_1 = require("../../../../shared/catchAsync");
+exports.AssignToClass = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, termModel_1.default.create(req.body)];
+            case 0: return [4 /*yield*/, user_1.default.findOneAndUpdate({ _id: req.body.studentId }, { level: req.body.level })];
             case 1:
                 _a.sent();
-                res.json({ message: 'done' });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.ListTerms = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var terms;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, termModel_1.default.find()];
-            case 1:
-                terms = _a.sent();
-                res.json({ terms: terms });
+                res.json({ message: 'Assigned to class' });
                 return [2 /*return*/];
         }
     });

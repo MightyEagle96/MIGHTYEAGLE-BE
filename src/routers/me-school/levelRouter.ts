@@ -3,7 +3,7 @@ import {
   CreateLevel,
   ViewLevel,
   ViewLevels,
-} from '../../controllers/ME-SCHOOL/level handler/levelController';
+} from '../../controllers/ME-SCHOOL/Admin/level handler/levelController';
 
 const levelRouter = express.Router();
 

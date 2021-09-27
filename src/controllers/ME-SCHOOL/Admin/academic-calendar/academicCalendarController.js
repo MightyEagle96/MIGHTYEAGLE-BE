@@ -39,34 +39,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ListSessions = exports.CreateSession = void 0;
-var catchAsync_1 = require("../../../shared/catchAsync");
-var sessionModel_1 = __importDefault(require("./sessionModel"));
-exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.SetAcademicCalendar = void 0;
+var user_1 = __importDefault(require("../../../../models/user"));
+var catchAsync_1 = require("../../../../shared/catchAsync");
+var sessionModel_1 = __importDefault(require("../session handler/sessionModel"));
+var termModel_1 = __importDefault(require("../termHandler/termModel"));
+exports.SetAcademicCalendar = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentSession, currentTerm;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: 
-            //first of all set all active sessions from true to false
-            return [4 /*yield*/, sessionModel_1.default.updateMany({ activeSession: true }, { activeSession: false })];
+            case 0: return [4 /*yield*/, sessionModel_1.default.findOne({ activeSession: true })];
             case 1:
-                //first of all set all active sessions from true to false
-                _a.sent();
-                return [4 /*yield*/, sessionModel_1.default.create(req.body)];
+                currentSession = _a.sent();
+                return [4 /*yield*/, termModel_1.default.findOne({ activeTerm: true })];
             case 2:
+                currentTerm = _a.sent();
+                console.log(currentSession);
+                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentTerm: currentTerm._id, currentSession: currentSession._id })];
+            case 3:
                 _a.sent();
-                res.status(201).json({ message: 'done' });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.ListSessions = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var sessions;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, sessionModel_1.default.find()];
-            case 1:
-                sessions = _a.sent();
-                res.json({ sessions: sessions });
+                res.json({ message: 'done' });
                 return [2 /*return*/];
         }
     });

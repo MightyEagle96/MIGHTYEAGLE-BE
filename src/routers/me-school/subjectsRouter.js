@@ -4,9 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var subjectController_1 = require("../../controllers/ME-SCHOOL/subjects/subjectController");
+var subjectController_1 = require("../../controllers/ME-SCHOOL/Admin/subjects/subjectController");
+var user_service_1 = require("../../services/user.service");
 var subjectRouter = express_1.default.Router();
-subjectRouter.post('/', subjectController_1.CreateSubject);
+subjectRouter.use(user_service_1.IsLoggedIn);
+subjectRouter.post('/', user_service_1.RestricTo('Admin'), subjectController_1.CreateSubject);
 subjectRouter.get('/', subjectController_1.ViewSubjects);
 subjectRouter.get('/:id', subjectController_1.ViewSubject);
 exports.default = subjectRouter;

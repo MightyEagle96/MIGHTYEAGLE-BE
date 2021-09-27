@@ -7,5 +7,6 @@ var currentTermSchema = new mongoose_1.Schema({
         unique: [true, 'This term already exists'],
         trim: true,
     },
+    activeTerm: { type: Boolean, default: true },
 });
 exports.default = mongoose_1.model('CurrentTerm', currentTermSchema);

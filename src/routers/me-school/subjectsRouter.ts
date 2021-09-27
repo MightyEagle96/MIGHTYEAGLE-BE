@@ -3,11 +3,13 @@ import {
   CreateSubject,
   ViewSubject,
   ViewSubjects,
-} from '../../controllers/ME-SCHOOL/subjects/subjectController';
+} from '../../controllers/ME-SCHOOL/Admin/subjects/subjectController';
+import { IsLoggedIn, RestricTo } from '../../services/user.service';
 
 const subjectRouter = express.Router();
 
-subjectRouter.post('/', CreateSubject);
+subjectRouter.use(IsLoggedIn);
+subjectRouter.post('/', RestricTo('Admin'), CreateSubject);
 subjectRouter.get('/', ViewSubjects);
 subjectRouter.get('/:id', ViewSubject);
 

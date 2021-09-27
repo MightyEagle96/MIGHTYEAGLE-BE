@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewLevel = exports.ViewLevels = exports.CreateLevel = void 0;
-var catchAsync_1 = require("../../../shared/catchAsync");
+var catchAsync_1 = require("../../../../shared/catchAsync");
 var levelModel_1 = __importDefault(require("./levelModel"));
 exports.CreateLevel = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
