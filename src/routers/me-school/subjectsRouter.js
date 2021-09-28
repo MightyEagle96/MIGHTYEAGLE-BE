@@ -8,7 +8,7 @@ var subjectController_1 = require("../../controllers/ME-SCHOOL/Admin/subjects/su
 var user_service_1 = require("../../services/user.service");
 var subjectRouter = express_1.default.Router();
 subjectRouter.use(user_service_1.IsLoggedIn);
-subjectRouter.post('/', user_service_1.RestricTo('Admin'), subjectController_1.CreateSubject);
+subjectRouter.post('/', user_service_1.RestricTo('admin'), subjectController_1.CreateSubject);
 subjectRouter.get('/', subjectController_1.ViewSubjects);
 subjectRouter.get('/:id', subjectController_1.ViewSubject);
 exports.default = subjectRouter;

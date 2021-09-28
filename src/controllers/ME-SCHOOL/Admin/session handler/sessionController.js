@@ -54,7 +54,7 @@ exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __a
                 return [4 /*yield*/, sessionModel_1.default.create(req.body)];
             case 2:
                 _a.sent();
-                res.status(201).json({ message: 'done' });
+                res.status(201).json({ message: 'New session created' });
                 return [2 /*return*/];
         }
     });

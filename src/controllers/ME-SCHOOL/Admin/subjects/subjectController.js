@@ -49,7 +49,7 @@ exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __a
             case 0: return [4 /*yield*/, subjectModel_1.default.create(req.body)];
             case 1:
                 _a.sent();
-                res.status(201).json({ message: 'done' });
+                res.status(201).json({ message: 'Subject Created' });
                 return [2 /*return*/];
         }
     });

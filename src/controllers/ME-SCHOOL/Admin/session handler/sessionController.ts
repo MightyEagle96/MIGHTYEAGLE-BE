@@ -7,7 +7,7 @@ export const CreateSession = catchAsync(async (req: any, res: any) => {
 
   await Session.create(req.body);
 
-  res.status(201).json({ message: 'done' });
+  res.status(201).json({ message: 'New session created' });
 });
 
 export const ListSessions = catchAsync(async (req: any, res: any) => {

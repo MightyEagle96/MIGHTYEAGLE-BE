@@ -48,7 +48,7 @@ exports.CreateLevel = catchAsync_1.catchAsync(function (req, res) { return __awa
             case 0: return [4 /*yield*/, levelModel_1.default.create(req.body)];
             case 1:
                 _a.sent();
-                res.status(201).json({ message: 'done' });
+                res.status(201).json({ message: 'New class created' });
                 return [2 /*return*/];
         }
     });
