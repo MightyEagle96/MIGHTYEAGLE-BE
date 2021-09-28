@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
+var user_1 = __importDefault(require("../../../../models/user"));
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var levelModel_1 = __importDefault(require("../level handler/levelModel"));
 var subjectModel_1 = __importDefault(require("./subjectModel"));
@@ -55,37 +56,41 @@ exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __a
     });
 }); });
 exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var subjects, level;
+    var subjects, userData, level;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                if (!(req.user.role === 'student')) return [3 /*break*/, 6];
-                return [4 /*yield*/, levelModel_1.default.findOne({ _id: req.user.level })];
+            case 0: return [4 /*yield*/, user_1.default
+                    .findById(req.user._id)
+                    .populate(['currentTerm', 'level', 'currentSession'])];
             case 1:
+                userData = _a.sent();
+                if (!(req.user.role === 'student')) return [3 /*break*/, 7];
+                return [4 /*yield*/, levelModel_1.default.findOne({ _id: req.user.level })];
+            case 2:
                 level = _a.sent();
                 if (!(level.level === 'Jss1' ||
                     level.level === 'Jss2' ||
-                    level.level === 'Jss3')) return [3 /*break*/, 3];
+                    level.level === 'Jss3')) return [3 /*break*/, 4];
                 return [4 /*yield*/, subjectModel_1.default.find({
                         $or: [{ category: 'both' }, { category: 'junior' }],
                     })];
-            case 2:
+            case 3:
                 subjects = _a.sent();
-                return [3 /*break*/, 5];
-            case 3: return [4 /*yield*/, subjectModel_1.default.find({
+                return [3 /*break*/, 6];
+            case 4: return [4 /*yield*/, subjectModel_1.default.find({
                     $or: [{ category: 'both' }, { category: 'senior' }],
                 })];
-            case 4:
+            case 5:
                 subjects = _a.sent();
                 res.json({ subjects: subjects });
-                _a.label = 5;
-            case 5: return [3 /*break*/, 8];
-            case 6: return [4 /*yield*/, subjectModel_1.default.find()];
-            case 7:
-                subjects = _a.sent();
-                _a.label = 8;
+                _a.label = 6;
+            case 6: return [3 /*break*/, 9];
+            case 7: return [4 /*yield*/, subjectModel_1.default.find()];
             case 8:
-                res.json({ subjects: subjects });
+                subjects = _a.sent();
+                _a.label = 9;
+            case 9:
+                res.json({ userData: userData, subjects: subjects });
                 return [2 /*return*/];
         }
     });

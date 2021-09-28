@@ -2,33 +2,38 @@ import { catchAsync } from '../../../shared/catchAsync';
 import SubjectsRegister from './subjectsRegister';
 
 export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
+  console.log(req.body.subjects.length);
   req.body.user = req.user._id;
   const register = await SubjectsRegister.findOne({
     user: req.user._id,
     level: req.user.level,
     currentTerm: req.user.currentTerm,
-    session: req.user.session,
+    session: req.user.currentSession,
   });
-
+  console.log(register);
   if (register) {
-    await SubjectsRegister.findOneAndUpdate(
-      { _id: register._id },
-      { $push: { subjects: req.body } }
-    );
+    for (let i = 0; i < req.body.subjects.length; i++) {
+      await SubjectsRegister.findOneAndUpdate(
+        { _id: register._id },
+        { $push: { subjects: { subject: req.body.subjects[i] } } }
+      );
+    }
   } else {
     const data = await SubjectsRegister.create({
-      user: req.body.user,
-      level: req.body.level,
-      currentTerm: req.body.currentTerm,
-      session: req.body.session,
+      user: req.user._id,
+      level: req.user.level,
+      currentTerm: req.user.currentTerm,
+      session: req.user.currentSession,
     });
 
-    await SubjectsRegister.findOneAndUpdate(
-      {
-        _id: data._id,
-      },
-      { $push: { subjects: req.body } }
-    );
+    for (let i = 0; i < req.body.subjects.length; i++) {
+      await SubjectsRegister.findOneAndUpdate(
+        {
+          _id: data._id,
+        },
+        { $push: { subjects: { subject: req.body.subjects[i] } } }
+      );
+    }
   }
 
   res.status(201).json({ message: 'Subjects registered' });
@@ -36,7 +41,9 @@ export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
 
 export const ViewRegisteredSubjects = catchAsync(async (req: any, res: any) => {
   const registeredSubject = await SubjectsRegister.findOne({
-    ...req.query,
+    session: req.user.currentSession,
+    level: req.user.level,
+    currentTerm: req.user.currentTerm,
     user: req.user._id,
   })
     .populate({ path: 'subjects.subject' })

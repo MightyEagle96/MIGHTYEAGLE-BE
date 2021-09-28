@@ -1,3 +1,4 @@
+import user from '../../../../models/user';
 import { catchAsync } from '../../../../shared/catchAsync';
 import levelModel from '../level handler/levelModel';
 import Subject from './subjectModel';
@@ -9,6 +10,9 @@ export const CreateSubject = catchAsync(async (req: any, res: any) => {
 
 export const ViewSubjects = catchAsync(async (req: any, res: any) => {
   let subjects;
+  const userData = await user
+    .findById(req.user._id)
+    .populate(['currentTerm', 'level', 'currentSession']);
   if (req.user.role === 'student') {
     //fetch the class of the student
     const level = await levelModel.findOne({ _id: req.user.level });
@@ -29,7 +33,7 @@ export const ViewSubjects = catchAsync(async (req: any, res: any) => {
   } else {
     subjects = await Subject.find();
   }
-  res.json({ subjects });
+  res.json({ userData, subjects });
 });
 
 export const ViewSubject = catchAsync(async (req: any, res: any) => {

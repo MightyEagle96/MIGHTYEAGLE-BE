@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -54,39 +43,56 @@ exports.DeleteRegisteredSubject = exports.ViewRegisteredSubjects = exports.Regis
 var catchAsync_1 = require("../../../shared/catchAsync");
 var subjectsRegister_1 = __importDefault(require("./subjectsRegister"));
 exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var register, data;
+    var register, i, data, i;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                console.log(req.body.subjects.length);
                 req.body.user = req.user._id;
                 return [4 /*yield*/, subjectsRegister_1.default.findOne({
                         user: req.user._id,
                         level: req.user.level,
                         currentTerm: req.user.currentTerm,
-                        session: req.user.session,
+                        session: req.user.currentSession,
                     })];
             case 1:
                 register = _a.sent();
-                if (!register) return [3 /*break*/, 3];
-                return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({ _id: register._id }, { $push: { subjects: req.body } })];
+                console.log(register);
+                if (!register) return [3 /*break*/, 6];
+                i = 0;
+                _a.label = 2;
             case 2:
+                if (!(i < req.body.subjects.length)) return [3 /*break*/, 5];
+                return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({ _id: register._id }, { $push: { subjects: { subject: req.body.subjects[i] } } })];
+            case 3:
                 _a.sent();
-                return [3 /*break*/, 6];
-            case 3: return [4 /*yield*/, subjectsRegister_1.default.create({
-                    user: req.body.user,
-                    level: req.body.level,
-                    currentTerm: req.body.currentTerm,
-                    session: req.body.session,
-                })];
+                _a.label = 4;
             case 4:
+                i++;
+                return [3 /*break*/, 2];
+            case 5: return [3 /*break*/, 11];
+            case 6: return [4 /*yield*/, subjectsRegister_1.default.create({
+                    user: req.user._id,
+                    level: req.user.level,
+                    currentTerm: req.user.currentTerm,
+                    session: req.user.currentSession,
+                })];
+            case 7:
                 data = _a.sent();
+                i = 0;
+                _a.label = 8;
+            case 8:
+                if (!(i < req.body.subjects.length)) return [3 /*break*/, 11];
                 return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({
                         _id: data._id,
-                    }, { $push: { subjects: req.body } })];
-            case 5:
+                    }, { $push: { subjects: { subject: req.body.subjects[i] } } })];
+            case 9:
                 _a.sent();
-                _a.label = 6;
-            case 6:
+                _a.label = 10;
+            case 10:
+                i++;
+                return [3 /*break*/, 8];
+            case 11:
                 res.status(201).json({ message: 'Subjects registered' });
                 return [2 /*return*/];
         }
@@ -96,7 +102,12 @@ exports.ViewRegisteredSubjects = catchAsync_1.catchAsync(function (req, res) { r
     var registeredSubject;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, subjectsRegister_1.default.findOne(__assign(__assign({}, req.query), { user: req.user._id }))
+            case 0: return [4 /*yield*/, subjectsRegister_1.default.findOne({
+                    session: req.user.currentSession,
+                    level: req.user.level,
+                    currentTerm: req.user.currentTerm,
+                    user: req.user._id,
+                })
                     .populate({ path: 'subjects.subject' })
                     .populate(['level', 'currentTerm', 'session'])];
             case 1:
