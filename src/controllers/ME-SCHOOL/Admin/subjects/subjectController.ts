@@ -8,29 +8,28 @@ export const CreateSubject = catchAsync(async (req: any, res: any) => {
 });
 
 export const ViewSubjects = catchAsync(async (req: any, res: any) => {
+  let subjects;
   if (req.user.role === 'student') {
     //fetch the class of the student
     const level = await levelModel.findOne({ _id: req.user.level });
-
     if (
       level.level === 'Jss1' ||
       level.level === 'Jss2' ||
       level.level === 'Jss3'
     ) {
-      const subjects = await Subject.find({
+      subjects = await Subject.find({
         $or: [{ category: 'both' }, { category: 'junior' }],
       });
-      res.send({ subjects });
     } else {
-      const subjects = await Subject.find({
+      subjects = await Subject.find({
         $or: [{ category: 'both' }, { category: 'senior' }],
       });
-      res.send({ subjects });
+      res.json({ subjects });
     }
   } else {
-    const subjects = await Subject.find();
-    res.send({ subjects });
+    subjects = await Subject.find();
   }
+  res.json({ subjects });
 });
 
 export const ViewSubject = catchAsync(async (req: any, res: any) => {

@@ -60,10 +60,10 @@ exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return 
             case 0:
                 req.body.user = req.user._id;
                 return [4 /*yield*/, subjectsRegister_1.default.findOne({
-                        user: req.body.user,
-                        level: req.body.level,
-                        currentTerm: req.body.currentTerm,
-                        session: req.body.session,
+                        user: req.user._id,
+                        level: req.user.level,
+                        currentTerm: req.user.currentTerm,
+                        session: req.user.session,
                     })];
             case 1:
                 register = _a.sent();
@@ -87,7 +87,7 @@ exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return 
                 _a.sent();
                 _a.label = 6;
             case 6:
-                res.status(201).json({ message: 'success' });
+                res.status(201).json({ message: 'Subjects registered' });
                 return [2 /*return*/];
         }
     });

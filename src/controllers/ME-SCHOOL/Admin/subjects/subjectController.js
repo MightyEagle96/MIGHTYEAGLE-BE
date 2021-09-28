@@ -55,7 +55,7 @@ exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __a
     });
 }); });
 exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var level, subjects, subjects, subjects;
+    var subjects, level;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -71,22 +71,22 @@ exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __aw
                     })];
             case 2:
                 subjects = _a.sent();
-                res.send({ subjects: subjects });
                 return [3 /*break*/, 5];
             case 3: return [4 /*yield*/, subjectModel_1.default.find({
                     $or: [{ category: 'both' }, { category: 'senior' }],
                 })];
             case 4:
                 subjects = _a.sent();
-                res.send({ subjects: subjects });
+                res.json({ subjects: subjects });
                 _a.label = 5;
             case 5: return [3 /*break*/, 8];
             case 6: return [4 /*yield*/, subjectModel_1.default.find()];
             case 7:
                 subjects = _a.sent();
-                res.send({ subjects: subjects });
                 _a.label = 8;
-            case 8: return [2 /*return*/];
+            case 8:
+                res.json({ subjects: subjects });
+                return [2 /*return*/];
         }
     });
 }); });

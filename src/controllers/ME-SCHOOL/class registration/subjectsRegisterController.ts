@@ -4,10 +4,10 @@ import SubjectsRegister from './subjectsRegister';
 export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
   req.body.user = req.user._id;
   const register = await SubjectsRegister.findOne({
-    user: req.body.user,
-    level: req.body.level,
-    currentTerm: req.body.currentTerm,
-    session: req.body.session,
+    user: req.user._id,
+    level: req.user.level,
+    currentTerm: req.user.currentTerm,
+    session: req.user.session,
   });
 
   if (register) {
@@ -31,7 +31,7 @@ export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
     );
   }
 
-  res.status(201).json({ message: 'success' });
+  res.status(201).json({ message: 'Subjects registered' });
 });
 
 export const ViewRegisteredSubjects = catchAsync(async (req: any, res: any) => {
