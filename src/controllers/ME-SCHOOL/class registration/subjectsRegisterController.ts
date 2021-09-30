@@ -49,7 +49,8 @@ export const ViewRegisteredSubjects = catchAsync(async (req: any, res: any) => {
     .populate({ path: 'subjects.subject' })
     .populate(['level', 'currentTerm', 'session']);
 
-  res.json({ registeredSubject });
+  if (registeredSubject) res.json({ registeredSubject });
+  else res.json({ registeredSubject: [] });
 });
 
 export const DeleteRegisteredSubject = catchAsync(

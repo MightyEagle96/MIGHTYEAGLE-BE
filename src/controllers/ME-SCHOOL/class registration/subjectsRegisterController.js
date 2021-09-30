@@ -112,7 +112,10 @@ exports.ViewRegisteredSubjects = catchAsync_1.catchAsync(function (req, res) { r
                     .populate(['level', 'currentTerm', 'session'])];
             case 1:
                 registeredSubject = _a.sent();
-                res.json({ registeredSubject: registeredSubject });
+                if (registeredSubject)
+                    res.json({ registeredSubject: registeredSubject });
+                else
+                    res.json({ registeredSubject: [] });
                 return [2 /*return*/];
         }
     });
