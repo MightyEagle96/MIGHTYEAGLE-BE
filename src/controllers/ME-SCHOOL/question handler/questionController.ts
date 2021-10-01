@@ -46,6 +46,7 @@ export const ViewQuestions = catchAsync(async (req: any, res: any) => {
     ]);
     if (result) {
       let questions = result[0];
+
       const count = questions.questions.length;
       res.json({ count, questions: questions });
     }

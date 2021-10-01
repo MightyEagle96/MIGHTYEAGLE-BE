@@ -13,6 +13,6 @@ questionRouter.post('/', CreateQuestion);
 questionRouter.get('/', ViewQuestions);
 questionRouter.get('/:collectionId/:questionId', ViewQuestion);
 questionRouter.patch('/:collectionId/:questionId', UpdateQuestion);
-questionRouter.delete('/:id', DeleteQuestion);
+questionRouter.post('/delete/:id', DeleteQuestion);
 
 export default questionRouter;

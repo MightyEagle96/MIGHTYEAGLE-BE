@@ -56,12 +56,15 @@ exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __a
     });
 }); });
 exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var subjects, userData, level;
+    var subjects, userData, level, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default
-                    .findById(req.user._id)
-                    .populate(['currentTerm', 'level', 'currentSession'])];
+            case 0:
+                _a.trys.push([0, 10, , 11]);
+                subjects = void 0;
+                return [4 /*yield*/, user_1.default
+                        .findById(req.user._id)
+                        .populate(['currentTerm', 'level', 'currentSession'])];
             case 1:
                 userData = _a.sent();
                 if (!(req.user.role === 'student')) return [3 /*break*/, 7];
@@ -82,7 +85,6 @@ exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __aw
                 })];
             case 5:
                 subjects = _a.sent();
-                res.json({ subjects: subjects });
                 _a.label = 6;
             case 6: return [3 /*break*/, 9];
             case 7: return [4 /*yield*/, subjectModel_1.default.find()];
@@ -91,7 +93,12 @@ exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __aw
                 _a.label = 9;
             case 9:
                 res.json({ userData: userData, subjects: subjects });
-                return [2 /*return*/];
+                return [3 /*break*/, 11];
+            case 10:
+                error_1 = _a.sent();
+                console.log(error_1);
+                return [3 /*break*/, 11];
+            case 11: return [2 /*return*/];
         }
     });
 }); });

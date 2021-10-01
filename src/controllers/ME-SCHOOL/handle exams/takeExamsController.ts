@@ -9,5 +9,6 @@ export const PaperReview = catchAsync(async (req: any, res: any) => {
   const candidate = await user
     .findById(req.user._id)
     .populate(['level', 'currentSession', 'currentTerm']);
+
   res.json({ subject, testType, candidate });
 });

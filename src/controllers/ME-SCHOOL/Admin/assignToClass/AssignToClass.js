@@ -45,7 +45,11 @@ var catchAsync_1 = require("../../../../shared/catchAsync");
 exports.AssignToClass = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.findOneAndUpdate({ _id: req.body.studentId }, { level: req.body.level })];
+            case 0: return [4 /*yield*/, user_1.default.findOneAndUpdate({ _id: req.body.studentId }, {
+                    level: req.body.level,
+                    currentSession: req.user.currentSession,
+                    currentTerm: req.user.currentTerm,
+                })];
             case 1:
                 _a.sent();
                 res.json({ message: 'Assigned to class' });

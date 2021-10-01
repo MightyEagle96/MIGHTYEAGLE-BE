@@ -9,13 +9,13 @@ const questionSchema = new Schema({
   activated: { type: Boolean, default: false },
   questions: [
     {
-      question: String,
-      optionA: String,
-      optionB: String,
-      optionC: String,
-      optionD: String,
-      optionE: String,
-      correctAns: String,
+      question: { type: String, trim: true },
+      optionA: { type: String, trim: true },
+      optionB: { type: String, trim: true },
+      optionC: { type: String, trim: true },
+      optionD: { type: String, trim: true },
+      optionE: { type: String, trim: true },
+      correctAns: { type: String, trim: true },
     },
   ],
 });

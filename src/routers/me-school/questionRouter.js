@@ -10,5 +10,5 @@ questionRouter.post('/', questionController_1.CreateQuestion);
 questionRouter.get('/', questionController_1.ViewQuestions);
 questionRouter.get('/:collectionId/:questionId', questionController_1.ViewQuestion);
 questionRouter.patch('/:collectionId/:questionId', questionController_1.UpdateQuestion);
-questionRouter.delete('/:id', questionController_1.DeleteQuestion);
+questionRouter.post('/delete/:id', questionController_1.DeleteQuestion);
 exports.default = questionRouter;
