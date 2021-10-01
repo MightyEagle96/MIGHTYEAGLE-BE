@@ -39,13 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AssignToClass = void 0;
+exports.StaffYetToBeAssigned = exports.YetToBeAssigned = exports.AssignToClass = void 0;
 var user_1 = __importDefault(require("../../../../models/user"));
 var catchAsync_1 = require("../../../../shared/catchAsync");
 exports.AssignToClass = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.findOneAndUpdate({ _id: req.body.studentId }, {
+            case 0: return [4 /*yield*/, user_1.default.findOneAndUpdate({ _id: req.body.userId }, {
                     level: req.body.level,
                     currentSession: req.user.currentSession,
                     currentTerm: req.user.currentTerm,
@@ -53,6 +53,34 @@ exports.AssignToClass = catchAsync_1.catchAsync(function (req, res) { return __a
             case 1:
                 _a.sent();
                 res.json({ message: 'Assigned to class' });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.YetToBeAssigned = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var awaitingStudents;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, user_1.default.find({
+                    $and: [{ role: 'student', level: null }],
+                })];
+            case 1:
+                awaitingStudents = _a.sent();
+                res.json({ count: awaitingStudents.length, awaitingStudents: awaitingStudents });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.StaffYetToBeAssigned = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var awaitingStaff;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, user_1.default.find({
+                    $and: [{ role: 'classTeacher', level: null }],
+                })];
+            case 1:
+                awaitingStaff = _a.sent();
+                res.json({ count: awaitingStaff.length, awaitingStaff: awaitingStaff });
                 return [2 /*return*/];
         }
     });

@@ -39,25 +39,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetAcademicCalendar = void 0;
+exports.StudentsRegister = void 0;
 var user_1 = __importDefault(require("../../../../models/user"));
 var catchAsync_1 = require("../../../../shared/catchAsync");
-var sessionModel_1 = __importDefault(require("../session handler/sessionModel"));
-var termModel_1 = __importDefault(require("../termHandler/termModel"));
-exports.SetAcademicCalendar = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var currentSession, currentTerm;
+var levelModel_1 = __importDefault(require("../level handler/levelModel"));
+exports.StudentsRegister = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var students, level;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, sessionModel_1.default.findOne({ activeSession: true })];
+            case 0: return [4 /*yield*/, user_1.default.find({
+                    $and: [{ role: 'student', level: req.params.classId }],
+                })];
             case 1:
-                currentSession = _a.sent();
-                return [4 /*yield*/, termModel_1.default.findOne({ activeTerm: true })];
+                students = _a.sent();
+                return [4 /*yield*/, levelModel_1.default.findById(req.params.classId)];
             case 2:
-                currentTerm = _a.sent();
-                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentTerm: currentTerm._id, currentSession: currentSession._id })];
-            case 3:
-                _a.sent();
-                res.json({ message: 'done' });
+                level = _a.sent();
+                res.json({ level: level, count: students.length, students: students });
                 return [2 /*return*/];
         }
     });
