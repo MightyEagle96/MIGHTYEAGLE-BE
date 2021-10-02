@@ -37,6 +37,7 @@ var questionRouter_1 = __importDefault(require("./src/routers/me-school/question
 var sessionRouter_1 = __importDefault(require("./src/routers/me-school/sessionRouter"));
 var classRegistrationRouter_1 = __importDefault(require("./src/routers/me-school/classRegistrationRouter"));
 var adminRouter_1 = __importDefault(require("./src/routers/me-school/Admin/adminRouter"));
+var studentRouter_1 = __importDefault(require("./src/routers/me-school/Students/studentRouter"));
 //import unirest from 'unirest';
 var app = express_1.default();
 exports.app = app;
@@ -74,6 +75,7 @@ app
     .use('/questions', questionRouter_1.default)
     .use('/class', classRegistrationRouter_1.default)
     .use('/school/admin', adminRouter_1.default)
+    .use('/school/student', studentRouter_1.default)
     .use('/*', function (req, res) {
     res.status(404).json({ message: "Can't find this route on this server" });
 });

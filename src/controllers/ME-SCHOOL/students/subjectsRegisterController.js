@@ -47,7 +47,6 @@ exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log(req.body.subjects.length);
                 req.body.user = req.user._id;
                 return [4 /*yield*/, subjectsRegister_1.default.findOne({
                         user: req.user._id,
@@ -57,7 +56,6 @@ exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return 
                     })];
             case 1:
                 register = _a.sent();
-                console.log(register);
                 if (!register) return [3 /*break*/, 6];
                 i = 0;
                 _a.label = 2;

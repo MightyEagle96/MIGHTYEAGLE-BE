@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var subjectsRegisterController_1 = require("../../controllers/ME-SCHOOL/class registration/subjectsRegisterController");
+var subjectsRegisterController_1 = require("../../controllers/ME-SCHOOL/students/subjectsRegisterController");
 var user_service_1 = require("../../services/user.service");
 var classRegistationRouter = express_1.default.Router();
 classRegistationRouter.use(user_service_1.IsLoggedIn);

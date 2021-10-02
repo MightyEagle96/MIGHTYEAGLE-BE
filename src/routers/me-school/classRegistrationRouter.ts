@@ -3,7 +3,7 @@ import {
   DeleteRegisteredSubject,
   RegisterSubjects,
   ViewRegisteredSubjects,
-} from '../../controllers/ME-SCHOOL/class registration/subjectsRegisterController';
+} from '../../controllers/ME-SCHOOL/students/subjectsRegisterController';
 import { IsLoggedIn, RestricTo } from '../../services/user.service';
 
 const classRegistationRouter = express.Router();

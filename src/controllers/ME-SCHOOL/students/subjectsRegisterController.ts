@@ -2,7 +2,6 @@ import { catchAsync } from '../../../shared/catchAsync';
 import SubjectsRegister from './subjectsRegister';
 
 export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
-  console.log(req.body.subjects.length);
   req.body.user = req.user._id;
   const register = await SubjectsRegister.findOne({
     user: req.user._id,
@@ -10,7 +9,7 @@ export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
     currentTerm: req.user.currentTerm,
     session: req.user.currentSession,
   });
-  console.log(register);
+
   if (register) {
     for (let i = 0; i < req.body.subjects.length; i++) {
       await SubjectsRegister.findOneAndUpdate(
