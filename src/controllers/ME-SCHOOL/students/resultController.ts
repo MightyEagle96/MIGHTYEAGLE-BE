@@ -54,7 +54,6 @@ export const ViewResult = catchAsync(async (req: any, res: any) => {
      * Subject:
      * First CA:0
      */
-    console.log(results.length);
 
     for (let i = 0; i < results.length; i++) {
       const body: { subject: ''; results: any[] } = {
@@ -75,6 +74,6 @@ export const ViewResult = catchAsync(async (req: any, res: any) => {
     res.json({ termResults });
   } catch (error) {
     console.log(error);
-    res.json({ message: 'error happened' });
+    res.status(400).json({ message: 'error happened' });
   }
 });

@@ -105,7 +105,6 @@ exports.ViewResult = catchAsync_1.catchAsync(function (req, res) { return __awai
                  * Subject:
                  * First CA:0
                  */
-                console.log(results.length);
                 for (i = 0; i < results.length; i++) {
                     body = {
                         subject: '',
@@ -126,7 +125,7 @@ exports.ViewResult = catchAsync_1.catchAsync(function (req, res) { return __awai
             case 2:
                 error_2 = _a.sent();
                 console.log(error_2);
-                res.json({ message: 'error happened' });
+                res.status(400).json({ message: 'error happened' });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
