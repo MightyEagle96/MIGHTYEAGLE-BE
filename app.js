@@ -9,6 +9,7 @@ var morgan_1 = __importDefault(require("morgan"));
 var cors_1 = __importDefault(require("cors"));
 var express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
+var multer_1 = __importDefault(require("multer"));
 var voterRouter_1 = require("./src/routers/voterRouter");
 var authRouter_1 = __importDefault(require("./src/routers/authRouter"));
 var errorController_1 = require("./src/controllers/errorController");
@@ -42,6 +43,7 @@ var studentRouter_1 = __importDefault(require("./src/routers/me-school/Students/
 var app = express_1.default();
 exports.app = app;
 var limiter = express_rate_limit_1.default({ windowMs: 2 * 60 * 1000, max: 10 });
+var imageUpload = multer_1.default({ dest: 'public/images' });
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cookie_parser_1.default());

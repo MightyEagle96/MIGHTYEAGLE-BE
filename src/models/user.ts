@@ -15,6 +15,7 @@ export interface UserInput {
   role: string;
   timeStamps: { createdAt: string; updatedAt: string };
   refreshToken: string;
+  imageUrl: string;
 }
 
 export interface UserDocument extends UserInput, Document {
@@ -37,6 +38,7 @@ const userSchema = new Schema({
   lga: String,
   address: String,
   phoneNumber: String,
+  imageUrl: String,
   role: {
     type: String,
     enum: [

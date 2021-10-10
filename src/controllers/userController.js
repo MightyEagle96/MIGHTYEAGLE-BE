@@ -39,8 +39,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GET_USER = void 0;
+exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
 var user_1 = __importDefault(require("../models/user"));
+var fs_1 = __importDefault(require("fs"));
 var catchAsync_1 = require("../shared/catchAsync");
 exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
@@ -51,5 +52,15 @@ exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaite
                 user = _a.sent();
                 return [2 /*return*/, res.json({ user: user })];
         }
+    });
+}); });
+exports.UPLOAD_PHOTO = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        console.log(req.file);
+        fs_1.default.rename("public/images/" + req.file.filename, "public/images/" + req.user._id + "-photo." + req.file.mimetype.split('/')[1], function () {
+            console.log('Image saved');
+        });
+        res.json({ message: 'image uploaded' });
+        return [2 /*return*/];
     });
 }); });

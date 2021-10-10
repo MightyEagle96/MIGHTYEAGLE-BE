@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
+import multer from 'multer';
+
 import { router } from './src/routers/voterRouter';
 import authRouter from './src/routers/authRouter';
 import { errorHandler } from './src/controllers/errorController';
@@ -32,10 +34,12 @@ import sessionRouter from './src/routers/me-school/sessionRouter';
 import classRegistationRouter from './src/routers/me-school/classRegistrationRouter';
 import adminRouter from './src/routers/me-school/Admin/adminRouter';
 import studentRouter from './src/routers/me-school/Students/studentRouter';
+
 //import unirest from 'unirest';
 
 const app = express();
 const limiter = rateLimit({ windowMs: 2 * 60 * 1000, max: 10 });
+const imageUpload = multer({ dest: 'public/images' });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
