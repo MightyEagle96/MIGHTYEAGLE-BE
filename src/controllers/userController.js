@@ -39,10 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
+exports.GET_PATH = exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
 var user_1 = __importDefault(require("../models/user"));
 var fs_1 = __importDefault(require("fs"));
 var catchAsync_1 = require("../shared/catchAsync");
+var path_1 = __importDefault(require("path"));
 exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
@@ -55,12 +56,34 @@ exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaite
     });
 }); });
 exports.UPLOAD_PHOTO = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var filePath;
     return __generator(this, function (_a) {
         console.log(req.file);
-        fs_1.default.rename("public/images/" + req.file.filename, "public/images/" + req.user._id + "-photo." + req.file.mimetype.split('/')[1], function () {
-            console.log('Image saved');
-        });
+        filePath = "public/images/" + req.user._id + "-photo." + req.file.mimetype.split('/')[1];
+        fs_1.default.rename("public/images/" + req.file.filename, filePath, function () { return __awaiter(void 0, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, user_1.default.findByIdAndUpdate(req.user._id, {
+                            imageUrl: path_1.default.resolve(filePath),
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
         res.json({ message: 'image uploaded' });
+        return [2 /*return*/];
+    });
+}); });
+exports.GET_PATH = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var filePath, fullPath, image;
+    return __generator(this, function (_a) {
+        filePath = 'public/images/614ac6846da600243253f2e0-photo.jpeg';
+        fullPath = path_1.default.resolve(filePath);
+        image = path_1.default.basename(filePath);
+        console.log(path_1.default.resolve(filePath));
+        res.json({ fullPath: fullPath, image: image });
         return [2 /*return*/];
     });
 }); });

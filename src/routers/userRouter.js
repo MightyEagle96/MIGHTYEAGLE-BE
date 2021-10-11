@@ -14,3 +14,4 @@ var upload = multer_1.default({ dest: 'public/images' });
 userRouter.use(user_service_1.IsLoggedIn);
 userRouter.get('/:id', userController_1.GET_USER);
 userRouter.post('/uploadPhoto', upload.single('profilePhoto'), userController_1.UPLOAD_PHOTO);
+userRouter.get('/image/getPath', userController_1.GET_PATH);
