@@ -45,7 +45,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
-//app.use(limiter);
+app.use(express.static('public'));
 app.use(cors({ origin: originUrl, credentials: true }));
 
 app

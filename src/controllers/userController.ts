@@ -31,3 +31,7 @@ export const GET_PATH = catchAsync(async (req: any, res: any) => {
   console.log(path.resolve(filePath));
   res.json({ fullPath, image });
 });
+
+// export const VIEW_PHOTO = catchAsync(async (req: any, res: any) => {
+
+// });

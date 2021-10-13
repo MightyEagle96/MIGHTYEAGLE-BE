@@ -48,7 +48,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cookie_parser_1.default());
 app.use(morgan_1.default('dev'));
-//app.use(limiter);
+app.use(express_1.default.static('public'));
 app.use(cors_1.default({ origin: services_1.originUrl, credentials: true }));
 app
     .use('/', successRouter_1.default)

@@ -87,3 +87,5 @@ exports.GET_PATH = catchAsync_1.catchAsync(function (req, res) { return __awaite
         return [2 /*return*/];
     });
 }); });
+// export const VIEW_PHOTO = catchAsync(async (req: any, res: any) => {
+// });
