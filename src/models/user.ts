@@ -39,6 +39,7 @@ const userSchema = new Schema({
   address: String,
   phoneNumber: String,
   imageUrl: String,
+  gender: String,
   role: {
     type: String,
     enum: [

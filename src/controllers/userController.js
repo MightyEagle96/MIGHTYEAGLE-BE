@@ -59,12 +59,12 @@ exports.UPLOAD_PHOTO = catchAsync_1.catchAsync(function (req, res) { return __aw
     var filePath;
     return __generator(this, function (_a) {
         console.log(req.file);
-        filePath = "public/images/" + req.user._id + "-photo." + req.file.mimetype.split('/')[1];
+        filePath = "public/images/" + req.user._id + "-" + Date.now() + "." + req.file.mimetype.split('/')[1];
         fs_1.default.rename("public/images/" + req.file.filename, filePath, function () { return __awaiter(void 0, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, user_1.default.findByIdAndUpdate(req.user._id, {
-                            imageUrl: path_1.default.resolve(filePath),
+                            imageUrl: path_1.default.basename(filePath),
                         })];
                     case 1:
                         _a.sent();

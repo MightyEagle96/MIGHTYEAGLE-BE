@@ -9,13 +9,13 @@ export const GET_USER = catchAsync(async (req: any, res: any) => {
 
 export const UPLOAD_PHOTO = catchAsync(async (req: any, res: any) => {
   console.log(req.file);
-  const filePath = `public/images/${req.user._id}-photo.${
+  const filePath = `public/images/${req.user._id}-${Date.now()}.${
     req.file.mimetype.split('/')[1]
   }`;
 
   fs.rename(`public/images/${req.file.filename}`, filePath, async () => {
     await User.findByIdAndUpdate(req.user._id, {
-      imageUrl: path.resolve(filePath),
+      imageUrl: path.basename(filePath),
     });
   });
 

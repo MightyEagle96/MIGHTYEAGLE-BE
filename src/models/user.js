@@ -58,6 +58,7 @@ var userSchema = new mongoose_1.Schema({
     address: String,
     phoneNumber: String,
     imageUrl: String,
+    gender: String,
     role: {
         type: String,
         enum: [
