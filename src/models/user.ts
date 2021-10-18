@@ -71,6 +71,7 @@ const userSchema = new Schema({
   currentTerm: { type: Schema.Types.ObjectId, ref: 'CurrentTerm' },
   level: { type: Schema.Types.ObjectId, ref: 'Level' },
   currentSession: { type: Schema.Types.ObjectId, ref: 'Session' },
+  devicePlatform: { os: String, version: String },
 });
 
 //to create a virtual method

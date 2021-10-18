@@ -58,7 +58,6 @@ exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaite
 exports.UPLOAD_PHOTO = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var filePath;
     return __generator(this, function (_a) {
-        console.log(req.file);
         filePath = "public/images/" + req.user._id + "-" + Date.now() + "." + req.file.mimetype.split('/')[1];
         fs_1.default.rename("public/images/" + req.file.filename, filePath, function () { return __awaiter(void 0, void 0, void 0, function () {
             return __generator(this, function (_a) {

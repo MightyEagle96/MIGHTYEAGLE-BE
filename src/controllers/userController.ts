@@ -8,7 +8,6 @@ export const GET_USER = catchAsync(async (req: any, res: any) => {
 });
 
 export const UPLOAD_PHOTO = catchAsync(async (req: any, res: any) => {
-  console.log(req.file);
   const filePath = `public/images/${req.user._id}-${Date.now()}.${
     req.file.mimetype.split('/')[1]
   }`;
