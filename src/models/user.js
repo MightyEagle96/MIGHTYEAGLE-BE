@@ -90,6 +90,7 @@ var userSchema = new mongoose_1.Schema({
     currentTerm: { type: mongoose_1.Schema.Types.ObjectId, ref: 'CurrentTerm' },
     level: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Level' },
     currentSession: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Session' },
+    devicePlatform: { os: String, version: String },
 });
 //to create a virtual method
 userSchema.virtual('fullname').get(function () {

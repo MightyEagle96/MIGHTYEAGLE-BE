@@ -10,7 +10,7 @@ dotenv_1.default.config({ path: '.env' });
 var DATABASE = process.env.DATABASE || '';
 var DATABASE_LOCAL = process.env.DATABASE_LOCAL || '';
 mongoose_1.default
-    .connect(DATABASE_LOCAL, {
+    .connect(DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -20,7 +20,7 @@ mongoose_1.default
     console.log('DB Connected successfully');
 })
     .catch(function (e) {
-    console.log('DB could not connect at this time');
+    console.log('DB could not connect at this time. Shutting down');
     process.exit(1);
 });
 var port = process.env.PORT || 4000;
