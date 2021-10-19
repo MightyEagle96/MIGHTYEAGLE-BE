@@ -19,7 +19,7 @@ mongoose
     console.log('DB Connected successfully');
   })
   .catch((e) => {
-    console.log('DB could not connect at this time');
+    console.log('DB could not connect at this time. Shutting down');
     process.exit(1);
   });
 const port = process.env.PORT || 4000;
