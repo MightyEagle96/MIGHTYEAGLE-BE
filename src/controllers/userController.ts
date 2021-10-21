@@ -2,8 +2,9 @@ import User from '../models/user';
 import fs from 'fs';
 import { catchAsync } from '../shared/catchAsync';
 import path from 'path';
+
 export const GET_USER = catchAsync(async (req: any, res: any) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.user._id);
   return res.json({ user });
 });
 
@@ -30,7 +31,3 @@ export const GET_PATH = catchAsync(async (req: any, res: any) => {
   console.log(path.resolve(filePath));
   res.json({ fullPath, image });
 });
-
-// export const VIEW_PHOTO = catchAsync(async (req: any, res: any) => {
-
-// });

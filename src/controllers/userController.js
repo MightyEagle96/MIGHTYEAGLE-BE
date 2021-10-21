@@ -48,7 +48,7 @@ exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaite
     var user;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.findById(req.params.id)];
+            case 0: return [4 /*yield*/, user_1.default.findById(req.user._id)];
             case 1:
                 user = _a.sent();
                 return [2 /*return*/, res.json({ user: user })];
@@ -86,5 +86,3 @@ exports.GET_PATH = catchAsync_1.catchAsync(function (req, res) { return __awaite
         return [2 /*return*/];
     });
 }); });
-// export const VIEW_PHOTO = catchAsync(async (req: any, res: any) => {
-// });

@@ -12,7 +12,7 @@ const userRouter = express.Router();
 const upload = multer({ dest: 'public/images' });
 
 userRouter.use(IsLoggedIn);
-userRouter.get('/:id', GET_USER);
+userRouter.get('/me', GET_USER);
 userRouter.post('/uploadPhoto', upload.single('profilePhoto'), UPLOAD_PHOTO);
 userRouter.get('/image/getPath', GET_PATH);
 
