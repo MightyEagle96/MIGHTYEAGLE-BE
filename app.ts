@@ -25,7 +25,7 @@ import successRouter from './src/routers/successRouter';
 import emailRouter from './src/routers/emailRouter';
 import ratingRouter from './src/routers/me-store/ratingRouter';
 import examsTakenRouter from './src/routers/me-school/examTakenRouter';
-import subjectRouter from './src/routers/me-school/subjectsRouter';
+import subjectRouter from './src/routers/me-school/Admin/subjectsRouter';
 import levelRouter from './src/routers/me-school/levelRouter';
 import termRouter from './src/routers/me-school/termRouter';
 import testTypeRouter from './src/routers/me-school/testTypeRouter';

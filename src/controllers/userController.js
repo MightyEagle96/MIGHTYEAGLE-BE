@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GET_PATH = exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
+exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
 var user_1 = __importDefault(require("../models/user"));
 var fs_1 = __importDefault(require("fs"));
 var catchAsync_1 = require("../shared/catchAsync");
@@ -72,17 +72,6 @@ exports.UPLOAD_PHOTO = catchAsync_1.catchAsync(function (req, res) { return __aw
             });
         }); });
         res.json({ message: 'image uploaded' });
-        return [2 /*return*/];
-    });
-}); });
-exports.GET_PATH = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filePath, fullPath, image;
-    return __generator(this, function (_a) {
-        filePath = 'public/images/614ac6846da600243253f2e0-photo.jpeg';
-        fullPath = path_1.default.resolve(filePath);
-        image = path_1.default.basename(filePath);
-        console.log(path_1.default.resolve(filePath));
-        res.json({ fullPath: fullPath, image: image });
         return [2 /*return*/];
     });
 }); });

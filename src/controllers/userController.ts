@@ -21,13 +21,4 @@ export const UPLOAD_PHOTO = catchAsync(async (req: any, res: any) => {
 
   res.json({ message: 'image uploaded' });
 });
-
-export const GET_PATH = catchAsync(async (req: any, res: any) => {
-  const filePath = 'public/images/614ac6846da600243253f2e0-photo.jpeg';
-
-  const fullPath = path.resolve(filePath);
-  const image = path.basename(filePath);
-
-  console.log(path.resolve(filePath));
-  res.json({ fullPath, image });
-});
+ 
