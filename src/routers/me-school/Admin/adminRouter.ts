@@ -6,6 +6,7 @@ import {
   YetToBeAssigned,
 } from '../../../controllers/ME-SCHOOL/Admin/assignToClass/AssignToClass';
 import { StudentsRegister } from '../../../controllers/ME-SCHOOL/Admin/classRegisters/studentsRegister';
+import { ViewUsers } from '../../../controllers/ME-SCHOOL/Admin/users/UsersViewByAdminController';
 import { IsLoggedIn, RestricTo } from '../../../services/user.service';
 
 const adminRouter = express.Router();
@@ -17,5 +18,6 @@ adminRouter.patch('/assignToClass', AssignToClass);
 adminRouter.get('/toBeAssigned', YetToBeAssigned);
 adminRouter.get('/staffYetToBeAssigned', StaffYetToBeAssigned);
 adminRouter.get('/class/:classId', StudentsRegister);
+adminRouter.get('/viewUsers', ViewUsers);
 
 export default adminRouter;

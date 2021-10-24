@@ -39,49 +39,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewLevel = exports.ViewLevels = exports.CreateLevel = void 0;
+exports.ViewUsers = void 0;
 var user_1 = __importDefault(require("../../../../models/user"));
 var catchAsync_1 = require("../../../../shared/catchAsync");
-var levelModel_1 = __importDefault(require("./levelModel"));
-exports.CreateLevel = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var level;
+exports.ViewUsers = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var users, length;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, levelModel_1.default.create(req.body)];
+            case 0: return [4 /*yield*/, user_1.default.find(req.query)];
             case 1:
-                level = _a.sent();
-                //update the user with the assigned class
-                return [4 /*yield*/, user_1.default.findByIdAndUpdate(req.body.levelTeacher, {
-                        level: level._id,
-                    })];
-            case 2:
-                //update the user with the assigned class
-                _a.sent();
-                res.status(201).json({ message: 'New class created' });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.ViewLevels = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var levels;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, levelModel_1.default.find()];
-            case 1:
-                levels = _a.sent();
-                res.json({ levels: levels });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.ViewLevel = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var level;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, levelModel_1.default.findById(req.params.id)];
-            case 1:
-                level = _a.sent();
-                res.json({ level: level });
+                users = _a.sent();
+                length = users.length;
+                res.json({ length: length, users: users });
                 return [2 /*return*/];
         }
     });
