@@ -48,7 +48,7 @@ exports.CreateCurrentTerm = catchAsync_1.catchAsync(function (req, res) { return
             case 0: return [4 /*yield*/, termModel_1.default.create(req.body)];
             case 1:
                 _a.sent();
-                res.json({ message: 'done' });
+                res.json({ message: 'New term created' });
                 return [2 /*return*/];
         }
     });

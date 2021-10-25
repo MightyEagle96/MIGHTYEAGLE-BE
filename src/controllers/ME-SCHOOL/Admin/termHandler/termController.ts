@@ -3,7 +3,7 @@ import CurrentTerm from './termModel';
 
 export const CreateCurrentTerm = catchAsync(async (req: any, res: any) => {
   await CurrentTerm.create(req.body);
-  res.json({ message: 'done' });
+  res.json({ message: 'New term created' });
 });
 
 export const ListTerms = catchAsync(async (req: any, res: any) => {

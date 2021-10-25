@@ -6,7 +6,7 @@ import {
 
 const termRouter = express.Router();
 
-termRouter.post('/', CreateCurrentTerm);
-termRouter.get('/', ListTerms);
+termRouter.post('/create', CreateCurrentTerm);
+termRouter.get('/view', ListTerms);
 
 export default termRouter;
