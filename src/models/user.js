@@ -97,6 +97,18 @@ userSchema.virtual('fullname').get(function () {
     return this.firstName + " " + this.lastName;
 });
 userSchema.pre('save', function (next) {
+    if (this.gender === 'male') {
+        this.imageUrl = 'maleDefault.png';
+    }
+    else if (this.gender === 'female') {
+        this.imageUrl = 'femaleDefault.jpeg';
+    }
+    else {
+        this.imageUrl = 'defaultAvatar.png';
+    }
+    next();
+});
+userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function () {
         var _a;
         return __generator(this, function (_b) {

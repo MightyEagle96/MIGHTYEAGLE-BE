@@ -16,6 +16,7 @@ export interface UserInput {
   timeStamps: { createdAt: string; updatedAt: string };
   refreshToken: string;
   imageUrl: string;
+  gender: string;
 }
 
 export interface UserDocument extends UserInput, Document {
@@ -79,6 +80,19 @@ userSchema.virtual('fullname').get(function (this: UserDocument) {
   return `${this.firstName} ${this.lastName}`;
 });
 
+userSchema.pre(
+  'save',
+  function (this: UserDocument, next: mongoose.HookNextFunction) {
+    if (this.gender === 'male') {
+      this.imageUrl = 'maleDefault.png';
+    } else if (this.gender === 'female') {
+      this.imageUrl = 'femaleDefault.jpeg';
+    } else {
+      this.imageUrl = 'defaultAvatar.png';
+    }
+    next();
+  }
+);
 userSchema.pre(
   'save',
   async function (this: UserDocument, next: mongoose.HookNextFunction) {
