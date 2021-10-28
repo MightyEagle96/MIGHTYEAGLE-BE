@@ -39,9 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ListSessions = exports.CreateSession = void 0;
+exports.UpdateSession = exports.ListSessions = exports.CreateSession = void 0;
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var sessionModel_1 = __importDefault(require("./sessionModel"));
+var user_1 = __importDefault(require("../../../../models/user"));
 exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -53,6 +54,9 @@ exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __a
                 _a.sent();
                 return [4 /*yield*/, sessionModel_1.default.create(req.body)];
             case 2:
+                _a.sent();
+                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentSession: req.body.session })];
+            case 3:
                 _a.sent();
                 res.status(201).json({ message: 'New session created' });
                 return [2 /*return*/];
@@ -67,6 +71,25 @@ exports.ListSessions = catchAsync_1.catchAsync(function (req, res) { return __aw
             case 1:
                 sessions = _a.sent();
                 res.json({ sessions: sessions });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.UpdateSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, sessionModel_1.default.updateMany({ activeSession: true }, { activeSession: false })];
+            case 1:
+                _a.sent();
+                return [4 /*yield*/, sessionModel_1.default.findByIdAndUpdate(req.params.id, {
+                        activeSession: req.body.activeSession,
+                    })];
+            case 2:
+                _a.sent();
+                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentSession: req.params.id })];
+            case 3:
+                _a.sent();
+                res.json({ message: 'Session updated' });
                 return [2 /*return*/];
         }
     });

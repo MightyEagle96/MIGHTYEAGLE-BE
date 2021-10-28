@@ -39,14 +39,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ListTerms = exports.CreateCurrentTerm = void 0;
+exports.UpdateTerm = exports.ListTerms = exports.CreateCurrentTerm = void 0;
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var termModel_1 = __importDefault(require("./termModel"));
+var user_1 = __importDefault(require("../../../../models/user"));
 exports.CreateCurrentTerm = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, termModel_1.default.create(req.body)];
             case 1:
+                _a.sent();
+                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentSession: req.body.session })];
+            case 2:
                 _a.sent();
                 res.json({ message: 'New term created' });
                 return [2 /*return*/];
@@ -61,6 +65,25 @@ exports.ListTerms = catchAsync_1.catchAsync(function (req, res) { return __await
             case 1:
                 terms = _a.sent();
                 res.json({ terms: terms });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.UpdateTerm = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, termModel_1.default.updateMany({ activeTerm: true }, { activeTerm: false })];
+            case 1:
+                _a.sent();
+                return [4 /*yield*/, termModel_1.default.findByIdAndUpdate(req.params.id, {
+                        activeTerm: req.body.activeTerm,
+                    })];
+            case 2:
+                _a.sent();
+                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentTerm: req.params.id })];
+            case 3:
+                _a.sent();
+                res.json({ message: 'Term updated' });
                 return [2 /*return*/];
         }
     });
