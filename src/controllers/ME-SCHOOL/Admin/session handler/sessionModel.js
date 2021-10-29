@@ -4,7 +4,7 @@ var mongoose_1 = require("mongoose");
 var sessionSchema = new mongoose_1.Schema({
     session: {
         type: String,
-        unique: [true, 'This subject already exists'],
+        unique: [true, 'This session already exists'],
         trim: true,
     },
     activeSession: { type: Boolean, default: true },

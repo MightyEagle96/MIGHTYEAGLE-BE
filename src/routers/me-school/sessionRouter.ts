@@ -1,15 +1,18 @@
 import express from 'express';
 import {
+  ActiveSession,
   CreateSession,
   ListSessions,
   UpdateSession,
 } from '../../controllers/ME-SCHOOL/Admin/session handler/sessionController';
+import { IsLoggedIn, RestricTo } from '../../services/user.service';
 
 const sessionRouter = express.Router();
 
 sessionRouter
-  .post('/create', CreateSession)
+  .post('/create', IsLoggedIn, RestricTo('admin'), CreateSession)
   .get('/view', ListSessions)
-  .patch('/update/:id', UpdateSession);
+  .patch('/update/:id', UpdateSession)
+  .get('/activeSession', ActiveSession);
 
 export default sessionRouter;

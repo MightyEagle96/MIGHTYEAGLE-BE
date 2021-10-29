@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const currentTermSchema = new Schema({
+const termSchema = new Schema({
   term: {
     type: String,
     unique: [true, 'This term already exists'],
@@ -9,4 +9,4 @@ const currentTermSchema = new Schema({
   activeTerm: { type: Boolean, default: true },
 });
 
-export default model('CurrentTerm', currentTermSchema);
+export default model('CurrentTerm', termSchema);

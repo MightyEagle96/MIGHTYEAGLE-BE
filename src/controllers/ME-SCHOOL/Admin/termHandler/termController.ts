@@ -3,13 +3,17 @@ import CurrentTerm from './termModel';
 import User from '../../../../models/user';
 
 export const CreateCurrentTerm = catchAsync(async (req: any, res: any) => {
-  await CurrentTerm.create(req.body);
+  await CurrentTerm.updateMany({ activeTerm: true }, { activeTerm: false });
+
+  req.body.activeTerm = true;
+  const currentTerm = await CurrentTerm.create(req.body);
 
   await User.updateMany(
     { account_type: 'me-school' },
-    { currentSession: req.body.session }
+    { currentTerm: currentTerm._id }
   );
-  res.json({ message: 'New term created' });
+
+  res.json({ message: 'New term created', currentTerm });
 });
 
 export const ListTerms = catchAsync(async (req: any, res: any) => {
@@ -20,12 +24,21 @@ export const ListTerms = catchAsync(async (req: any, res: any) => {
 export const UpdateTerm = catchAsync(async (req: any, res: any) => {
   await CurrentTerm.updateMany({ activeTerm: true }, { activeTerm: false });
 
-  await CurrentTerm.findByIdAndUpdate(req.params.id, {
+  const currentTerm = await CurrentTerm.findByIdAndUpdate(req.params.id, {
     activeTerm: req.body.activeTerm,
   });
   await User.updateMany(
     { account_type: 'me-school' },
     { currentTerm: req.params.id }
   );
-  res.json({ message: 'Term updated' });
+  res.json({ message: 'Term updated', currentTerm });
+});
+
+export const ActiveTerm = catchAsync(async (req: any, res: any) => {
+  //to get the active term
+  const currentTerm = await CurrentTerm.find({ activeTerm: true });
+
+  if (currentTerm) {
+    res.json({ activeTerm: currentTerm[0] });
+  } else res.json({ activeTerm: { term: '' } });
 });

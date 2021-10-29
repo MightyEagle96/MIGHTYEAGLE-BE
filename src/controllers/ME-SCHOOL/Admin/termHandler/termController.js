@@ -39,20 +39,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateTerm = exports.ListTerms = exports.CreateCurrentTerm = void 0;
+exports.ActiveTerm = exports.UpdateTerm = exports.ListTerms = exports.CreateCurrentTerm = void 0;
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var termModel_1 = __importDefault(require("./termModel"));
 var user_1 = __importDefault(require("../../../../models/user"));
 exports.CreateCurrentTerm = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentTerm;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, termModel_1.default.create(req.body)];
+            case 0: return [4 /*yield*/, termModel_1.default.updateMany({ activeTerm: true }, { activeTerm: false })];
             case 1:
                 _a.sent();
-                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentSession: req.body.session })];
+                req.body.activeTerm = true;
+                return [4 /*yield*/, termModel_1.default.create(req.body)];
             case 2:
+                currentTerm = _a.sent();
+                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentTerm: currentTerm._id })];
+            case 3:
                 _a.sent();
-                res.json({ message: 'New term created' });
+                res.json({ message: 'New term created', currentTerm: currentTerm });
                 return [2 /*return*/];
         }
     });
@@ -70,6 +75,7 @@ exports.ListTerms = catchAsync_1.catchAsync(function (req, res) { return __await
     });
 }); });
 exports.UpdateTerm = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentTerm;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, termModel_1.default.updateMany({ activeTerm: true }, { activeTerm: false })];
@@ -79,11 +85,27 @@ exports.UpdateTerm = catchAsync_1.catchAsync(function (req, res) { return __awai
                         activeTerm: req.body.activeTerm,
                     })];
             case 2:
-                _a.sent();
+                currentTerm = _a.sent();
                 return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentTerm: req.params.id })];
             case 3:
                 _a.sent();
-                res.json({ message: 'Term updated' });
+                res.json({ message: 'Term updated', currentTerm: currentTerm });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.ActiveTerm = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentTerm;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, termModel_1.default.find({ activeTerm: true })];
+            case 1:
+                currentTerm = _a.sent();
+                if (currentTerm) {
+                    res.json({ activeTerm: currentTerm[0] });
+                }
+                else
+                    res.json({ activeTerm: { term: '' } });
                 return [2 /*return*/];
         }
     });

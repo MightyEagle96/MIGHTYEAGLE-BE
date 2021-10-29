@@ -39,26 +39,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateSession = exports.ListSessions = exports.CreateSession = void 0;
+exports.ActiveSession = exports.UpdateSession = exports.ListSessions = exports.CreateSession = void 0;
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var sessionModel_1 = __importDefault(require("./sessionModel"));
 var user_1 = __importDefault(require("../../../../models/user"));
 exports.CreateSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentSession;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: 
-            //first of all set all active sessions from true to false
-            return [4 /*yield*/, sessionModel_1.default.updateMany({ activeSession: true }, { activeSession: false })];
+            case 0:
+                console.log(req.body);
+                //first of all set all active sessions from true to false
+                return [4 /*yield*/, sessionModel_1.default.updateMany({ activeSession: true }, { activeSession: false })];
             case 1:
                 //first of all set all active sessions from true to false
                 _a.sent();
+                req.body.activeSession = true;
                 return [4 /*yield*/, sessionModel_1.default.create(req.body)];
             case 2:
-                _a.sent();
-                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentSession: req.body.session })];
+                currentSession = _a.sent();
+                return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentSession: currentSession._id })];
             case 3:
                 _a.sent();
-                res.status(201).json({ message: 'New session created' });
+                res.status(201).json({ message: 'New session created', currentSession: currentSession });
                 return [2 /*return*/];
         }
     });
@@ -76,6 +79,7 @@ exports.ListSessions = catchAsync_1.catchAsync(function (req, res) { return __aw
     });
 }); });
 exports.UpdateSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentSession;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, sessionModel_1.default.updateMany({ activeSession: true }, { activeSession: false })];
@@ -85,11 +89,27 @@ exports.UpdateSession = catchAsync_1.catchAsync(function (req, res) { return __a
                         activeSession: req.body.activeSession,
                     })];
             case 2:
-                _a.sent();
+                currentSession = _a.sent();
                 return [4 /*yield*/, user_1.default.updateMany({ account_type: 'me-school' }, { currentSession: req.params.id })];
             case 3:
                 _a.sent();
-                res.json({ message: 'Session updated' });
+                res.json({ message: 'Session updated', currentSession: currentSession });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.ActiveSession = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentSession;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, sessionModel_1.default.find({ activeSession: true })];
+            case 1:
+                currentSession = _a.sent();
+                if (currentSession) {
+                    res.json({ activeSession: currentSession[0] });
+                }
+                else
+                    res.json({ activeSession: { session: '-' } });
                 return [2 /*return*/];
         }
     });
