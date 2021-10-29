@@ -11,11 +11,11 @@ var UsersViewByAdminController_1 = require("../../../controllers/ME-SCHOOL/Admin
 var user_service_1 = require("../../../services/user.service");
 var adminRouter = express_1.default.Router();
 adminRouter.use(user_service_1.IsLoggedIn);
+adminRouter.get('/viewUsers', UsersViewByAdminController_1.ViewUsers);
 adminRouter.use(user_service_1.RestricTo('admin'));
 adminRouter.post('/setCalendar', academicCalendarController_1.SetAcademicCalendar);
 adminRouter.patch('/assignToClass', AssignToClass_1.AssignToClass);
 adminRouter.get('/toBeAssigned', AssignToClass_1.YetToBeAssigned);
 adminRouter.get('/staffYetToBeAssigned', AssignToClass_1.StaffYetToBeAssigned);
 adminRouter.get('/class/:classId', studentsRegister_1.StudentsRegister);
-adminRouter.get('/viewUsers', UsersViewByAdminController_1.ViewUsers);
 exports.default = adminRouter;
