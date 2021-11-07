@@ -1,4 +1,3 @@
-import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { app } from './app';
@@ -18,7 +17,7 @@ mongoose
   .then(() => {
     console.log('DB Connected successfully');
   })
-  .catch((e) => {
+  .catch((e:any) => {
     console.log('DB could not connect at this time. Shutting down');
     process.exit(1);
   });
