@@ -28,7 +28,6 @@
     "multer": "^1.4.3",
     "nodemon": "^2.0.12",
     "paystack-node": "^0.3.0",
-    "sib-api-v3-sdk": "github:sendinblue/APIv3-nodejs-library",
     "slugify": "^1.5.3",
     "ts-node-dev": "^1.1.6",
     "unirest": "^0.6.0"
