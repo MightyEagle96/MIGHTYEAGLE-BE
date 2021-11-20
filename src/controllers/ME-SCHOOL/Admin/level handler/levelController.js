@@ -47,7 +47,9 @@ exports.CreateLevel = catchAsync_1.catchAsync(function (req, res) { return __awa
     var level;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, levelModel_1.default.create(req.body)];
+            case 0:
+                console.log(req.body);
+                return [4 /*yield*/, levelModel_1.default.create(req.body)];
             case 1:
                 level = _a.sent();
                 //update the user with the assigned class
@@ -66,7 +68,7 @@ exports.ViewLevels = catchAsync_1.catchAsync(function (req, res) { return __awai
     var levels;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, levelModel_1.default.find()];
+            case 0: return [4 /*yield*/, levelModel_1.default.find().populate('levelTeacher')];
             case 1:
                 levels = _a.sent();
                 res.json({ levels: levels });

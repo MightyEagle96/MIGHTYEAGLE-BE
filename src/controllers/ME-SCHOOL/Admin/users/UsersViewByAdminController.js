@@ -43,15 +43,38 @@ exports.ViewUsers = void 0;
 var user_1 = __importDefault(require("../../../../models/user"));
 var catchAsync_1 = require("../../../../shared/catchAsync");
 exports.ViewUsers = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users, length;
+    var users, length_1, newQuery, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.find(req.query)];
+            case 0:
+                _a.trys.push([0, 5, , 6]);
+                users = void 0;
+                length_1 = 0;
+                if (!(req.query.filter === 'ytba')) return [3 /*break*/, 2];
+                newQuery = {};
+                newQuery.account_type = req.query.account_type;
+                newQuery.role = req.query.role;
+                newQuery.level = null;
+                console.log(newQuery);
+                return [4 /*yield*/, user_1.default.find(newQuery)];
             case 1:
                 users = _a.sent();
-                length = users.length;
-                res.json({ length: length, users: users });
-                return [2 /*return*/];
+                length_1 = users.length;
+                return [3 /*break*/, 4];
+            case 2: return [4 /*yield*/, user_1.default.find(req.query)];
+            case 3:
+                users = _a.sent();
+                length_1 = users.length;
+                _a.label = 4;
+            case 4:
+                res.json({ length: length_1, users: users });
+                return [3 /*break*/, 6];
+            case 5:
+                error_1 = _a.sent();
+                console.log(error_1);
+                res.json({ message: 'yawa don gas' });
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); });

@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StaffYetToBeAssigned = exports.YetToBeAssigned = exports.AssignToClass = void 0;
+exports.YetToBeAssigned = exports.AssignToClass = void 0;
 var user_1 = __importDefault(require("../../../../models/user"));
 var catchAsync_1 = require("../../../../shared/catchAsync");
 exports.AssignToClass = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -58,29 +58,15 @@ exports.AssignToClass = catchAsync_1.catchAsync(function (req, res) { return __a
     });
 }); });
 exports.YetToBeAssigned = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var awaitingStudents;
+    var awaitingUsers;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, user_1.default.find({
-                    $and: [{ role: 'student', level: null }],
+                    $and: [{ role: req.query.role, level: null }],
                 })];
             case 1:
-                awaitingStudents = _a.sent();
-                res.json({ count: awaitingStudents.length, awaitingStudents: awaitingStudents });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.StaffYetToBeAssigned = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var awaitingStaff;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.find({
-                    $and: [{ role: 'classTeacher', level: null }],
-                })];
-            case 1:
-                awaitingStaff = _a.sent();
-                res.json({ count: awaitingStaff.length, awaitingStaff: awaitingStaff });
+                awaitingUsers = _a.sent();
+                res.json({ count: awaitingUsers.length, awaitingUsers: awaitingUsers });
                 return [2 /*return*/];
         }
     });

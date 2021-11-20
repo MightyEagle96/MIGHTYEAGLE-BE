@@ -3,6 +3,7 @@ import { catchAsync } from '../../../../shared/catchAsync';
 import Level from './levelModel';
 
 export const CreateLevel = catchAsync(async (req: any, res: any) => {
+  console.log(req.body);
   const level = await Level.create(req.body);
 
   //update the user with the assigned class
@@ -14,7 +15,7 @@ export const CreateLevel = catchAsync(async (req: any, res: any) => {
 });
 
 export const ViewLevels = catchAsync(async (req: any, res: any) => {
-  const levels = await Level.find();
+  const levels = await Level.find().populate('levelTeacher');
   res.json({ levels });
 });
 

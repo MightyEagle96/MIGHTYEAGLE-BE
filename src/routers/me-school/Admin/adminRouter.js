@@ -16,6 +16,5 @@ adminRouter.use(user_service_1.RestricTo('admin'));
 adminRouter.post('/setCalendar', academicCalendarController_1.SetAcademicCalendar);
 adminRouter.patch('/assignToClass', AssignToClass_1.AssignToClass);
 adminRouter.get('/toBeAssigned', AssignToClass_1.YetToBeAssigned);
-adminRouter.get('/staffYetToBeAssigned', AssignToClass_1.StaffYetToBeAssigned);
 adminRouter.get('/class/:classId', studentsRegister_1.StudentsRegister);
 exports.default = adminRouter;

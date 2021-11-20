@@ -40,7 +40,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
-var user_1 = __importDefault(require("../../../../models/user"));
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var levelModel_1 = __importDefault(require("../level handler/levelModel"));
 var subjectModel_1 = __importDefault(require("./subjectModel"));
@@ -56,49 +55,50 @@ exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __a
     });
 }); });
 exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var subjects, userData, level, error_1;
+    var subjects, level, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 10, , 11]);
+                _a.trys.push([0, 12, , 13]);
                 subjects = void 0;
-                return [4 /*yield*/, user_1.default
-                        .findById(req.user._id)
-                        .populate(['currentTerm', 'level', 'currentSession'])];
-            case 1:
-                userData = _a.sent();
-                if (!(req.user.role === 'student')) return [3 /*break*/, 7];
+                if (!req.user) return [3 /*break*/, 9];
+                if (!(req.user.role === 'student')) return [3 /*break*/, 6];
                 return [4 /*yield*/, levelModel_1.default.findOne({ _id: req.user.level })];
-            case 2:
+            case 1:
                 level = _a.sent();
                 if (!(level.level === 'Jss1' ||
                     level.level === 'Jss2' ||
-                    level.level === 'Jss3')) return [3 /*break*/, 4];
+                    level.level === 'Jss3')) return [3 /*break*/, 3];
                 return [4 /*yield*/, subjectModel_1.default.find({
                         $or: [{ category: 'both' }, { category: 'junior' }],
                     })];
-            case 3:
+            case 2:
                 subjects = _a.sent();
-                return [3 /*break*/, 6];
-            case 4: return [4 /*yield*/, subjectModel_1.default.find({
+                return [3 /*break*/, 5];
+            case 3: return [4 /*yield*/, subjectModel_1.default.find({
                     $or: [{ category: 'both' }, { category: 'senior' }],
                 })];
-            case 5:
+            case 4:
                 subjects = _a.sent();
-                _a.label = 6;
-            case 6: return [3 /*break*/, 9];
-            case 7: return [4 /*yield*/, subjectModel_1.default.find()];
-            case 8:
+                _a.label = 5;
+            case 5: return [3 /*break*/, 8];
+            case 6: return [4 /*yield*/, subjectModel_1.default.find()];
+            case 7:
                 subjects = _a.sent();
-                _a.label = 9;
-            case 9:
-                res.json({ userData: userData, subjects: subjects });
-                return [3 /*break*/, 11];
+                _a.label = 8;
+            case 8: return [3 /*break*/, 11];
+            case 9: return [4 /*yield*/, subjectModel_1.default.find()];
             case 10:
+                subjects = _a.sent();
+                _a.label = 11;
+            case 11:
+                res.json({ subjects: subjects });
+                return [3 /*break*/, 13];
+            case 12:
                 error_1 = _a.sent();
                 console.log(error_1);
-                return [3 /*break*/, 11];
-            case 11: return [2 /*return*/];
+                return [3 /*break*/, 13];
+            case 13: return [2 /*return*/];
         }
     });
 }); });

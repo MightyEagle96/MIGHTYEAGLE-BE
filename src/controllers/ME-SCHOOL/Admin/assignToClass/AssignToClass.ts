@@ -14,15 +14,11 @@ export const AssignToClass = catchAsync(async (req: any, res: any) => {
 });
 
 export const YetToBeAssigned = catchAsync(async (req: any, res: any) => {
-  const awaitingStudents = await User.find({
-    $and: [{ role: 'student', level: null }],
+
+  const awaitingUsers = await User.find({
+    $and: [{ role: req.query.role, level: null }],
   });
-  res.json({ count: awaitingStudents.length, awaitingStudents });
+  res.json({ count: awaitingUsers.length, awaitingUsers });
 });
 
-export const StaffYetToBeAssigned = catchAsync(async (req: any, res: any) => {
-  const awaitingStaff = await User.find({
-    $and: [{ role: 'classTeacher', level: null }],
-  });
-  res.json({ count: awaitingStaff.length, awaitingStaff });
-});
+
