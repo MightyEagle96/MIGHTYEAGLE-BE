@@ -8,7 +8,7 @@ var sessionController_1 = require("../../controllers/ME-SCHOOL/Admin/session han
 var user_service_1 = require("../../services/user.service");
 var sessionRouter = express_1.default.Router();
 sessionRouter
-    .post('/create', user_service_1.IsLoggedIn, user_service_1.RestricTo('admin'), sessionController_1.CreateSession)
+    .post('/create', user_service_1.IsLoggedIn, user_service_1.RestrictTo('admin'), sessionController_1.CreateSession)
     .get('/view', sessionController_1.ListSessions)
     .patch('/update/:id', sessionController_1.UpdateSession)
     .get('/activeSession', sessionController_1.ActiveSession);

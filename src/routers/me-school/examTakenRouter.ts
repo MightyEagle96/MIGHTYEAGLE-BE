@@ -6,7 +6,7 @@ import {
   ViewPapersTaken,
 } from '../../controllers/ME-SCHOOL/handle exams/examsTakenController';
 import { PaperReview } from '../../controllers/ME-SCHOOL/handle exams/takeExamsController';
-import { IsLoggedIn, RestricTo } from '../../services/user.service';
+import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const examsTakenRouter = express.Router();
 
@@ -15,7 +15,7 @@ examsTakenRouter.post('/', TakeExam);
 examsTakenRouter.get('/', ViewPapersTaken);
 examsTakenRouter.get(
   '/review/:subjectId/:testTypeId',
-  RestricTo('student'),
+  RestrictTo('student'),
   PaperReview
 );
 examsTakenRouter.delete('/:id', DeletePaperTaken);

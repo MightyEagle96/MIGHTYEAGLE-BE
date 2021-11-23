@@ -10,6 +10,6 @@ var levelRouter = express_1.default.Router();
 levelRouter.get('/view', levelController_1.ViewLevels);
 levelRouter.use(user_service_1.IsLoggedIn);
 levelRouter.get('/:id', levelController_1.ViewLevel);
-levelRouter.use(user_service_1.RestricTo('admin'));
+levelRouter.use(user_service_1.RestrictTo('admin'));
 levelRouter.post('/create', levelController_1.CreateLevel);
 exports.default = levelRouter;

@@ -8,7 +8,7 @@ var subjectsRegisterController_1 = require("../../controllers/ME-SCHOOL/students
 var user_service_1 = require("../../services/user.service");
 var classRegistationRouter = express_1.default.Router();
 classRegistationRouter.use(user_service_1.IsLoggedIn);
-classRegistationRouter.post('/registerSubject', user_service_1.RestricTo('student'), subjectsRegisterController_1.RegisterSubjects);
+classRegistationRouter.post('/registerSubject', user_service_1.RestrictTo('student'), subjectsRegisterController_1.RegisterSubjects);
 classRegistationRouter.get('/viewRegisteredSubject', subjectsRegisterController_1.ViewRegisteredSubjects);
 classRegistationRouter.delete('/deleteRegisteredSubject', subjectsRegisterController_1.DeleteRegisteredSubject);
 exports.default = classRegistationRouter;

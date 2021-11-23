@@ -3,13 +3,13 @@ import {
   PostResult,
   ViewResult,
 } from '../../../controllers/ME-SCHOOL/students/resultController';
-import { IsLoggedIn, RestricTo } from '../../../services/user.service';
+import { IsLoggedIn, RestrictTo } from '../../../services/user.service';
 
 const studentRouter = express.Router();
 
 studentRouter
   .use(IsLoggedIn)
-  .use(RestricTo('student'))
+  .use(RestrictTo('student'))
   .post('/result', PostResult)
   .get('/result', ViewResult);
 

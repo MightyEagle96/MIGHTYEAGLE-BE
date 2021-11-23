@@ -1,0 +1,101 @@
+[
+  {
+    "account_type": "me-school",
+    "firstName": "Eagle",
+    "lastName": "Moses",
+    "role": "student",
+    "password": "password",
+    "email": "eagle@io",
+    "gender": "male"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "John",
+    "lastName": "Jones",
+    "role": "student",
+    "password": "password",
+    "email": "john@io",
+    "gender": "male"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Shola",
+    "lastName": "Badmus",
+    "role": "student",
+    "password": "password",
+    "email": "shola@io",
+    "gender": "female"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Memphis",
+    "lastName": "Depay",
+    "role": "student",
+    "password": "password",
+    "email": "memphis@io",
+    "gender": "male"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Melody",
+    "lastName": "Morris",
+    "role": "student",
+    "password": "password",
+    "email": "melody@io",
+    "gender": "female"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Phil",
+    "lastName": "Cassidy",
+    "role": "student",
+    "password": "password",
+    "email": "phil@io",
+    "gender": "male"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Funmi",
+    "lastName": "Holder",
+    "role": "student",
+    "password": "password",
+    "email": "funmi@io",
+    "gender": "female"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Favour",
+    "lastName": "Lancelot",
+    "role": "student",
+    "password": "password",
+    "email": "favour@io",
+    "gender": "female"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Jadon",
+    "lastName": "Sancho",
+    "role": "student",
+    "password": "password",
+    "email": "jadon@io",
+    "gender": "male"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Helen",
+    "lastName": "Reece",
+    "role": "student",
+    "password": "password",
+    "email": "helen@io",
+    "gender": "female"
+  },
+  {
+    "account_type": "me-school",
+    "firstName": "Noel",
+    "lastName": "Jones",
+    "role": "student",
+    "password": "password",
+    "email": "noel@io",
+    "gender": "male"
+  }
+]

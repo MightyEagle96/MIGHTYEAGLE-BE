@@ -41,7 +41,10 @@ export const Login = catchAsync(async (req: any, res: any) => {
   if (await user.comparePasswords(password)) {
     const accessToken = createAccessToken({ id: user._id });
     const refreshToken = createRefreshToken({ id: user._id });
-    await User.findByIdAndUpdate(user._id, { refreshToken: refreshToken });
+    await User.findByIdAndUpdate(user._id, {
+      refreshToken: refreshToken,
+      isNewAccount: false,
+    });
     sendRefreshToken(res, refreshToken);
     sendAccessToken(user, req, res, accessToken);
   } else
@@ -94,7 +97,7 @@ export const RefreshToken = catchAsync(async (req: any, res: any) => {
   return res.send({ accessToken, user });
 });
 
-export const RestricTo = (...roles: any) => {
+export const RestrictTo = (...roles: any) => {
   return (req: any, res: any, next: any) => {
     // roles ['admin', 'lead-guide']. role='user'
     if (!roles.includes(req.user.role)) {

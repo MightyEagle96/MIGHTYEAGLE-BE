@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Logout = exports.RestricTo = exports.RefreshToken = exports.IsLoggedIn = exports.Login = exports.SignUp = exports.GetUsers = void 0;
+exports.Logout = exports.RestrictTo = exports.RefreshToken = exports.IsLoggedIn = exports.Login = exports.SignUp = exports.GetUsers = void 0;
 var jsonwebtoken_1 = require("jsonwebtoken");
 var user_1 = __importDefault(require("../models/user"));
 var catchAsync_1 = require("../shared/catchAsync");
@@ -96,7 +96,10 @@ exports.Login = catchAsync_1.catchAsync(function (req, res) { return __awaiter(v
                 if (!_b.sent()) return [3 /*break*/, 4];
                 accessToken = tokens_1.createAccessToken({ id: user._id });
                 refreshToken = tokens_1.createRefreshToken({ id: user._id });
-                return [4 /*yield*/, user_1.default.findByIdAndUpdate(user._id, { refreshToken: refreshToken })];
+                return [4 /*yield*/, user_1.default.findByIdAndUpdate(user._id, {
+                        refreshToken: refreshToken,
+                        isNewAccount: false,
+                    })];
             case 3:
                 _b.sent();
                 tokens_1.sendRefreshToken(res, refreshToken);
@@ -165,7 +168,7 @@ exports.RefreshToken = catchAsync_1.catchAsync(function (req, res) { return __aw
         }
     });
 }); });
-var RestricTo = function () {
+var RestrictTo = function () {
     var roles = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         roles[_i] = arguments[_i];
@@ -180,7 +183,7 @@ var RestricTo = function () {
         next();
     };
 };
-exports.RestricTo = RestricTo;
+exports.RestrictTo = RestrictTo;
 exports.Logout = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.clearCookie('refreshToken', { path: 'refresh_token' });

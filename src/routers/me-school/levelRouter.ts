@@ -4,14 +4,14 @@ import {
   ViewLevel,
   ViewLevels,
 } from '../../controllers/ME-SCHOOL/Admin/level handler/levelController';
-import { IsLoggedIn, RestricTo } from '../../services/user.service';
+import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const levelRouter = express.Router();
 
 levelRouter.get('/view', ViewLevels);
 levelRouter.use(IsLoggedIn);
 levelRouter.get('/:id', ViewLevel);
-levelRouter.use(RestricTo('admin'));
+levelRouter.use(RestrictTo('admin'));
 levelRouter.post('/create', CreateLevel);
 
 export default levelRouter;

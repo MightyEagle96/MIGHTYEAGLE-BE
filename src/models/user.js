@@ -79,6 +79,7 @@ var userSchema = new mongoose_1.Schema({
         type: String,
         enum: ['me-school', 'medi-tec', 'me-stores'],
     },
+    isNewAccount: { type: Boolean, default: true },
     medical_department: String,
     isAgent: Boolean,
     //  referralId: { type: Schema.Types.ObjectId, ref: 'Account' },

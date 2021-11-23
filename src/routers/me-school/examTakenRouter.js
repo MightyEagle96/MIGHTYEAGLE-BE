@@ -11,7 +11,7 @@ var examsTakenRouter = express_1.default.Router();
 examsTakenRouter.use(user_service_1.IsLoggedIn);
 examsTakenRouter.post('/', examsTakenController_1.TakeExam);
 examsTakenRouter.get('/', examsTakenController_1.ViewPapersTaken);
-examsTakenRouter.get('/review/:subjectId/:testTypeId', user_service_1.RestricTo('student'), takeExamsController_1.PaperReview);
+examsTakenRouter.get('/review/:subjectId/:testTypeId', user_service_1.RestrictTo('student'), takeExamsController_1.PaperReview);
 examsTakenRouter.delete('/:id', examsTakenController_1.DeletePaperTaken);
 examsTakenRouter.post('/hasTakenPaper', examsTakenController_1.HasTakenPaper);
 exports.default = examsTakenRouter;

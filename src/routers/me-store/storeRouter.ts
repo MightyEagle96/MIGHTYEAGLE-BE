@@ -8,7 +8,7 @@ import {
   OrdersCount,
   ViewTransactions,
 } from '../../controllers/ME-STORES/store-management/store-management-controller';
-import { IsLoggedIn, RestricTo } from '../../services/user.service';
+import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 const storeRouter = express.Router();
 
 storeRouter.get('/', GetItems);
@@ -16,15 +16,15 @@ storeRouter.use(IsLoggedIn);
 storeRouter.get('/:id', GetItem);
 storeRouter.post('/', CreateItem);
 storeRouter.patch('/:id', EditItem);
-storeRouter.delete('/:id', RestricTo('admin', 'storeAdmin'), DeleteItem);
+storeRouter.delete('/:id', RestrictTo('admin', 'storeAdmin'), DeleteItem);
 storeRouter.get(
   '/store/viewTransactions',
-  RestricTo('storeAdmin'),
+  RestrictTo('storeAdmin'),
   ViewTransactions
 );
 storeRouter.get(
   '/store/orderCount',
-  RestricTo('admin', 'storeAdmin'),
+  RestrictTo('admin', 'storeAdmin'),
   OrdersCount
 );
 

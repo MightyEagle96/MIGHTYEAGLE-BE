@@ -12,7 +12,7 @@ var user_service_1 = require("../../../services/user.service");
 var adminRouter = express_1.default.Router();
 adminRouter.use(user_service_1.IsLoggedIn);
 adminRouter.get('/viewUsers', UsersViewByAdminController_1.ViewUsers);
-adminRouter.use(user_service_1.RestricTo('admin'));
+adminRouter.use(user_service_1.RestrictTo('admin'));
 adminRouter.post('/setCalendar', academicCalendarController_1.SetAcademicCalendar);
 adminRouter.patch('/assignToClass', AssignToClass_1.AssignToClass);
 adminRouter.get('/toBeAssigned', AssignToClass_1.YetToBeAssigned);

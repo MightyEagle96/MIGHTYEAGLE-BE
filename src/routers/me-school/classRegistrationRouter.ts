@@ -4,14 +4,14 @@ import {
   RegisterSubjects,
   ViewRegisteredSubjects,
 } from '../../controllers/ME-SCHOOL/students/subjectsRegisterController';
-import { IsLoggedIn, RestricTo } from '../../services/user.service';
+import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const classRegistationRouter = express.Router();
 
 classRegistationRouter.use(IsLoggedIn);
 classRegistationRouter.post(
   '/registerSubject',
-  RestricTo('student'),
+  RestrictTo('student'),
   RegisterSubjects
 );
 classRegistationRouter.get('/viewRegisteredSubject', ViewRegisteredSubjects);

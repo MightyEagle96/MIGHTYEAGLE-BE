@@ -5,7 +5,7 @@ import {
   ViewOrder,
   ViewOrders,
 } from '../../controllers/ME-STORES/ordered-products/ordered-products-controller';
-import { IsLoggedIn, RestricTo } from '../../services/user.service';
+import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const orderRouter = express.Router();
 
