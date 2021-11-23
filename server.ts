@@ -8,7 +8,7 @@ let DATABASE = process.env.DATABASE || '';
 let DATABASE_LOCAL = process.env.DATABASE_LOCAL || '';
 
 mongoose
-  .connect(DATABASE, {
+  .connect(DATABASE_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -17,7 +17,7 @@ mongoose
   .then(() => {
     console.log('DB Connected successfully');
   })
-  .catch((e:any) => {
+  .catch((e: any) => {
     console.log('DB could not connect at this time. Shutting down');
     process.exit(1);
   });
