@@ -10,8 +10,8 @@ const levelRouter = express.Router();
 
 levelRouter.get('/view', ViewLevels);
 levelRouter.use(IsLoggedIn);
+levelRouter.get('/:id', ViewLevel);
 levelRouter.use(RestricTo('admin'));
 levelRouter.post('/create', CreateLevel);
-levelRouter.get('/:id', ViewLevel);
 
 export default levelRouter;

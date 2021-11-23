@@ -9,7 +9,7 @@ var user_service_1 = require("../../services/user.service");
 var levelRouter = express_1.default.Router();
 levelRouter.get('/view', levelController_1.ViewLevels);
 levelRouter.use(user_service_1.IsLoggedIn);
+levelRouter.get('/:id', levelController_1.ViewLevel);
 levelRouter.use(user_service_1.RestricTo('admin'));
 levelRouter.post('/create', levelController_1.CreateLevel);
-levelRouter.get('/:id', levelController_1.ViewLevel);
 exports.default = levelRouter;

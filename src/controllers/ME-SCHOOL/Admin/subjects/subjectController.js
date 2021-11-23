@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
 var catchAsync_1 = require("../../../../shared/catchAsync");
+var labels_1 = require("../../../../utils/labels");
 var levelModel_1 = __importDefault(require("../level handler/levelModel"));
 var subjectModel_1 = __importDefault(require("./subjectModel"));
 exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -55,13 +56,13 @@ exports.CreateSubject = catchAsync_1.catchAsync(function (req, res) { return __a
     });
 }); });
 exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var subjects, level, error_1;
+    var subjects, level, allSubjects_1, allLevels, _loop_1, i, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 12, , 13]);
-                subjects = void 0;
-                if (!req.user) return [3 /*break*/, 9];
+                _a.trys.push([0, 13, , 14]);
+                subjects = [];
+                if (!req.user) return [3 /*break*/, 10];
                 if (!(req.user.role === 'student')) return [3 /*break*/, 6];
                 return [4 /*yield*/, levelModel_1.default.findOne({ _id: req.user.level })];
             case 1:
@@ -81,24 +82,43 @@ exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __aw
             case 4:
                 subjects = _a.sent();
                 _a.label = 5;
-            case 5: return [3 /*break*/, 8];
+            case 5: return [3 /*break*/, 9];
             case 6: return [4 /*yield*/, subjectModel_1.default.find()];
             case 7:
-                subjects = _a.sent();
-                _a.label = 8;
-            case 8: return [3 /*break*/, 11];
-            case 9: return [4 /*yield*/, subjectModel_1.default.find()];
-            case 10:
-                subjects = _a.sent();
-                _a.label = 11;
+                allSubjects_1 = _a.sent();
+                return [4 /*yield*/, levelModel_1.default.find()];
+            case 8:
+                allLevels = _a.sent();
+                _loop_1 = function (i) {
+                    var subjectLevel = {};
+                    subjectLevel.subject = allSubjects_1[i];
+                    if (allSubjects_1[i].category === labels_1.BOTH_LABEL) {
+                        subjectLevel.levels = allLevels;
+                    }
+                    else {
+                        subjectLevel.levels = allLevels.filter(function (levels) {
+                            return levels.category === allSubjects_1[i].category;
+                        });
+                    }
+                    subjects.push(subjectLevel);
+                };
+                for (i = 0; i < allSubjects_1.length; i++) {
+                    _loop_1(i);
+                }
+                _a.label = 9;
+            case 9: return [3 /*break*/, 12];
+            case 10: return [4 /*yield*/, subjectModel_1.default.find()];
             case 11:
-                res.json({ subjects: subjects });
-                return [3 /*break*/, 13];
+                subjects = _a.sent();
+                _a.label = 12;
             case 12:
+                res.json({ subjects: subjects });
+                return [3 /*break*/, 14];
+            case 13:
                 error_1 = _a.sent();
                 console.log(error_1);
-                return [3 /*break*/, 13];
-            case 13: return [2 /*return*/];
+                return [3 /*break*/, 14];
+            case 14: return [2 /*return*/];
         }
     });
 }); });
