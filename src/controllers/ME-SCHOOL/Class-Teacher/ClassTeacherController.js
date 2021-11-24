@@ -42,8 +42,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentsInMyClass = void 0;
 var user_1 = __importDefault(require("../../../models/user"));
 var catchAsync_1 = require("../../../shared/catchAsync");
+var levelModel_1 = __importDefault(require("../Admin/level handler/levelModel"));
 exports.StudentsInMyClass = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var students;
+    var students, level;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, user_1.default.find({
@@ -51,7 +52,10 @@ exports.StudentsInMyClass = catchAsync_1.catchAsync(function (req, res) { return
                 })];
             case 1:
                 students = _a.sent();
-                res.json({ count: students.length, students: students });
+                return [4 /*yield*/, levelModel_1.default.findById(req.user.level)];
+            case 2:
+                level = _a.sent();
+                res.json({ count: students.length, level: level, students: students });
                 return [2 /*return*/];
         }
     });

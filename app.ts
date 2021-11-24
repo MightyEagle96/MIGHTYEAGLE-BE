@@ -34,6 +34,7 @@ import sessionRouter from './src/routers/me-school/sessionRouter';
 import classRegistationRouter from './src/routers/me-school/classRegistrationRouter';
 import adminRouter from './src/routers/me-school/Admin/adminRouter';
 import studentRouter from './src/routers/me-school/Students/studentRouter';
+import classTeacherRouter from './src/routers/me-school/TeacherClassTeacher/classTeacherRouter';
 
 //import unirest from 'unirest';
 
@@ -74,6 +75,7 @@ app
   .use('/testType', testTypeRouter)
   .use('/questions', questionRouter)
   .use('/class', classRegistationRouter)
+  .use('/classTeacher', classTeacherRouter)
   .use('/school/admin', adminRouter)
   .use('/school/student', studentRouter)
   .use('/*', (req: any, res: any) => {

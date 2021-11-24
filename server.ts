@@ -8,7 +8,7 @@ let DATABASE = process.env.DATABASE || '';
 let DATABASE_LOCAL = process.env.DATABASE_LOCAL || '';
 
 mongoose
-  .connect(DATABASE_LOCAL, {
+  .connect(DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

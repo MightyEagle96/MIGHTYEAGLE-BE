@@ -39,6 +39,7 @@ var sessionRouter_1 = __importDefault(require("./src/routers/me-school/sessionRo
 var classRegistrationRouter_1 = __importDefault(require("./src/routers/me-school/classRegistrationRouter"));
 var adminRouter_1 = __importDefault(require("./src/routers/me-school/Admin/adminRouter"));
 var studentRouter_1 = __importDefault(require("./src/routers/me-school/Students/studentRouter"));
+var classTeacherRouter_1 = __importDefault(require("./src/routers/me-school/TeacherClassTeacher/classTeacherRouter"));
 //import unirest from 'unirest';
 var app = express_1.default();
 exports.app = app;
@@ -76,6 +77,7 @@ app
     .use('/testType', testTypeRouter_1.default)
     .use('/questions', questionRouter_1.default)
     .use('/class', classRegistrationRouter_1.default)
+    .use('/classTeacher', classTeacherRouter_1.default)
     .use('/school/admin', adminRouter_1.default)
     .use('/school/student', studentRouter_1.default)
     .use('/*', function (req, res) {
