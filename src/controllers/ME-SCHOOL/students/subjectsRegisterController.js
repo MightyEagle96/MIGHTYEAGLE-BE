@@ -43,61 +43,48 @@ exports.DeleteRegisteredSubject = exports.ViewRegisteredSubjects = exports.Regis
 var catchAsync_1 = require("../../../shared/catchAsync");
 var subjectsRegister_1 = __importDefault(require("./subjectsRegister"));
 exports.RegisterSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var register, i, data, i;
+    var data, i, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                _a.trys.push([0, 6, , 7]);
+                console.log(req.body);
                 req.body.user = req.user._id;
-                return [4 /*yield*/, subjectsRegister_1.default.findOne({
+                return [4 /*yield*/, subjectsRegister_1.default.create({
                         user: req.user._id,
                         level: req.user.level,
                         currentTerm: req.user.currentTerm,
                         session: req.user.currentSession,
                     })];
             case 1:
-                register = _a.sent();
-                if (!register) return [3 /*break*/, 6];
+                data = _a.sent();
                 i = 0;
                 _a.label = 2;
             case 2:
-                if (!(i < req.body.subjects.length)) return [3 /*break*/, 5];
-                return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({ _id: register._id }, { $push: { subjects: { subject: req.body.subjects[i] } } })];
+                if (!(i < req.body.length)) return [3 /*break*/, 5];
+                return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({
+                        _id: data._id,
+                    }, { $push: { subjects: { subject: req.body[i]._id } } })];
             case 3:
                 _a.sent();
                 _a.label = 4;
             case 4:
                 i++;
                 return [3 /*break*/, 2];
-            case 5: return [3 /*break*/, 11];
-            case 6: return [4 /*yield*/, subjectsRegister_1.default.create({
-                    user: req.user._id,
-                    level: req.user.level,
-                    currentTerm: req.user.currentTerm,
-                    session: req.user.currentSession,
-                })];
-            case 7:
-                data = _a.sent();
-                i = 0;
-                _a.label = 8;
-            case 8:
-                if (!(i < req.body.subjects.length)) return [3 /*break*/, 11];
-                return [4 /*yield*/, subjectsRegister_1.default.findOneAndUpdate({
-                        _id: data._id,
-                    }, { $push: { subjects: { subject: req.body.subjects[i] } } })];
-            case 9:
-                _a.sent();
-                _a.label = 10;
-            case 10:
-                i++;
-                return [3 /*break*/, 8];
-            case 11:
+            case 5:
                 res.status(201).json({ message: 'Subjects registered' });
-                return [2 /*return*/];
+                return [3 /*break*/, 7];
+            case 6:
+                error_1 = _a.sent();
+                console.log(error_1);
+                res.json({ message: 'Error dey, we dey come' });
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); });
 exports.ViewRegisteredSubjects = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var registeredSubject;
+    var registeredSubjects;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, subjectsRegister_1.default.findOne({
@@ -109,11 +96,11 @@ exports.ViewRegisteredSubjects = catchAsync_1.catchAsync(function (req, res) { r
                     .populate({ path: 'subjects.subject' })
                     .populate(['level', 'currentTerm', 'session'])];
             case 1:
-                registeredSubject = _a.sent();
-                if (registeredSubject)
-                    res.json({ registeredSubject: registeredSubject });
+                registeredSubjects = _a.sent();
+                if (registeredSubjects)
+                    res.json({ registeredSubjects: registeredSubjects });
                 else
-                    res.json({ registeredSubject: [] });
+                    res.json({ registeredSubjects: [] });
                 return [2 /*return*/];
         }
     });

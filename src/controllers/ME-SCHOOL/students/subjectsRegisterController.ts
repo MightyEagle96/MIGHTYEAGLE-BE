@@ -2,22 +2,10 @@ import { catchAsync } from '../../../shared/catchAsync';
 import SubjectsRegister from './subjectsRegister';
 
 export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
-  req.body.user = req.user._id;
-  const register = await SubjectsRegister.findOne({
-    user: req.user._id,
-    level: req.user.level,
-    currentTerm: req.user.currentTerm,
-    session: req.user.currentSession,
-  });
+  try {
+    console.log(req.body);
+    req.body.user = req.user._id;
 
-  if (register) {
-    for (let i = 0; i < req.body.subjects.length; i++) {
-      await SubjectsRegister.findOneAndUpdate(
-        { _id: register._id },
-        { $push: { subjects: { subject: req.body.subjects[i] } } }
-      );
-    }
-  } else {
     const data = await SubjectsRegister.create({
       user: req.user._id,
       level: req.user.level,
@@ -25,21 +13,25 @@ export const RegisterSubjects = catchAsync(async (req: any, res: any) => {
       session: req.user.currentSession,
     });
 
-    for (let i = 0; i < req.body.subjects.length; i++) {
+    for (let i = 0; i < req.body.length; i++) {
       await SubjectsRegister.findOneAndUpdate(
         {
           _id: data._id,
         },
-        { $push: { subjects: { subject: req.body.subjects[i] } } }
+        { $push: { subjects: { subject: req.body[i]._id } } }
       );
     }
-  }
 
-  res.status(201).json({ message: 'Subjects registered' });
+    res.status(201).json({ message: 'Subjects registered' });
+  } catch (error) {
+    console.log(error);
+
+    res.json({ message: 'Error dey, we dey come' });
+  }
 });
 
 export const ViewRegisteredSubjects = catchAsync(async (req: any, res: any) => {
-  const registeredSubject = await SubjectsRegister.findOne({
+  const registeredSubjects = await SubjectsRegister.findOne({
     session: req.user.currentSession,
     level: req.user.level,
     currentTerm: req.user.currentTerm,
@@ -48,8 +40,8 @@ export const ViewRegisteredSubjects = catchAsync(async (req: any, res: any) => {
     .populate({ path: 'subjects.subject' })
     .populate(['level', 'currentTerm', 'session']);
 
-  if (registeredSubject) res.json({ registeredSubject });
-  else res.json({ registeredSubject: [] });
+  if (registeredSubjects) res.json({ registeredSubjects });
+  else res.json({ registeredSubjects: [] });
 });
 
 export const DeleteRegisteredSubject = catchAsync(

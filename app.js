@@ -36,7 +36,7 @@ var termRouter_1 = __importDefault(require("./src/routers/me-school/termRouter")
 var testTypeRouter_1 = __importDefault(require("./src/routers/me-school/testTypeRouter"));
 var questionRouter_1 = __importDefault(require("./src/routers/me-school/questionRouter"));
 var sessionRouter_1 = __importDefault(require("./src/routers/me-school/sessionRouter"));
-var classRegistrationRouter_1 = __importDefault(require("./src/routers/me-school/classRegistrationRouter"));
+var subjectRegistrationRouter_1 = __importDefault(require("./src/routers/me-school/Students/subjectRegistrationRouter"));
 var adminRouter_1 = __importDefault(require("./src/routers/me-school/Admin/adminRouter"));
 var studentRouter_1 = __importDefault(require("./src/routers/me-school/Students/studentRouter"));
 var classTeacherRouter_1 = __importDefault(require("./src/routers/me-school/TeacherClassTeacher/classTeacherRouter"));
@@ -76,7 +76,7 @@ app
     .use('/session', sessionRouter_1.default)
     .use('/testType', testTypeRouter_1.default)
     .use('/questions', questionRouter_1.default)
-    .use('/class', classRegistrationRouter_1.default)
+    .use('/subjectRegistration', subjectRegistrationRouter_1.default)
     .use('/classTeacher', classTeacherRouter_1.default)
     .use('/school/admin', adminRouter_1.default)
     .use('/school/student', studentRouter_1.default)

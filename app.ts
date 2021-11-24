@@ -31,7 +31,7 @@ import termRouter from './src/routers/me-school/termRouter';
 import testTypeRouter from './src/routers/me-school/testTypeRouter';
 import questionRouter from './src/routers/me-school/questionRouter';
 import sessionRouter from './src/routers/me-school/sessionRouter';
-import classRegistationRouter from './src/routers/me-school/classRegistrationRouter';
+import subjectRegistrationRouter from './src/routers/me-school/Students/subjectRegistrationRouter';
 import adminRouter from './src/routers/me-school/Admin/adminRouter';
 import studentRouter from './src/routers/me-school/Students/studentRouter';
 import classTeacherRouter from './src/routers/me-school/TeacherClassTeacher/classTeacherRouter';
@@ -74,7 +74,7 @@ app
   .use('/session', sessionRouter)
   .use('/testType', testTypeRouter)
   .use('/questions', questionRouter)
-  .use('/class', classRegistationRouter)
+  .use('/subjectRegistration', subjectRegistrationRouter)
   .use('/classTeacher', classTeacherRouter)
   .use('/school/admin', adminRouter)
   .use('/school/student', studentRouter)
