@@ -60,7 +60,7 @@ export const IsLoggedIn = catchAsync(async (req: any, res: any, next: any) => {
       req.user = user;
     }
   } catch (error) {
-    return res.status(401).send(error);
+    return res.status(401).json({ message: 'invalid token' });
   }
   next();
 });

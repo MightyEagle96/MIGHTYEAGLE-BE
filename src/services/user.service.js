@@ -126,7 +126,7 @@ exports.IsLoggedIn = catchAsync_1.catchAsync(function (req, res, next) { return 
             case 2: return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
-                return [2 /*return*/, res.status(401).send(error_1)];
+                return [2 /*return*/, res.status(401).json({ message: 'invalid token' })];
             case 4:
                 next();
                 return [2 /*return*/];
