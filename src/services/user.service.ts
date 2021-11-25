@@ -32,7 +32,11 @@ export const SignUp = catchAsync(async (req: any, res: any) => {
 
 export const Login = catchAsync(async (req: any, res: any) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate([
+    'currentSession',
+    'level',
+    'currentTerm',
+  ]);
 
   //if there is no user
   if (!user)

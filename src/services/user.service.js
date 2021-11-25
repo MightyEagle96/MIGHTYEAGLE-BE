@@ -85,7 +85,11 @@ exports.Login = catchAsync_1.catchAsync(function (req, res) { return __awaiter(v
         switch (_b.label) {
             case 0:
                 _a = req.body, email = _a.email, password = _a.password;
-                return [4 /*yield*/, user_1.default.findOne({ email: email })];
+                return [4 /*yield*/, user_1.default.findOne({ email: email }).populate([
+                        'currentSession',
+                        'level',
+                        'currentTerm',
+                    ])];
             case 1:
                 user = _b.sent();
                 //if there is no user
