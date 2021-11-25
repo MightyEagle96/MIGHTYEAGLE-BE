@@ -1,4 +1,4 @@
-import { catchAsync } from '../../../shared/catchAsync';
+import { catchAsync } from '../../../../shared/catchAsync';
 import Question from './questionModel';
 
 //to create a question
@@ -48,7 +48,7 @@ export const ViewQuestions = catchAsync(async (req: any, res: any) => {
       let questions = result[0];
 
       const count = questions.questions.length;
-      res.json({ count, questions: questions });
+      res.json({ count, questionId: questions._id, questions: questions });
     }
   } catch (error) {
     res.json({ count: 0, questions: { questions: [] } });
@@ -101,5 +101,38 @@ export const DeleteQuestion = catchAsync(async (req: any, res: any) => {
 });
 
 export const SetTimer = catchAsync(async (req: any, res: any) => {
-  //const body ={duration}
+  try {
+    const { collectionId } = req.params;
+    const totalDuration =
+      req.body.hour * 60 * 60 * 1000 + req.body.minute * 60 * 1000;
+    await Question.findOneAndUpdate(
+      { _id: collectionId },
+      { duration: totalDuration }
+    );
+
+    res.json({ message: 'Duration Updated' });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const ToggleActivation = catchAsync(async (req: any, res: any) => {
+  try {
+    const { collectionId } = req.params;
+    console.log();
+
+    const question = await Question.findById(collectionId);
+
+    await Question.findOneAndUpdate(
+      { _id: collectionId },
+      {
+        activated: !question.activated,
+      }
+    );
+
+    res.json({ message: 'Done' });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
 });

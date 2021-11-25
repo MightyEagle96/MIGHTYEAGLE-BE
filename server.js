@@ -10,7 +10,7 @@ dotenv_1.default.config({ path: '.env' });
 var DATABASE = process.env.DATABASE || '';
 var DATABASE_LOCAL = process.env.DATABASE_LOCAL || '';
 mongoose_1.default
-    .connect(DATABASE, {
+    .connect(DATABASE_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

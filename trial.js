@@ -1,6 +1,18 @@
-console.log(1);
-setTimeout(() => {
-  console.log(2);
-}, 0);
-Promise.resolve(3).then(console.log);
-console.log(4);
+const duration = {
+  hour: 2,
+  minute: 60,
+  sum() {
+    return this.hour * 60 * 60 * 1000 + this.minute * 60 * 1000;
+  },
+};
+
+const totalDuration = duration.sum();
+
+console.log(totalDuration);
+
+const hours = Math.floor(totalDuration / (60 * 60 * 1000));
+
+const minutes = Math.floor((totalDuration / (60 * 1000)) % 60);
+
+console.log(hours);
+console.log(minutes);

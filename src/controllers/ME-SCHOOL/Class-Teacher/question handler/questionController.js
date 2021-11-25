@@ -39,8 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetTimer = exports.DeleteQuestion = exports.UpdateQuestion = exports.ViewQuestion = exports.ViewQuestions = exports.CreateQuestion = void 0;
-var catchAsync_1 = require("../../../shared/catchAsync");
+exports.ToggleActivation = exports.SetTimer = exports.DeleteQuestion = exports.UpdateQuestion = exports.ViewQuestion = exports.ViewQuestions = exports.CreateQuestion = void 0;
+var catchAsync_1 = require("../../../../shared/catchAsync");
 var questionModel_1 = __importDefault(require("./questionModel"));
 //to create a question
 exports.CreateQuestion = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -100,7 +100,7 @@ exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __a
                 if (result) {
                     questions = result[0];
                     count = questions.questions.length;
-                    res.json({ count: count, questions: questions });
+                    res.json({ count: count, questionId: questions._id, questions: questions });
                 }
                 return [3 /*break*/, 3];
             case 2:
@@ -169,7 +169,50 @@ exports.DeleteQuestion = catchAsync_1.catchAsync(function (req, res) { return __
     });
 }); });
 exports.SetTimer = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var collectionId, totalDuration, error_2;
     return __generator(this, function (_a) {
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                collectionId = req.params.collectionId;
+                totalDuration = req.body.hour * 60 * 60 * 1000 + req.body.minute * 60 * 1000;
+                return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: collectionId }, { duration: totalDuration })];
+            case 1:
+                _a.sent();
+                res.json({ message: 'Duration Updated' });
+                return [3 /*break*/, 3];
+            case 2:
+                error_2 = _a.sent();
+                console.log(error_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+exports.ToggleActivation = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var collectionId, question, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                collectionId = req.params.collectionId;
+                console.log();
+                return [4 /*yield*/, questionModel_1.default.findById(collectionId)];
+            case 1:
+                question = _a.sent();
+                return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: collectionId }, {
+                        activated: !question.activated,
+                    })];
+            case 2:
+                _a.sent();
+                res.json({ message: 'Done' });
+                return [3 /*break*/, 4];
+            case 3:
+                error_3 = _a.sent();
+                console.log(error_3);
+                res.json({ error: error_3 });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
     });
 }); });
