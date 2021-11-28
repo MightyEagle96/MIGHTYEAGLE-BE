@@ -10,7 +10,7 @@ const studentRouter = express.Router();
 studentRouter
   .use(IsLoggedIn)
   .use(RestrictTo('student'))
-  .post('/result', PostResult)
+  .post('/result/:paperId', PostResult)
   .get('/result', ViewResult);
 
 export default studentRouter;

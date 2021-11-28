@@ -77,10 +77,9 @@ app
   .use('/subjectRegistration', subjectRegistrationRouter)
   .use('/classTeacher', classTeacherRouter)
   .use('/school/admin', adminRouter)
-  .use('/school/student', studentRouter)
+  .use('/student', studentRouter)
   .use('/*', (req: any, res: any) => {
     res.status(404).json({ message: "Can't find this route on this server" });
   });
-
 app.use(errorHandler);
 export { app };

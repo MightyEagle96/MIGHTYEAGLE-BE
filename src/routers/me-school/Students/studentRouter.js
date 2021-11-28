@@ -10,6 +10,6 @@ var studentRouter = express_1.default.Router();
 studentRouter
     .use(user_service_1.IsLoggedIn)
     .use(user_service_1.RestrictTo('student'))
-    .post('/result', resultController_1.PostResult)
+    .post('/result/:paperId', resultController_1.PostResult)
     .get('/result', resultController_1.ViewResult);
 exports.default = studentRouter;

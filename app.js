@@ -79,7 +79,7 @@ app
     .use('/subjectRegistration', subjectRegistrationRouter_1.default)
     .use('/classTeacher', classTeacherRouter_1.default)
     .use('/school/admin', adminRouter_1.default)
-    .use('/school/student', studentRouter_1.default)
+    .use('/student', studentRouter_1.default)
     .use('/*', function (req, res) {
     res.status(404).json({ message: "Can't find this route on this server" });
 });

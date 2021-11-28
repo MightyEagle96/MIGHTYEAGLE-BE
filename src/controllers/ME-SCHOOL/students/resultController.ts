@@ -1,79 +1,48 @@
 import { catchAsync } from '../../../shared/catchAsync';
+import questionModel from '../Class-Teacher/question handler/questionModel';
+import testTypeModel from '../handle exams/testTypeModel';
 import Result from './resultModel';
 
 export const PostResult = catchAsync(async (req: any, res: any) => {
-  //first of all create the result file
+  const { paperId } = req.params;
 
-  try {
-    const result = await Result.findOne({
-      user: req.user._id,
-      level: req.user.level,
-      currentTerm: req.user.currentTerm,
-      currentSession: req.user.currentSession,
-      subject: req.body.subject,
-    });
+  req.body.session = req.user.currentSession;
+  req.body.user = req.user._id;
+  req.body.paper = paperId;
 
-    if (!result) {
-      const newResult = await Result.create({
-        user: req.user._id,
-        level: req.user.level,
-        currentTerm: req.user.currentTerm,
-        currentSession: req.user.currentSession,
-        subject: req.body.subject,
-      });
-      await Result.findOneAndUpdate(
-        { _id: newResult._id },
-        { $push: { results: req.body } }
-      );
-    } else {
-      await Result.findOneAndUpdate(
-        { _id: result._id },
-        { $push: { results: req.body } }
-      );
-    }
+  await Result.create(req.body);
 
-    res.json({ message: 'Updated' });
-  } catch (error) {
-    console.log(error);
-  }
+  res.json({ message: 'Result posted' });
 });
 
 export const ViewResult = catchAsync(async (req: any, res: any) => {
-  /**
-   * THIS WILL PULL RESULTS BY THE CURRENT TERM AND SESSION
-   */
-  try {
-    const termResults = [];
-    const results = await Result.find({
-      user: req.user._id,
-      level: req.user.level,
-      currentTerm: req.user.currentTerm,
-      currentSession: req.user.currentSession,
-    }).populate(['subject', 'results.testType']);
-    /**
-     * Subject:
-     * First CA:0
-     */
+  //user can view results by session as well
 
-    for (let i = 0; i < results.length; i++) {
-      const body: { subject: ''; results: any[] } = {
-        subject: '',
-        results: [],
-      };
-      const resultScores = results[i].results;
-      body.subject = results[i].subject.title;
+  const results = await Result.find({
+    user: req.user._id,
+    ...req.query,
+  });
 
-      for (let k = 0; k < resultScores.length; k++) {
-        body.results.push({
-          testType: resultScores[k].testType.testType,
-          score: resultScores[k].score,
-        });
-      }
-      termResults.push(body);
-    }
-    res.json({ termResults });
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ message: 'error happened' });
+  const detailedResult = [];
+  //loop through the results
+  for (let i = 0; i < results.length; i++) {
+    const paper = await questionModel
+      .findById(results[i].paper)
+      .populate(['testType', 'subject', 'currentClass', 'currentTerm'])
+      .select({ questions: 0, duration: 0 });
+
+    const result: any = {};
+    result.testType = paper.testType.testType;
+    result.title = paper.subject.title;
+    result.term = paper.currentTerm.term;
+    result.score = results[i].score;
+
+    detailedResult.push(result);
   }
+
+  const testTypes = await testTypeModel.find();
+
+  console.log(detailedResult);
+
+  res.json({ detailedResult });
 });

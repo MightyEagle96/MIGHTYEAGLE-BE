@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,93 +52,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewResult = exports.PostResult = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
+var questionModel_1 = __importDefault(require("../Class-Teacher/question handler/questionModel"));
+var testTypeModel_1 = __importDefault(require("../handle exams/testTypeModel"));
 var resultModel_1 = __importDefault(require("./resultModel"));
 exports.PostResult = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var result, newResult, error_1;
+    var paperId;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 7, , 8]);
-                return [4 /*yield*/, resultModel_1.default.findOne({
-                        user: req.user._id,
-                        level: req.user.level,
-                        currentTerm: req.user.currentTerm,
-                        currentSession: req.user.currentSession,
-                        subject: req.body.subject,
-                    })];
+                paperId = req.params.paperId;
+                req.body.session = req.user.currentSession;
+                req.body.user = req.user._id;
+                req.body.paper = paperId;
+                return [4 /*yield*/, resultModel_1.default.create(req.body)];
             case 1:
-                result = _a.sent();
-                if (!!result) return [3 /*break*/, 4];
-                return [4 /*yield*/, resultModel_1.default.create({
-                        user: req.user._id,
-                        level: req.user.level,
-                        currentTerm: req.user.currentTerm,
-                        currentSession: req.user.currentSession,
-                        subject: req.body.subject,
-                    })];
-            case 2:
-                newResult = _a.sent();
-                return [4 /*yield*/, resultModel_1.default.findOneAndUpdate({ _id: newResult._id }, { $push: { results: req.body } })];
-            case 3:
                 _a.sent();
-                return [3 /*break*/, 6];
-            case 4: return [4 /*yield*/, resultModel_1.default.findOneAndUpdate({ _id: result._id }, { $push: { results: req.body } })];
-            case 5:
-                _a.sent();
-                _a.label = 6;
-            case 6:
-                res.json({ message: 'Updated' });
-                return [3 /*break*/, 8];
-            case 7:
-                error_1 = _a.sent();
-                console.log(error_1);
-                return [3 /*break*/, 8];
-            case 8: return [2 /*return*/];
+                res.json({ message: 'Result posted' });
+                return [2 /*return*/];
         }
     });
 }); });
 exports.ViewResult = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var termResults, results, i, body, resultScores, k, error_2;
+    var results, detailedResult, i, paper, result, testTypes;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                termResults = [];
-                return [4 /*yield*/, resultModel_1.default.find({
-                        user: req.user._id,
-                        level: req.user.level,
-                        currentTerm: req.user.currentTerm,
-                        currentSession: req.user.currentSession,
-                    }).populate(['subject', 'results.testType'])];
+            case 0: return [4 /*yield*/, resultModel_1.default.find(__assign({ user: req.user._id }, req.query))];
             case 1:
                 results = _a.sent();
-                /**
-                 * Subject:
-                 * First CA:0
-                 */
-                for (i = 0; i < results.length; i++) {
-                    body = {
-                        subject: '',
-                        results: [],
-                    };
-                    resultScores = results[i].results;
-                    body.subject = results[i].subject.title;
-                    for (k = 0; k < resultScores.length; k++) {
-                        body.results.push({
-                            testType: resultScores[k].testType.testType,
-                            score: resultScores[k].score,
-                        });
-                    }
-                    termResults.push(body);
-                }
-                res.json({ termResults: termResults });
-                return [3 /*break*/, 3];
+                detailedResult = [];
+                i = 0;
+                _a.label = 2;
             case 2:
-                error_2 = _a.sent();
-                console.log(error_2);
-                res.status(400).json({ message: 'error happened' });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                if (!(i < results.length)) return [3 /*break*/, 5];
+                return [4 /*yield*/, questionModel_1.default
+                        .findById(results[i].paper)
+                        .populate(['testType', 'subject', 'currentClass', 'currentTerm'])
+                        .select({ questions: 0, duration: 0 })];
+            case 3:
+                paper = _a.sent();
+                result = {};
+                result.testType = paper.testType.testType;
+                result.title = paper.subject.title;
+                result.term = paper.currentTerm.term;
+                result.score = results[i].score;
+                detailedResult.push(result);
+                _a.label = 4;
+            case 4:
+                i++;
+                return [3 /*break*/, 2];
+            case 5: return [4 /*yield*/, testTypeModel_1.default.find()];
+            case 6:
+                testTypes = _a.sent();
+                console.log(detailedResult);
+                res.json({ detailedResult: detailedResult });
+                return [2 /*return*/];
         }
     });
 }); });
