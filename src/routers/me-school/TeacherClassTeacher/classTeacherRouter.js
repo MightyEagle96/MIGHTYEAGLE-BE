@@ -8,6 +8,6 @@ var ClassTeacherController_1 = require("../../../controllers/ME-SCHOOL/Class-Tea
 var user_service_1 = require("../../../services/user.service");
 var classTeacherRouter = express_1.default.Router();
 classTeacherRouter.use(user_service_1.IsLoggedIn);
-classTeacherRouter.use(user_service_1.RestrictTo('classTeacher'));
+classTeacherRouter.use(user_service_1.RestrictTo('class teacher'));
 classTeacherRouter.get('/myStudents', ClassTeacherController_1.StudentsInMyClass);
 exports.default = classTeacherRouter;

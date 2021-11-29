@@ -39,45 +39,50 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HasTakenPaper = exports.DeletePaperTaken = exports.ViewPapersTaken = exports.TakeExam = void 0;
+exports.DeletePaperTaken = exports.StudentsWhoHaveTakenPaper = exports.HasTakenPaper = exports.RegisterStudentWithPaper = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
 var examsTakenModel_1 = __importDefault(require("./examsTakenModel"));
-exports.TakeExam = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, record, data;
+exports.RegisterStudentWithPaper = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, examsTakenModel_1.default.findOne({ user: req.user._id })];
+            case 0:
+                req.body.user = req.user._id;
+                return [4 /*yield*/, examsTakenModel_1.default.create(req.body)];
             case 1:
-                user = _a.sent();
-                if (!!user) return [3 /*break*/, 4];
-                return [4 /*yield*/, examsTakenModel_1.default.create({ user: req.user._id })];
-            case 2:
-                record = _a.sent();
-                return [4 /*yield*/, examsTakenModel_1.default.findOneAndUpdate({ _id: record._id }, { $push: { examsTaken: req.body } })];
-            case 3:
-                data = _a.sent();
-                return [3 /*break*/, 6];
-            case 4: 
-            //otherwise update it
-            return [4 /*yield*/, examsTakenModel_1.default.findOneAndUpdate({ _id: user._id }, { $push: { examsTaken: req.body } })];
-            case 5:
-                //otherwise update it
                 _a.sent();
-                _a.label = 6;
-            case 6:
-                res.json({ message: 'success' });
+                res.json({ message: 'Done' });
                 return [2 /*return*/];
         }
     });
 }); });
-exports.ViewPapersTaken = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var papers;
+exports.HasTakenPaper = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var confirm;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, examsTakenModel_1.default.findOne({ user: req.user._id })];
+            case 0: return [4 /*yield*/, examsTakenModel_1.default.findOne({
+                    $and: [{ user: req.user._id }, { paper: req.params.paperId }],
+                })];
             case 1:
-                papers = _a.sent();
-                res.json({ papers: papers.examsTaken });
+                confirm = _a.sent();
+                if (confirm)
+                    res.json({ hasTaken: true });
+                else
+                    res.json({ hasTaken: false });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.StudentsWhoHaveTakenPaper = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var students;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, examsTakenModel_1.default.find(req.query).populate([
+                    'user',
+                    'paper',
+                ])];
+            case 1:
+                students = _a.sent();
+                res.json({ students: students });
                 return [2 /*return*/];
         }
     });
@@ -85,32 +90,10 @@ exports.ViewPapersTaken = catchAsync_1.catchAsync(function (req, res) { return _
 exports.DeletePaperTaken = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, examsTakenModel_1.default.findOneAndUpdate({ user: req.user._id }, { $pull: { examsTaken: { _id: req.params.id } } })];
+            case 0: return [4 /*yield*/, examsTakenModel_1.default.findByIdAndDelete(req.params.id)];
             case 1:
                 _a.sent();
-                res.json({ message: 'success' });
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.HasTakenPaper = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, currentClass, currentTerm, testType, codeName, confirm;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, currentClass = _a.currentClass, currentTerm = _a.currentTerm, testType = _a.testType, codeName = _a.codeName;
-                return [4 /*yield*/, examsTakenModel_1.default.findOne({
-                        $and: [
-                            { user: req.user._id },
-                            { 'examsTaken.currentClass': currentClass },
-                            { 'examsTaken.currentTerm': currentTerm },
-                            { 'examsTaken.testType': testType },
-                            { 'examsTaken.codeName': codeName },
-                        ],
-                    })];
-            case 1:
-                confirm = _b.sent();
-                res.json({ data: confirm ? 'true' : 'false' });
+                res.json({ message: 'done' });
                 return [2 /*return*/];
         }
     });

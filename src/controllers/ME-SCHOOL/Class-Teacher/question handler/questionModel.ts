@@ -5,7 +5,7 @@ const questionSchema = new Schema({
   currentTerm: { type: Schema.Types.ObjectId, ref: 'CurrentTerm' },
   subject: { type: Schema.Types.ObjectId, ref: 'Subject' },
   testType: { type: Schema.Types.ObjectId, ref: 'TestType' },
-  duration: Number,
+  duration: { type: Number, default: 0 },
   activated: { type: Boolean, default: false },
   questions: [
     {

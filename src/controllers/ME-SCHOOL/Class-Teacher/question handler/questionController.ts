@@ -51,7 +51,12 @@ export const ViewQuestions = catchAsync(async (req: any, res: any) => {
       res.json({ count, questionId: questions._id, questions: questions });
     }
   } catch (error) {
-    res.json({ count: 0, questions: { questions: [] } });
+    const createdQuestion = await Question.create(req.query);
+    res.json({
+      count: 0,
+      questionId: createdQuestion._id,
+      questions: { questions: [] },
+    });
   }
 });
 

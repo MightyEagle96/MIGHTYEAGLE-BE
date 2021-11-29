@@ -84,11 +84,11 @@ exports.CreateQuestion = catchAsync_1.catchAsync(function (req, res) { return __
 }); });
 //to view the list of questions
 exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var result, questions, count, error_1;
+    var result, questions, count, error_1, createdQuestion;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 2, , 4]);
                 return [4 /*yield*/, questionModel_1.default.find(req.query).populate([
                         'currentClass',
                         'testType',
@@ -102,12 +102,19 @@ exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __a
                     count = questions.questions.length;
                     res.json({ count: count, questionId: questions._id, questions: questions });
                 }
-                return [3 /*break*/, 3];
+                return [3 /*break*/, 4];
             case 2:
                 error_1 = _a.sent();
-                res.json({ count: 0, questions: { questions: [] } });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [4 /*yield*/, questionModel_1.default.create(req.query)];
+            case 3:
+                createdQuestion = _a.sent();
+                res.json({
+                    count: 0,
+                    questionId: createdQuestion._id,
+                    questions: { questions: [] },
+                });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
