@@ -8,15 +8,22 @@ import {
   ViewQuestion,
   ViewQuestions,
 } from '../../controllers/ME-SCHOOL/Class-Teacher/question handler/questionController';
+import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const questionRouter = express.Router();
 
-questionRouter.post('/', CreateQuestion);
-questionRouter.get('/', ViewQuestions);
-questionRouter.get('/:collectionId/:questionId', ViewQuestion);
-questionRouter.patch('/:collectionId/:questionId', UpdateQuestion);
-questionRouter.patch('/:collectionId/timer/paper', SetTimer);
-questionRouter.patch('/:collectionId/toggleActivate/paper', ToggleActivation);
-questionRouter.post('/delete/:id', DeleteQuestion);
+questionRouter
+  .use(IsLoggedIn)
+  .post('/', CreateQuestion)
+  .get('/', ViewQuestions)
+  .get('/:collectionId/:questionId', ViewQuestion)
+  .patch(
+    '/:collectionId/:questionId',
+    RestrictTo('class teacher', 'teacher'),
+    UpdateQuestion
+  )
+  .patch('/:collectionId/timer/paper', SetTimer)
+  .patch('/:collectionId/toggleActivate/paper', ToggleActivation)
+  .post('/delete/:id', DeleteQuestion);
 
 export default questionRouter;

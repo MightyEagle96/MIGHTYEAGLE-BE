@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToggleActivation = exports.SetTimer = exports.DeleteQuestion = exports.UpdateQuestion = exports.ViewQuestion = exports.ViewQuestions = exports.CreateQuestion = void 0;
 var catchAsync_1 = require("../../../../shared/catchAsync");
+var services_1 = require("../../../../utils/services");
 var questionModel_1 = __importDefault(require("./questionModel"));
 //to create a question
 exports.CreateQuestion = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -88,7 +89,7 @@ exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __a
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 4]);
+                _a.trys.push([0, 2, , 6]);
                 return [4 /*yield*/, questionModel_1.default.find(req.query).populate([
                         'currentClass',
                         'testType',
@@ -99,12 +100,17 @@ exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __a
                 result = _a.sent();
                 if (result) {
                     questions = result[0];
+                    //to randomise the questions field for student's alone
+                    if (req.user.role === 'student') {
+                        questions.questions = services_1.randomizeQuestions(questions.questions, questions.questions.length);
+                    }
                     count = questions.questions.length;
                     res.json({ count: count, questionId: questions._id, questions: questions });
                 }
-                return [3 /*break*/, 4];
+                return [3 /*break*/, 6];
             case 2:
                 error_1 = _a.sent();
+                if (!(req.user.role === 'class teacher' || req.user.role === 'teacher')) return [3 /*break*/, 4];
                 return [4 /*yield*/, questionModel_1.default.create(req.query)];
             case 3:
                 createdQuestion = _a.sent();
@@ -113,8 +119,15 @@ exports.ViewQuestions = catchAsync_1.catchAsync(function (req, res) { return __a
                     questionId: createdQuestion._id,
                     questions: { questions: [] },
                 });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 4:
+                res.json({
+                    count: 0,
+                    questions: { questions: [] },
+                });
+                _a.label = 5;
+            case 5: return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); });

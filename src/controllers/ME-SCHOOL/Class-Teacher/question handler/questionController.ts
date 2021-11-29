@@ -1,4 +1,5 @@
 import { catchAsync } from '../../../../shared/catchAsync';
+import { randomizeQuestions } from '../../../../utils/services';
 import Question from './questionModel';
 
 //to create a question
@@ -47,16 +48,34 @@ export const ViewQuestions = catchAsync(async (req: any, res: any) => {
     if (result) {
       let questions = result[0];
 
+      //to randomise the questions field for student's alone
+      if (req.user.role === 'student') {
+        questions.questions = randomizeQuestions(
+          questions.questions,
+          questions.questions.length
+        );
+      }
+
       const count = questions.questions.length;
       res.json({ count, questionId: questions._id, questions: questions });
     }
   } catch (error) {
-    const createdQuestion = await Question.create(req.query);
-    res.json({
-      count: 0,
-      questionId: createdQuestion._id,
-      questions: { questions: [] },
-    });
+    // this line here is to create a question record on first view
+    //restrict this to only teachers and class teachers
+
+    if (req.user.role === 'class teacher' || req.user.role === 'teacher') {
+      const createdQuestion = await Question.create(req.query);
+      res.json({
+        count: 0,
+        questionId: createdQuestion._id,
+        questions: { questions: [] },
+      });
+    } else {
+      res.json({
+        count: 0,
+        questions: { questions: [] },
+      });
+    }
   }
 });
 
