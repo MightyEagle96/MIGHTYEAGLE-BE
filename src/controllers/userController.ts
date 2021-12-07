@@ -21,4 +21,8 @@ export const UPLOAD_PHOTO = catchAsync(async (req: any, res: any) => {
 
   res.json({ message: 'image uploaded' });
 });
- 
+
+export const CREATE_USER = catchAsync(async (req: any, res: any) => {
+  await User.create(req.body);
+  res.json({ message: `New ${req.body.role} created` });
+});

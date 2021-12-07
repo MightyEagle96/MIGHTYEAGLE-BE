@@ -16,33 +16,35 @@ export const PostResult = catchAsync(async (req: any, res: any) => {
 });
 
 export const ViewResult = catchAsync(async (req: any, res: any) => {
-  //user can view results by session as well
+  try {
+    //user can view results by session as well
 
-  const results = await Result.find({
-    user: req.user._id,
-    ...req.query,
-  });
+    const testTypes = await testTypeModel.find();
 
-  const detailedResult = [];
-  //loop through the results
-  for (let i = 0; i < results.length; i++) {
-    const paper = await questionModel
-      .findById(results[i].paper)
-      .populate(['testType', 'subject', 'currentClass', 'currentTerm'])
-      .select({ questions: 0, duration: 0 });
+    console.log(testTypes.length);
+    //get the subject Id
+    let assessmentResults = [];
+    for (let i = 0; i < testTypes.length; i++) {
+      const query = {
+        subject: req.params.subjectId,
+        currentClass: req.user.level,
+        currentTerm: req.user.currentTerm,
+        testType: testTypes[i]._id,
+      };
 
-    const result: any = {};
-    result.testType = paper.testType.testType;
-    result.title = paper.subject.title;
-    result.term = paper.currentTerm.term;
-    result.score = results[i].score;
+      const paper = await questionModel.find(query);
 
-    detailedResult.push(result);
+      if (paper && paper[0]) {
+        const result = await Result.findOne({ paper: paper[0]._id });
+
+        assessmentResults.push({ testType: testTypes[i], result });
+      }
+    }
+
+    res.json({ assessmentResults });
+    //res.json({ message: 'Hello' });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: 'Something is broken' });
   }
-
-  const testTypes = await testTypeModel.find();
-
-  console.log(detailedResult);
-
-  res.json({ detailedResult });
 });

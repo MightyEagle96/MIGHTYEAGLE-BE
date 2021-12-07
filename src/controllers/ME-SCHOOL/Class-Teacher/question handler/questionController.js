@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ToggleActivation = exports.SetTimer = exports.DeleteQuestion = exports.UpdateQuestion = exports.ViewQuestion = exports.ViewQuestions = exports.CreateQuestion = void 0;
+exports.SetDivisor = exports.ToggleActivation = exports.SetTimer = exports.DeleteQuestion = exports.UpdateQuestion = exports.ViewQuestion = exports.ViewQuestions = exports.CreateQuestion = void 0;
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var services_1 = require("../../../../utils/services");
 var questionModel_1 = __importDefault(require("./questionModel"));
@@ -216,7 +216,6 @@ exports.ToggleActivation = catchAsync_1.catchAsync(function (req, res) { return 
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 collectionId = req.params.collectionId;
-                console.log();
                 return [4 /*yield*/, questionModel_1.default.findById(collectionId)];
             case 1:
                 question = _a.sent();
@@ -231,6 +230,32 @@ exports.ToggleActivation = catchAsync_1.catchAsync(function (req, res) { return 
                 error_3 = _a.sent();
                 console.log(error_3);
                 res.json({ error: error_3 });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+exports.SetDivisor = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var collectionId, question, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                collectionId = req.params.collectionId;
+                return [4 /*yield*/, questionModel_1.default.findById(collectionId)];
+            case 1:
+                question = _a.sent();
+                return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: collectionId }, {
+                        divisor: req.body.divisor,
+                    })];
+            case 2:
+                _a.sent();
+                res.json({ message: 'Done' });
+                return [3 /*break*/, 4];
+            case 3:
+                error_4 = _a.sent();
+                console.log(error_4);
+                res.json({ error: error_4 });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }

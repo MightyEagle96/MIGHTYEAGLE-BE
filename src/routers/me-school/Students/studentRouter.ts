@@ -11,6 +11,6 @@ studentRouter
   .use(IsLoggedIn)
   .use(RestrictTo('student'))
   .post('/result/:paperId', PostResult)
-  .get('/result', ViewResult);
+  .get('/result/:subjectId', ViewResult);
 
 export default studentRouter;

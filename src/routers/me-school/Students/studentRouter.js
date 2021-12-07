@@ -11,5 +11,5 @@ studentRouter
     .use(user_service_1.IsLoggedIn)
     .use(user_service_1.RestrictTo('student'))
     .post('/result/:paperId', resultController_1.PostResult)
-    .get('/result', resultController_1.ViewResult);
+    .get('/result/:subjectId', resultController_1.ViewResult);
 exports.default = studentRouter;

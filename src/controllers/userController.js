@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
+exports.CREATE_USER = exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
 var user_1 = __importDefault(require("../models/user"));
 var fs_1 = __importDefault(require("fs"));
 var catchAsync_1 = require("../shared/catchAsync");
@@ -73,5 +73,16 @@ exports.UPLOAD_PHOTO = catchAsync_1.catchAsync(function (req, res) { return __aw
         }); });
         res.json({ message: 'image uploaded' });
         return [2 /*return*/];
+    });
+}); });
+exports.CREATE_USER = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, user_1.default.create(req.body)];
+            case 1:
+                _a.sent();
+                res.json({ message: "New " + req.body.role + " created" });
+                return [2 /*return*/];
+        }
     });
 }); });

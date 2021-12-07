@@ -1,13 +1,13 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.randomizeQuestions = exports.originUrl = void 0;
 // export const originUrl =
 //   process.env.NODE_ENV === 'development'
 //     ? 'https://hidden-fjord-42920.herokuapp.com'
 //     : 'http://localhost:3000';
 //export const originUrl = 'https://me-school.herokuapp.com';
-exports.originUrl = 'http://localhost:3000';
-//export const originUrl = 'http://192.168.1.6:3000';
+//export const originUrl = 'http://localhost:3000';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.randomizeQuestions = exports.originUrl = void 0;
+exports.originUrl = 'http://192.168.1.6:3000';
 var randomizeQuestions = function (arrayToRandomize, limit) {
     var randomizedArray = [];
     var array = [];

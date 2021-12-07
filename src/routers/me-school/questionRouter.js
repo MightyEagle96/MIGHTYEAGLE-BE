@@ -15,5 +15,6 @@ questionRouter
     .patch('/:collectionId/:questionId', user_service_1.RestrictTo('class teacher', 'teacher'), questionController_1.UpdateQuestion)
     .patch('/:collectionId/timer/paper', questionController_1.SetTimer)
     .patch('/:collectionId/toggleActivate/paper', questionController_1.ToggleActivation)
+    .patch('/:collectionId/divisor/paper', questionController_1.SetDivisor)
     .post('/delete/:id', questionController_1.DeleteQuestion);
 exports.default = questionRouter;

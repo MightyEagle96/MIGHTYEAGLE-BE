@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -73,39 +62,47 @@ exports.PostResult = catchAsync_1.catchAsync(function (req, res) { return __awai
     });
 }); });
 exports.ViewResult = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var results, detailedResult, i, paper, result, testTypes;
+    var testTypes, assessmentResults, i, query, paper, result, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, resultModel_1.default.find(__assign({ user: req.user._id }, req.query))];
+            case 0:
+                _a.trys.push([0, 7, , 8]);
+                return [4 /*yield*/, testTypeModel_1.default.find()];
             case 1:
-                results = _a.sent();
-                detailedResult = [];
+                testTypes = _a.sent();
+                console.log(testTypes.length);
+                assessmentResults = [];
                 i = 0;
                 _a.label = 2;
             case 2:
-                if (!(i < results.length)) return [3 /*break*/, 5];
-                return [4 /*yield*/, questionModel_1.default
-                        .findById(results[i].paper)
-                        .populate(['testType', 'subject', 'currentClass', 'currentTerm'])
-                        .select({ questions: 0, duration: 0 })];
+                if (!(i < testTypes.length)) return [3 /*break*/, 6];
+                query = {
+                    subject: req.params.subjectId,
+                    currentClass: req.user.level,
+                    currentTerm: req.user.currentTerm,
+                    testType: testTypes[i]._id,
+                };
+                return [4 /*yield*/, questionModel_1.default.find(query)];
             case 3:
                 paper = _a.sent();
-                result = {};
-                result.testType = paper.testType.testType;
-                result.title = paper.subject.title;
-                result.term = paper.currentTerm.term;
-                result.score = results[i].score;
-                detailedResult.push(result);
-                _a.label = 4;
+                if (!(paper && paper[0])) return [3 /*break*/, 5];
+                return [4 /*yield*/, resultModel_1.default.findOne({ paper: paper[0]._id })];
             case 4:
+                result = _a.sent();
+                assessmentResults.push({ testType: testTypes[i], result: result });
+                _a.label = 5;
+            case 5:
                 i++;
                 return [3 /*break*/, 2];
-            case 5: return [4 /*yield*/, testTypeModel_1.default.find()];
             case 6:
-                testTypes = _a.sent();
-                console.log(detailedResult);
-                res.json({ detailedResult: detailedResult });
-                return [2 /*return*/];
+                res.json({ assessmentResults: assessmentResults });
+                return [3 /*break*/, 8];
+            case 7:
+                error_1 = _a.sent();
+                console.log(error_1);
+                res.json({ message: 'Something is broken' });
+                return [3 /*break*/, 8];
+            case 8: return [2 /*return*/];
         }
     });
 }); });

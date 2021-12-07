@@ -2,6 +2,7 @@ import express from 'express';
 import {
   CreateQuestion,
   DeleteQuestion,
+  SetDivisor,
   SetTimer,
   ToggleActivation,
   UpdateQuestion,
@@ -24,6 +25,7 @@ questionRouter
   )
   .patch('/:collectionId/timer/paper', SetTimer)
   .patch('/:collectionId/toggleActivate/paper', ToggleActivation)
+  .patch('/:collectionId/divisor/paper', SetDivisor)
   .post('/delete/:id', DeleteQuestion);
 
 export default questionRouter;

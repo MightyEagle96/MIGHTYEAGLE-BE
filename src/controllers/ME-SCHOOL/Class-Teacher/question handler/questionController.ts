@@ -143,7 +143,6 @@ export const SetTimer = catchAsync(async (req: any, res: any) => {
 export const ToggleActivation = catchAsync(async (req: any, res: any) => {
   try {
     const { collectionId } = req.params;
-    console.log();
 
     const question = await Question.findById(collectionId);
 
@@ -151,6 +150,26 @@ export const ToggleActivation = catchAsync(async (req: any, res: any) => {
       { _id: collectionId },
       {
         activated: !question.activated,
+      }
+    );
+
+    res.json({ message: 'Done' });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+});
+
+export const SetDivisor = catchAsync(async (req: any, res: any) => {
+  try {
+    const { collectionId } = req.params;
+
+    const question = await Question.findById(collectionId);
+
+    await Question.findOneAndUpdate(
+      { _id: collectionId },
+      {
+        divisor: req.body.divisor,
       }
     );
 
