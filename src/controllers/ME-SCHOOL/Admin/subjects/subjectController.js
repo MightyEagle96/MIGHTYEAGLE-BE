@@ -60,34 +60,24 @@ exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __aw
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 13, , 14]);
+                _a.trys.push([0, 10, , 11]);
                 subjects = [];
-                if (!req.user) return [3 /*break*/, 10];
-                if (!(req.user.role === 'student')) return [3 /*break*/, 6];
+                if (!req.user) return [3 /*break*/, 7];
+                if (!(req.user.role === 'student')) return [3 /*break*/, 3];
                 return [4 /*yield*/, levelModel_1.default.findOne({ _id: req.user.level })];
             case 1:
                 level = _a.sent();
-                if (!(level.level === 'Jss1' ||
-                    level.level === 'Jss2' ||
-                    level.level === 'Jss3')) return [3 /*break*/, 3];
                 return [4 /*yield*/, subjectModel_1.default.find({
-                        $or: [{ category: 'both' }, { category: 'junior' }],
+                        $or: [{ category: 'both' }, { category: level.category }],
                     })];
             case 2:
                 subjects = _a.sent();
-                return [3 /*break*/, 5];
-            case 3: return [4 /*yield*/, subjectModel_1.default.find({
-                    $or: [{ category: 'both' }, { category: 'senior' }],
-                })];
+                return [3 /*break*/, 6];
+            case 3: return [4 /*yield*/, subjectModel_1.default.find()];
             case 4:
-                subjects = _a.sent();
-                _a.label = 5;
-            case 5: return [3 /*break*/, 9];
-            case 6: return [4 /*yield*/, subjectModel_1.default.find()];
-            case 7:
                 allSubjects_1 = _a.sent();
                 return [4 /*yield*/, levelModel_1.default.find()];
-            case 8:
+            case 5:
                 allLevels = _a.sent();
                 _loop_1 = function (i) {
                     var subjectLevel = {};
@@ -105,20 +95,20 @@ exports.ViewSubjects = catchAsync_1.catchAsync(function (req, res) { return __aw
                 for (i = 0; i < allSubjects_1.length; i++) {
                     _loop_1(i);
                 }
-                _a.label = 9;
-            case 9: return [3 /*break*/, 12];
-            case 10: return [4 /*yield*/, subjectModel_1.default.find()];
-            case 11:
+                _a.label = 6;
+            case 6: return [3 /*break*/, 9];
+            case 7: return [4 /*yield*/, subjectModel_1.default.find()];
+            case 8:
                 subjects = _a.sent();
-                _a.label = 12;
-            case 12:
+                _a.label = 9;
+            case 9:
                 res.json({ subjects: subjects });
-                return [3 /*break*/, 14];
-            case 13:
+                return [3 /*break*/, 11];
+            case 10:
                 error_1 = _a.sent();
                 console.log(error_1);
-                return [3 /*break*/, 14];
-            case 14: return [2 /*return*/];
+                return [3 /*break*/, 11];
+            case 11: return [2 /*return*/];
         }
     });
 }); });
