@@ -44,6 +44,9 @@ var user_1 = __importDefault(require("../models/user"));
 var fs_1 = __importDefault(require("fs"));
 var catchAsync_1 = require("../shared/catchAsync");
 var path_1 = __importDefault(require("path"));
+var labels_1 = require("../utils/labels");
+var sessionModel_1 = __importDefault(require("./ME-SCHOOL/Admin/session handler/sessionModel"));
+var termModel_1 = __importDefault(require("./ME-SCHOOL/Admin/termHandler/termModel"));
 exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
@@ -76,13 +79,33 @@ exports.UPLOAD_PHOTO = catchAsync_1.catchAsync(function (req, res) { return __aw
     });
 }); });
 exports.CREATE_USER = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var currentSession, currentTerm, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, user_1.default.create(req.body)];
+            case 0:
+                _a.trys.push([0, 5, , 6]);
+                if (!(req.body.account_type == labels_1.ACCOUNT_LABEL.me_school)) return [3 /*break*/, 3];
+                return [4 /*yield*/, sessionModel_1.default.findOne({
+                        activeSession: true,
+                    })];
             case 1:
+                currentSession = _a.sent();
+                return [4 /*yield*/, termModel_1.default.findOne({ activeTerm: true })];
+            case 2:
+                currentTerm = _a.sent();
+                req.body.currentSession = currentSession._id;
+                req.body.currentTerm = currentTerm._id;
+                _a.label = 3;
+            case 3: return [4 /*yield*/, user_1.default.create(req.body)];
+            case 4:
                 _a.sent();
                 res.json({ message: "New " + req.body.role + " created" });
-                return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 5:
+                error_1 = _a.sent();
+                console.log(error_1);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); });

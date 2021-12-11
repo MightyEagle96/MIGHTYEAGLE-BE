@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { stringify } from 'querystring';
+import { ACCOUNT_LABEL } from '../utils/labels';
 
 export interface UserInput {
   email: string;
@@ -59,7 +60,11 @@ const userSchema = new Schema({
   },
   account_type: {
     type: String,
-    enum: ['me-school', 'medi-tec', 'me-stores'],
+    enum: [
+      ACCOUNT_LABEL.me_school,
+      ACCOUNT_LABEL.me_stores,
+      ACCOUNT_LABEL.medi_tec,
+    ],
   },
   isNewAccount: { type: Boolean, default: true },
   medical_department: String,

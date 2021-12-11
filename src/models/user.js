@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
 var bcrypt_1 = __importDefault(require("bcrypt"));
+var labels_1 = require("../utils/labels");
 var userSchema = new mongoose_1.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -77,7 +78,11 @@ var userSchema = new mongoose_1.Schema({
     },
     account_type: {
         type: String,
-        enum: ['me-school', 'medi-tec', 'me-stores'],
+        enum: [
+            labels_1.ACCOUNT_LABEL.me_school,
+            labels_1.ACCOUNT_LABEL.me_stores,
+            labels_1.ACCOUNT_LABEL.medi_tec,
+        ],
     },
     isNewAccount: { type: Boolean, default: true },
     medical_department: String,
