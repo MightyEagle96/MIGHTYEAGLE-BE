@@ -9,8 +9,8 @@ const studentRouter = express.Router();
 
 studentRouter
   .use(IsLoggedIn)
-  .use(RestrictTo('student'))
-  .post('/result/:paperId', PostResult)
-  .get('/result/:subjectId', ViewResult);
+  .use(RestrictTo('student', 'class teacher'))
+  .post('/result', PostResult)
+  .get('/result', ViewResult);
 
 export default studentRouter;

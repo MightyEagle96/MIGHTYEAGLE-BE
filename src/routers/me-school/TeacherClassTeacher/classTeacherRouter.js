@@ -9,5 +9,7 @@ var user_service_1 = require("../../../services/user.service");
 var classTeacherRouter = express_1.default.Router();
 classTeacherRouter.use(user_service_1.IsLoggedIn);
 classTeacherRouter.use(user_service_1.RestrictTo('class teacher'));
-classTeacherRouter.get('/myStudents', ClassTeacherController_1.StudentsInMyClass);
+classTeacherRouter
+    .get('/myStudents', ClassTeacherController_1.StudentsInMyClass)
+    .get('/studentsPerformance/:studentId', user_service_1.RestrictTo('admin', 'class teacher'), ClassTeacherController_1.MyStudentsPerformance);
 exports.default = classTeacherRouter;

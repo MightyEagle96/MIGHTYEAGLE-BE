@@ -39,10 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StudentsInMyClass = void 0;
+exports.MyStudentsPerformance = exports.StudentsInMyClass = void 0;
 var user_1 = __importDefault(require("../../../models/user"));
 var catchAsync_1 = require("../../../shared/catchAsync");
 var levelModel_1 = __importDefault(require("../Admin/level handler/levelModel"));
+var testTypeModel_1 = __importDefault(require("../handle exams/testTypeModel"));
+var resultModel_1 = __importDefault(require("../students/resultModel"));
+var subjectsRegister_1 = __importDefault(require("../students/subjectsRegister"));
 exports.StudentsInMyClass = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var students, level;
     return __generator(this, function (_a) {
@@ -56,6 +59,73 @@ exports.StudentsInMyClass = catchAsync_1.catchAsync(function (req, res) { return
             case 2:
                 level = _a.sent();
                 res.json({ count: students.length, level: level, students: students });
+                return [2 /*return*/];
+        }
+    });
+}); });
+exports.MyStudentsPerformance = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var totalResults, data, subjects, testTypes, i, data_1, j, scores, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                totalResults = [];
+                return [4 /*yield*/, subjectsRegister_1.default
+                        .findOne({
+                        user: req.params.studentId,
+                        session: req.user.currentSession,
+                        currentTerm: req.user.currentTerm,
+                    })
+                        .populate({
+                        path: 'subjects',
+                        model: 'Subject',
+                        populate: { path: 'subject', model: 'Subject' },
+                    })];
+            case 1:
+                data = _a.sent();
+                subjects = data.subjects;
+                return [4 /*yield*/, testTypeModel_1.default.find()];
+            case 2:
+                testTypes = _a.sent();
+                i = 0;
+                _a.label = 3;
+            case 3:
+                if (!(i < subjects.length)) return [3 /*break*/, 9];
+                data_1 = { scores: [] };
+                data_1.title = subjects[i].subject.title;
+                j = 0;
+                _a.label = 4;
+            case 4:
+                if (!(j < testTypes.length)) return [3 /*break*/, 7];
+                scores = {};
+                scores.testType = testTypes[j].testType;
+                return [4 /*yield*/, resultModel_1.default.findOne({
+                        subject: subjects[i].subject._id,
+                        level: req.user.level,
+                        term: req.user.currentTerm,
+                        session: req.user.currentSession,
+                        testType: testTypes[j]._id,
+                        user: req.params.studentId,
+                    })];
+            case 5:
+                result = _a.sent();
+                if (result) {
+                    scores.score = result.score;
+                }
+                else
+                    scores.score = 0;
+                data_1.scores.push(scores);
+                _a.label = 6;
+            case 6:
+                j++;
+                return [3 /*break*/, 4];
+            case 7:
+                totalResults.push(data_1);
+                _a.label = 8;
+            case 8:
+                i++;
+                return [3 /*break*/, 3];
+            case 9:
+                res.json({ totalResults: totalResults });
                 return [2 /*return*/];
         }
     });

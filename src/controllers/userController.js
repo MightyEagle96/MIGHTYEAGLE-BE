@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CREATE_USER = exports.UPLOAD_PHOTO = exports.GET_USER = void 0;
+exports.FIND_USER = exports.CREATE_USER = exports.UPLOAD_PHOTO = exports.GET_ME = void 0;
 var user_1 = __importDefault(require("../models/user"));
 var fs_1 = __importDefault(require("fs"));
 var catchAsync_1 = require("../shared/catchAsync");
@@ -47,7 +47,7 @@ var path_1 = __importDefault(require("path"));
 var labels_1 = require("../utils/labels");
 var sessionModel_1 = __importDefault(require("./ME-SCHOOL/Admin/session handler/sessionModel"));
 var termModel_1 = __importDefault(require("./ME-SCHOOL/Admin/termHandler/termModel"));
-exports.GET_USER = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.GET_ME = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -106,6 +106,18 @@ exports.CREATE_USER = catchAsync_1.catchAsync(function (req, res) { return __awa
                 console.log(error_1);
                 return [3 /*break*/, 6];
             case 6: return [2 /*return*/];
+        }
+    });
+}); });
+exports.FIND_USER = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, user_1.default.findById(req.params.id)];
+            case 1:
+                user = _a.sent();
+                res.json({ user: user });
+                return [2 /*return*/];
         }
     });
 }); });

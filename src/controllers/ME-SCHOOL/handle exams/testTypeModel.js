@@ -4,7 +4,7 @@ var mongoose_1 = require("mongoose");
 var testTypeSchema = new mongoose_1.Schema({
     testType: {
         type: String,
-        unique: [true, 'This subject already exists'],
+        unique: [true, 'This test type already exists'],
         trim: true,
     },
 });

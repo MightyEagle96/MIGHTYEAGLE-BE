@@ -9,7 +9,7 @@ var user_service_1 = require("../../../services/user.service");
 var studentRouter = express_1.default.Router();
 studentRouter
     .use(user_service_1.IsLoggedIn)
-    .use(user_service_1.RestrictTo('student'))
-    .post('/result/:paperId', resultController_1.PostResult)
-    .get('/result/:subjectId', resultController_1.ViewResult);
+    .use(user_service_1.RestrictTo('student', 'class teacher'))
+    .post('/result', resultController_1.PostResult)
+    .get('/result', resultController_1.ViewResult);
 exports.default = studentRouter;

@@ -13,6 +13,7 @@ exports.userRouter = userRouter;
 var upload = multer_1.default({ dest: 'public/images' });
 userRouter
     .use(user_service_1.IsLoggedIn)
-    .get('/me', userController_1.GET_USER)
+    .get('/me', userController_1.GET_ME)
     .post('/uploadPhoto', upload.single('profilePhoto'), userController_1.UPLOAD_PHOTO)
-    .post('/createUser', user_service_1.RestrictTo('admin'), userController_1.CREATE_USER);
+    .post('/createUser', user_service_1.RestrictTo('admin'), userController_1.CREATE_USER)
+    .get('/findUser/:id', user_service_1.RestrictTo('admin', 'class teacher'), userController_1.FIND_USER);

@@ -7,7 +7,7 @@ exports.randomizeQuestions = exports.originUrl = void 0;
 //     : 'http://localhost:3000';
 //export const originUrl = 'https://me-school.herokuapp.com';
 exports.originUrl = 'http://localhost:3000';
-//export const originUrl = 'http://192.168.1.6:3000';
+//export const originUrl = 'http://192.168.41.129:3000';
 var randomizeQuestions = function (arrayToRandomize, limit) {
     var randomizedArray = [];
     var array = [];

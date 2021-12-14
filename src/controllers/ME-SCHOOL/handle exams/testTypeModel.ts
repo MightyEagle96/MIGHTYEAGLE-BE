@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const testTypeSchema = new Schema({
   testType: {
     type: String,
-    unique: [true, 'This subject already exists'],
+    unique: [true, 'This test type already exists'],
     trim: true,
   },
 });

@@ -41,18 +41,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ViewResult = exports.PostResult = void 0;
 var catchAsync_1 = require("../../../shared/catchAsync");
-var questionModel_1 = __importDefault(require("../Class-Teacher/question handler/questionModel"));
-var testTypeModel_1 = __importDefault(require("../handle exams/testTypeModel"));
 var resultModel_1 = __importDefault(require("./resultModel"));
 exports.PostResult = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var paperId;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                paperId = req.params.paperId;
+                // to add additional fields on the request body
                 req.body.session = req.user.currentSession;
+                req.body.level = req.user.level;
+                req.body.term = req.user.currentTerm;
                 req.body.user = req.user._id;
-                req.body.paper = paperId;
                 return [4 /*yield*/, resultModel_1.default.create(req.body)];
             case 1:
                 _a.sent();
@@ -62,47 +60,25 @@ exports.PostResult = catchAsync_1.catchAsync(function (req, res) { return __awai
     });
 }); });
 exports.ViewResult = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var testTypes, assessmentResults, i, query, paper, result, error_1;
+    var result;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 7, , 8]);
-                return [4 /*yield*/, testTypeModel_1.default.find()];
+                result = {};
+                if (!(req.user.role === 'student')) return [3 /*break*/, 2];
+                return [4 /*yield*/, resultModel_1.default.find({
+                        subject: req.query.subject,
+                        level: req.user.level,
+                        session: req.user.currentSession,
+                        term: req.user.currentTerm,
+                        user: req.user._id,
+                    }).populate(['testType'])];
             case 1:
-                testTypes = _a.sent();
-                console.log(testTypes.length);
-                assessmentResults = [];
-                i = 0;
+                result = _a.sent();
                 _a.label = 2;
             case 2:
-                if (!(i < testTypes.length)) return [3 /*break*/, 6];
-                query = {
-                    subject: req.params.subjectId,
-                    currentClass: req.user.level,
-                    currentTerm: req.user.currentTerm,
-                    testType: testTypes[i]._id,
-                };
-                return [4 /*yield*/, questionModel_1.default.find(query)];
-            case 3:
-                paper = _a.sent();
-                if (!(paper && paper[0])) return [3 /*break*/, 5];
-                return [4 /*yield*/, resultModel_1.default.findOne({ paper: paper[0]._id })];
-            case 4:
-                result = _a.sent();
-                assessmentResults.push({ testType: testTypes[i], result: result });
-                _a.label = 5;
-            case 5:
-                i++;
-                return [3 /*break*/, 2];
-            case 6:
-                res.json({ assessmentResults: assessmentResults });
-                return [3 /*break*/, 8];
-            case 7:
-                error_1 = _a.sent();
-                console.log(error_1);
-                res.json({ message: 'Something is broken' });
-                return [3 /*break*/, 8];
-            case 8: return [2 /*return*/];
+                res.json({ result: result });
+                return [2 /*return*/];
         }
     });
 }); });

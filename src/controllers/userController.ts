@@ -7,7 +7,7 @@ import user from '../models/user';
 import sessionModel from './ME-SCHOOL/Admin/session handler/sessionModel';
 import termModel from './ME-SCHOOL/Admin/termHandler/termModel';
 
-export const GET_USER = catchAsync(async (req: any, res: any) => {
+export const GET_ME = catchAsync(async (req: any, res: any) => {
   const user = await User.findById(req.user._id);
   return res.json({ user });
 });
@@ -43,4 +43,9 @@ export const CREATE_USER = catchAsync(async (req: any, res: any) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+export const FIND_USER = catchAsync(async (req: any, res: any) => {
+  const user = await User.findById(req.params.id);
+  res.json({ user });
 });
