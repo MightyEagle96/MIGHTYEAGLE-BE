@@ -16,7 +16,7 @@ var questionSchema = new mongoose_1.Schema({
             optionB: { type: String, trim: true },
             optionC: { type: String, trim: true },
             optionD: { type: String, trim: true },
-            optionE: { type: String, trim: true },
+            // optionE: { type: String, trim: true },
             correctAns: { type: String, trim: true },
         },
     ],

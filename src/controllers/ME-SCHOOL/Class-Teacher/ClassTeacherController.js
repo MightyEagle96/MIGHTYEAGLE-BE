@@ -112,7 +112,7 @@ exports.MyStudentsPerformance = catchAsync_1.catchAsync(function (req, res) { re
                     scores.score = result.score;
                 }
                 else
-                    scores.score = 0;
+                    scores.score = 'N/A';
                 data_1.scores.push(scores);
                 _a.label = 6;
             case 6:

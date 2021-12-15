@@ -33,3 +33,52 @@ export const ViewResult = catchAsync(async (req: any, res: any) => {
 
   res.json({ result });
 });
+
+export const ViewAllMyResults = catchAsync(async (req: any, res: any) => {
+  //first thing first is to get the student's registered sujects
+
+  //this result will be based on a particular term and session
+
+  let totalResults = [];
+  const data = await SubjectRegister.findOne({
+    user: req.user._id,
+    session: req.user.currentSession,
+    currentTerm: req.user.currentTerm,
+  }).populate({
+    path: 'subjects',
+    model: 'Subject',
+    populate: { path: 'subject', model: 'Subject' },
+  });
+
+  const subjects = data.subjects;
+  const testTypes = await testTypeModel.find();
+
+  for (let i = 0; i < subjects.length; i++) {
+    const data: any = { scores: [] };
+    data.title = subjects[i].subject.title;
+
+    for (let j = 0; j < testTypes.length; j++) {
+      // data.testType = testTypes[j].testType;
+      const scores: any = {};
+      scores.testType = testTypes[j].testType;
+
+      const result = await Result.findOne({
+        subject: subjects[i].subject._id,
+        level: req.user.level,
+        term: req.user.currentTerm,
+        session: req.user.currentSession,
+        testType: testTypes[j]._id,
+        user: req.user._id,
+      });
+
+      if (result) {
+        scores.score = result.score;
+      } else scores.score = 'N/A';
+
+      data.scores.push(scores);
+    }
+
+    totalResults.push(data);
+  }
+  res.json({ totalResults });
+});

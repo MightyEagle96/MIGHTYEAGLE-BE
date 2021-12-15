@@ -11,5 +11,6 @@ studentRouter
     .use(user_service_1.IsLoggedIn)
     .use(user_service_1.RestrictTo('student', 'class teacher'))
     .post('/result', resultController_1.PostResult)
-    .get('/result', resultController_1.ViewResult);
+    .get('/result', resultController_1.ViewResult)
+    .get('/results/all', resultController_1.ViewAllMyResults);
 exports.default = studentRouter;

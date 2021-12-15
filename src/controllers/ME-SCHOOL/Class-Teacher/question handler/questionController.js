@@ -43,13 +43,19 @@ exports.SetDivisor = exports.ToggleActivation = exports.SetTimer = exports.Delet
 var catchAsync_1 = require("../../../../shared/catchAsync");
 var services_1 = require("../../../../utils/services");
 var questionModel_1 = __importDefault(require("./questionModel"));
+var fs_1 = __importDefault(require("fs"));
+var csv_parse_1 = require("csv-parse");
 //to create a question
 exports.CreateQuestion = catchAsync_1.catchAsync(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, currentClass, currentTerm, subject, testType, question, createdQuestion;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var _a, currentClass, currentTerm, subject, testType, ext, newFileName, question_1, parser, _b, currentClass, currentTerm, subject, testType, question;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
-                _a = req.body, currentClass = _a.currentClass, currentTerm = _a.currentTerm, subject = _a.subject, testType = _a.testType;
+                if (!req.file) return [3 /*break*/, 2];
+                _a = req.query, currentClass = _a.currentClass, currentTerm = _a.currentTerm, subject = _a.subject, testType = _a.testType;
+                ext = req.file.originalname.split('.')[1];
+                newFileName = "file-" + Date.now() + "." + ext;
+                fs_1.default.rename(req.file.path, "public/documents/" + newFileName, function () { });
                 return [4 /*yield*/, questionModel_1.default.findOne({
                         $and: [
                             { currentClass: currentClass },
@@ -59,24 +65,38 @@ exports.CreateQuestion = catchAsync_1.catchAsync(function (req, res) { return __
                         ],
                     })];
             case 1:
-                question = _b.sent();
-                if (!!question) return [3 /*break*/, 4];
-                return [4 /*yield*/, questionModel_1.default.create({
-                        currentClass: currentClass,
-                        currentTerm: currentTerm,
-                        subject: subject,
-                        testType: testType,
-                    })];
-            case 2:
-                createdQuestion = _b.sent();
-                return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: createdQuestion._id }, { $push: { questions: req.body } })];
-            case 3:
-                _b.sent();
+                question_1 = _c.sent();
+                parser = csv_parse_1.parse({ columns: true }, function (err, records) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
+                    return [2 /*return*/];
+                }); }); }).on('data', function (data) { return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: question_1._id }, { $push: { questions: data } })];
+                            case 1:
+                                _a.sent();
+                                return [2 /*return*/];
+                        }
+                    });
+                }); });
+                fs_1.default.createReadStream("public/documents/" + newFileName).pipe(parser);
                 return [3 /*break*/, 6];
-            case 4: return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: question._id }, { $push: { questions: req.body } })];
+            case 2:
+                _b = req.body, currentClass = _b.currentClass, currentTerm = _b.currentTerm, subject = _b.subject, testType = _b.testType;
+                return [4 /*yield*/, questionModel_1.default.findOne({
+                        $and: [
+                            { currentClass: currentClass },
+                            { currentTerm: currentTerm },
+                            { subject: subject },
+                            { testType: testType },
+                        ],
+                    })];
+            case 3:
+                question = _c.sent();
+                return [4 /*yield*/, questionModel_1.default.findOneAndUpdate({ _id: question._id }, { $push: { questions: req.body } })];
+            case 4: return [4 /*yield*/, _c.sent()];
             case 5:
-                _b.sent();
-                _b.label = 6;
+                _c.sent();
+                _c.label = 6;
             case 6:
                 res.status(201).json({ message: 'done' });
                 return [2 /*return*/];

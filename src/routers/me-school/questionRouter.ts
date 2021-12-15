@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import {
   CreateQuestion,
   DeleteQuestion,
@@ -13,9 +14,11 @@ import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const questionRouter = express.Router();
 
+const upload = multer({ dest: 'public/documents' });
+
 questionRouter
   .use(IsLoggedIn)
-  .post('/', CreateQuestion)
+  .post('/', upload.single('questions'), CreateQuestion)
   .get('/', ViewQuestions)
   .get('/:collectionId/:questionId', ViewQuestion)
   .patch(

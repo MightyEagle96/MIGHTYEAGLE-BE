@@ -55,7 +55,7 @@ export const MyStudentsPerformance = catchAsync(async (req: any, res: any) => {
 
       if (result) {
         scores.score = result.score;
-      } else scores.score = 0;
+      } else scores.score = 'N/A';
 
       data.scores.push(scores);
     }

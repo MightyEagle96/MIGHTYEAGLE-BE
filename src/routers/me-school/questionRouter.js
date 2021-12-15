@@ -4,12 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var multer_1 = __importDefault(require("multer"));
 var questionController_1 = require("../../controllers/ME-SCHOOL/Class-Teacher/question handler/questionController");
 var user_service_1 = require("../../services/user.service");
 var questionRouter = express_1.default.Router();
+var upload = multer_1.default({ dest: 'public/documents' });
 questionRouter
     .use(user_service_1.IsLoggedIn)
-    .post('/', questionController_1.CreateQuestion)
+    .post('/', upload.single('questions'), questionController_1.CreateQuestion)
     .get('/', questionController_1.ViewQuestions)
     .get('/:collectionId/:questionId', questionController_1.ViewQuestion)
     .patch('/:collectionId/:questionId', user_service_1.RestrictTo('class teacher', 'teacher'), questionController_1.UpdateQuestion)

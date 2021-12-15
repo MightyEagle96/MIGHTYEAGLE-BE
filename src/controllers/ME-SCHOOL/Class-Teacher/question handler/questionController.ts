@@ -1,38 +1,58 @@
 import { catchAsync } from '../../../../shared/catchAsync';
 import { randomizeQuestions } from '../../../../utils/services';
 import Question from './questionModel';
+import fs from 'fs';
+import { parse } from 'csv-parse';
 
 //to create a question
 export const CreateQuestion = catchAsync(async (req: any, res: any) => {
-  const { currentClass, currentTerm, subject, testType } = req.body;
+  if (req.file) {
+    //this is coming from the query
+    const { currentClass, currentTerm, subject, testType } = req.query;
 
-  const question = await Question.findOne({
-    $and: [
-      { currentClass: currentClass },
-      { currentTerm: currentTerm },
-      { subject: subject },
-      { testType: testType },
-    ],
-  });
+    const ext = req.file.originalname.split('.')[1];
+    const newFileName = `file-${Date.now()}.${ext}`;
 
-  if (!question) {
-    const createdQuestion = await Question.create({
-      currentClass: currentClass,
-      currentTerm: currentTerm,
-      subject: subject,
-      testType: testType,
+    fs.rename(req.file.path, `public/documents/${newFileName}`, () => {});
+
+    const question = await Question.findOne({
+      $and: [
+        { currentClass: currentClass },
+        { currentTerm: currentTerm },
+        { subject: subject },
+        { testType: testType },
+      ],
+    });
+    const parser = parse({ columns: true }, async (err, records) => {}).on(
+      'data',
+      async (data) => {
+        await Question.findOneAndUpdate(
+          { _id: question._id },
+          { $push: { questions: data } }
+        );
+      }
+    );
+
+    fs.createReadStream(`public/documents/${newFileName}`).pipe(parser);
+  } else {
+    //if we are not uploading via a file
+    const { currentClass, currentTerm, subject, testType } = req.body;
+
+    const question = await Question.findOne({
+      $and: [
+        { currentClass: currentClass },
+        { currentTerm: currentTerm },
+        { subject: subject },
+        { testType: testType },
+      ],
     });
 
-    await Question.findOneAndUpdate(
-      { _id: createdQuestion._id },
-      { $push: { questions: req.body } }
-    );
-  } else {
-    await Question.findOneAndUpdate(
+    await await Question.findOneAndUpdate(
       { _id: question._id },
       { $push: { questions: req.body } }
     );
   }
+
   res.status(201).json({ message: 'done' });
 });
 
