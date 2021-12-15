@@ -1,6 +1,6 @@
 import user from '../../../../models/user';
 import { catchAsync } from '../../../../shared/catchAsync';
-import levelModel from '../level handler/levelModel';
+import levelModel from '../level_handler/levelModel';
 
 export const StudentsRegister = catchAsync(async (req: any, res: any) => {
   const students = await user.find({

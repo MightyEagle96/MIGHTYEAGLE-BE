@@ -1,7 +1,7 @@
 import user from '../../../models/user';
 import { catchAsync } from '../../../shared/catchAsync';
-import levelModel from '../Admin/level handler/levelModel';
-import testTypeModel from '../handle exams/testTypeModel';
+import levelModel from '../Admin/level_handler/levelModel';
+import testTypeModel from '../handle_exams/testTypeModel';
 import resultModel from '../students/resultModel';
 import subjectsRegister from '../students/subjectsRegister';
 

@@ -2,7 +2,7 @@ import express from 'express';
 import {
   CreateTestType,
   ViewTestTypes,
-} from '../../controllers/ME-SCHOOL/handle exams/testTypeController';
+} from '../../controllers/ME-SCHOOL/handle_exams/testTypeController';
 
 const testTypeRouter = express.Router();
 

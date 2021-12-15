@@ -9,7 +9,7 @@ import {
   UpdateQuestion,
   ViewQuestion,
   ViewQuestions,
-} from '../../controllers/ME-SCHOOL/Class-Teacher/question handler/questionController';
+} from '../../controllers/ME-SCHOOL/Class-Teacher/question_handler/questionController';
 import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const questionRouter = express.Router();

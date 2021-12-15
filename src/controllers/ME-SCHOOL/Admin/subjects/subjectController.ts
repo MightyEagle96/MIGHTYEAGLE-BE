@@ -1,7 +1,7 @@
 import user from '../../../../models/user';
 import { catchAsync } from '../../../../shared/catchAsync';
 import { BOTH_LABEL } from '../../../../utils/labels';
-import levelModel from '../level handler/levelModel';
+import levelModel from '../level_handler/levelModel';
 import Subject from './subjectModel';
 
 export const CreateSubject = catchAsync(async (req: any, res: any) => {

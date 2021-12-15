@@ -4,8 +4,8 @@ import {
   RegisterStudentWithPaper,
   DeletePaperTaken,
   StudentsWhoHaveTakenPaper,
-} from '../../controllers/ME-SCHOOL/handle exams/examsTakenController';
-import { PaperReview } from '../../controllers/ME-SCHOOL/handle exams/takeExamsController';
+} from '../../controllers/ME-SCHOOL/handle_exams/examsTakenController';
+import { PaperReview } from '../../controllers/ME-SCHOOL/handle_exams/takeExamsController';
 import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const examsTakenRouter = express.Router();

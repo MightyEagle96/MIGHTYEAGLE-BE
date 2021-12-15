@@ -1,6 +1,6 @@
 import User from '../../../../models/user';
 import { catchAsync } from '../../../../shared/catchAsync';
-import sessionModel from '../session handler/sessionModel';
+import sessionModel from '../session_handler/sessionModel';
 import termModel from '../termHandler/termModel';
 
 export const SetAcademicCalendar = catchAsync(async (req: any, res: any) => {

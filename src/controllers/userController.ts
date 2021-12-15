@@ -4,7 +4,7 @@ import { catchAsync } from '../shared/catchAsync';
 import path from 'path';
 import { ACCOUNT_LABEL } from '../utils/labels';
 import user from '../models/user';
-import sessionModel from './ME-SCHOOL/Admin/session handler/sessionModel';
+import sessionModel from './ME-SCHOOL/Admin/session_handler/sessionModel';
 import termModel from './ME-SCHOOL/Admin/termHandler/termModel';
 
 export const GET_ME = catchAsync(async (req: any, res: any) => {

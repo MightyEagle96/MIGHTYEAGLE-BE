@@ -3,7 +3,7 @@ import {
   CreateLevel,
   ViewLevel,
   ViewLevels,
-} from '../../controllers/ME-SCHOOL/Admin/level handler/levelController';
+} from '../../controllers/ME-SCHOOL/Admin/level_handler/levelController';
 import { IsLoggedIn, RestrictTo } from '../../services/user.service';
 
 const levelRouter = express.Router();

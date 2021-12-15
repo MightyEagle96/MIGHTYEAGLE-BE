@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const academicCalendarController_1 = require("../../../controllers/ME-SCHOOL/Admin/academic-calendar/academicCalendarController");
+const AssignToClass_1 = require("../../../controllers/ME-SCHOOL/Admin/assignToClass/AssignToClass");
+const studentsRegister_1 = require("../../../controllers/ME-SCHOOL/Admin/classRegisters/studentsRegister");
+const UsersViewByAdminController_1 = require("../../../controllers/ME-SCHOOL/Admin/users/UsersViewByAdminController");
+const user_service_1 = require("../../../services/user.service");
+const adminRouter = express_1.default.Router();
+adminRouter.use(user_service_1.IsLoggedIn);
+adminRouter.get('/viewUsers', UsersViewByAdminController_1.ViewUsers);
+adminRouter.use(user_service_1.RestrictTo('admin'));
+adminRouter.post('/setCalendar', academicCalendarController_1.SetAcademicCalendar);
+adminRouter.patch('/assignToClass', AssignToClass_1.AssignToClass);
+adminRouter.get('/toBeAssigned', AssignToClass_1.YetToBeAssigned);
+adminRouter.get('/class/:classId', studentsRegister_1.StudentsRegister);
+exports.default = adminRouter;

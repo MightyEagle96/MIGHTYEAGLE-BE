@@ -1,6 +1,6 @@
 import { catchAsync } from '../../../shared/catchAsync';
-import questionModel from '../Class-Teacher/question handler/questionModel';
-import testTypeModel from '../handle exams/testTypeModel';
+import questionModel from '../Class-Teacher/question_handler/questionModel';
+import testTypeModel from '../handle_exams/testTypeModel';
 import Result from './resultModel';
 import SubjectRegister from './subjectsRegister';
 
