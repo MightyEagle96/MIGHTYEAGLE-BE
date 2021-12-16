@@ -47,7 +47,7 @@ export const CreateQuestion = catchAsync(async (req: any, res: any) => {
       ],
     });
 
-    await await Question.findOneAndUpdate(
+    await Question.findOneAndUpdate(
       { _id: question._id },
       { $push: { questions: req.body } }
     );

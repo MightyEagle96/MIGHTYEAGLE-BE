@@ -50,7 +50,7 @@ exports.CreateQuestion = catchAsync_1.catchAsync((req, res) => __awaiter(void 0,
                 { testType: testType },
             ],
         });
-        yield yield questionModel_1.default.findOneAndUpdate({ _id: question._id }, { $push: { questions: req.body } });
+        yield questionModel_1.default.findOneAndUpdate({ _id: question._id }, { $push: { questions: req.body } });
     }
     res.status(201).json({ message: 'done' });
 }));
