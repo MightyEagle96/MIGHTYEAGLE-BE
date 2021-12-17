@@ -63,7 +63,18 @@ export const PostSubjectClassAssignment = catchAsync(
 );
 
 export const WhoIsAssignedToWhat = catchAsync(async (req: any, res: any) => {
-  const whoIsAssignedToWhat = await Teacher_Subject_Assignment_Model.find();
+  const whoIsAssignedToWhat = await Teacher_Subject_Assignment_Model.find(
+    req.query
+  ).populate([
+    {
+      path: 'subjectAndLevel',
+      populate: { path: 'subject', model: 'Subject' },
+    },
+    {
+      path: 'subjectAndLevel',
+      populate: { path: 'level', model: 'Level' },
+    },
+  ]);
 
   res.json({ whoIsAssignedToWhat });
 });

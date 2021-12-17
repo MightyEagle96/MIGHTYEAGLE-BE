@@ -28,16 +28,19 @@ exports.PostResult = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, voi
 }));
 exports.ViewResult = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //for a particular subject
-    let result = {};
     //view by a student
-    if (req.user.role === 'student') {
+    let result = [];
+    try {
         result = yield resultModel_1.default.find({
             subject: req.query.subject,
-            level: req.user.level,
+            level: req.query.level || req.user.level,
             session: req.user.currentSession,
             term: req.user.currentTerm,
-            user: req.user._id,
+            user: req.query.user || req.user._id,
         }).populate(['testType']);
+    }
+    catch (error) {
+        console.log(error);
     }
     res.json({ result });
 }));

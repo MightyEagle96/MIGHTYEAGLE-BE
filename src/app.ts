@@ -36,6 +36,7 @@ import adminRouter from './routers/me-school/Admin/adminRouter';
 import studentRouter from './routers/me-school/Students/studentRouter';
 import classTeacherRouter from './routers/me-school/TeacherClassTeacher/classTeacherRouter';
 import teacherSubjectAssignmentRouter from './routers/me-school/Academics/teacherSubjectAssignmentRouter';
+import studentsPerformanceRouter from './routers/me-school/Academics/studentsPerformanceRouter';
 
 //import unirest from 'unirest';
 
@@ -80,6 +81,7 @@ app
   .use('/school/admin', adminRouter)
   .use('/student', studentRouter)
   .use('/academics', teacherSubjectAssignmentRouter)
+  .use('/academics', studentsPerformanceRouter)
   .use('/*', (req: any, res: any) => {
     res.status(404).json({ message: "Can't find this route on this server" });
   });

@@ -10,7 +10,7 @@ const studentRouter = express.Router();
 
 studentRouter
   .use(IsLoggedIn)
-  .use(RestrictTo('student', 'class teacher'))
+  .use(RestrictTo('student', 'class teacher', 'teacher'))
   .post('/result', PostResult)
   .get('/result', ViewResult)
   .get('/results/all', ViewAllMyResults);

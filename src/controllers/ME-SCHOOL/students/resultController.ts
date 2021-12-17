@@ -18,17 +18,20 @@ export const PostResult = catchAsync(async (req: any, res: any) => {
 
 export const ViewResult = catchAsync(async (req: any, res: any) => {
   //for a particular subject
-  let result = {};
 
   //view by a student
-  if (req.user.role === 'student') {
+  let result = [];
+
+  try {
     result = await Result.find({
       subject: req.query.subject,
-      level: req.user.level,
+      level: req.query.level || req.user.level,
       session: req.user.currentSession,
       term: req.user.currentTerm,
-      user: req.user._id,
+      user: req.query.user || req.user._id,
     }).populate(['testType']);
+  } catch (error) {
+    console.log(error);
   }
 
   res.json({ result });

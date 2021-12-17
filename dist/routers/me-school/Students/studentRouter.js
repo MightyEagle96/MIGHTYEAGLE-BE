@@ -9,7 +9,7 @@ const user_service_1 = require("../../../services/user.service");
 const studentRouter = express_1.default.Router();
 studentRouter
     .use(user_service_1.IsLoggedIn)
-    .use(user_service_1.RestrictTo('student', 'class teacher'))
+    .use(user_service_1.RestrictTo('student', 'class teacher', 'teacher'))
     .post('/result', resultController_1.PostResult)
     .get('/result', resultController_1.ViewResult)
     .get('/results/all', resultController_1.ViewAllMyResults);

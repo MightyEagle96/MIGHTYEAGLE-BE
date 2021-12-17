@@ -55,6 +55,15 @@ exports.PostSubjectClassAssignment = catchAsync_1.catchAsync((req, res) => __awa
     res.status(201).json({ message: 'Success' });
 }));
 exports.WhoIsAssignedToWhat = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const whoIsAssignedToWhat = yield Teacher_Subject_Assignment_Model_1.default.find();
+    const whoIsAssignedToWhat = yield Teacher_Subject_Assignment_Model_1.default.find(req.query).populate([
+        {
+            path: 'subjectAndLevel',
+            populate: { path: 'subject', model: 'Subject' },
+        },
+        {
+            path: 'subjectAndLevel',
+            populate: { path: 'level', model: 'Level' },
+        },
+    ]);
     res.json({ whoIsAssignedToWhat });
 }));
