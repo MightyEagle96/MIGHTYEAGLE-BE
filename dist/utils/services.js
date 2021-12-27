@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.randomizeQuestions = exports.originUrl = void 0;
-//export const originUrl = 'https://me-school.herokuapp.com';
-exports.originUrl = 'http://localhost:3000';
-//export const originUrl = 'http://192.168.41.129:3000';
+const prodUrl = 'http://192.168.1.2:3000';
+const devUrl = 'http://192.168.1.2:3000';
+exports.originUrl = process.env.NODE_ENV === 'production' ? prodUrl : devUrl;
 const randomizeQuestions = (arrayToRandomize, limit) => {
     let randomizedArray = [];
     let array = [];

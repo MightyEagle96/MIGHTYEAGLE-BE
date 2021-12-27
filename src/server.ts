@@ -7,10 +7,6 @@ dotenv.config({ path: '.env' });
 let DATABASE = process.env.DATABASE || '';
 let DATABASE_LOCAL = process.env.DATABASE_LOCAL || '';
 
-//process.env.NODE_ENV = 'production';
-
-console.log(process.env.NODE_ENV);
-
 mongoose
   .connect(process.env.NODE_ENV === 'production' ? DATABASE : DATABASE_LOCAL, {
     useNewUrlParser: true,

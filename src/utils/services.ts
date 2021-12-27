@@ -1,7 +1,9 @@
-//export const originUrl = 'https://me-school.herokuapp.com';
-export const originUrl = 'http://localhost:3000';
+const prodUrl = 'http://192.168.1.2:3000';
 
-//export const originUrl = 'http://192.168.41.129:3000';
+const devUrl = 'http://192.168.1.2:3000';
+
+export const originUrl =
+  process.env.NODE_ENV === 'production' ? prodUrl : devUrl;
 
 export const randomizeQuestions = (arrayToRandomize: [], limit: number) => {
   let randomizedArray: any = [];
