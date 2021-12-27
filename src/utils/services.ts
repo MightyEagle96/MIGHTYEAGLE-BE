@@ -1,4 +1,4 @@
-const prodUrl = 'https://me-school-b65bb.firebaseapp.com/';
+const prodUrl = 'https://me-school-b65bb.firebaseapp.com';
 
 const devUrl = 'http://192.168.1.2:3000';
 
