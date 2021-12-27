@@ -49,7 +49,10 @@ const imageUpload = multer({ dest: 'public/images' });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(morgan('dev'));
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 app.use(express.static('public'));
 app.use(cors({ origin: originUrl, credentials: true }));
 
