@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   CreateSubject,
+  DeleteSubject,
   ViewSubject,
   ViewSubjects,
 } from '../../../controllers/ME-SCHOOL/Admin/subjects/subjectController';
@@ -8,9 +9,11 @@ import { IsLoggedIn, RestrictTo } from '../../../services/user.service';
 
 const subjectRouter = express.Router();
 
-subjectRouter.use(IsLoggedIn);
-subjectRouter.get('/view', ViewSubjects);
-subjectRouter.get('/view/:id', ViewSubject);
-subjectRouter.post('/add', RestrictTo('admin'), CreateSubject);
+subjectRouter
+  .use(IsLoggedIn)
+  .get('/view', ViewSubjects)
+  .get('/view/:id', ViewSubject)
+  .post('/add', RestrictTo('admin'), CreateSubject)
+  .delete('/delete/:subjectId', DeleteSubject);
 
 export default subjectRouter;

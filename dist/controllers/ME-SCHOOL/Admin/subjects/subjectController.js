@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
+exports.DeleteSubject = exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
 const catchAsync_1 = require("../../../../shared/catchAsync");
 const labels_1 = require("../../../../utils/labels");
 const levelModel_1 = __importDefault(require("../level_handler/levelModel"));
@@ -74,4 +74,8 @@ exports.ViewSubjects = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, v
 exports.ViewSubject = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const subject = yield subjectModel_1.default.findById(req.params.id);
     res.json({ subject });
+}));
+exports.DeleteSubject = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield subjectModel_1.default.findByIdAndDelete(req.params.subjectId);
+    res.json({ message: 'Subject Deleted' });
 }));

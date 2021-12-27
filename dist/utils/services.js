@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.randomizeQuestions = exports.originUrl = void 0;
-const prodUrl = 'http://192.168.1.2:3000';
+const prodUrl = 'https://me-school-b65bb.firebaseapp.com';
 const devUrl = 'http://192.168.1.2:3000';
 exports.originUrl = process.env.NODE_ENV === 'production' ? prodUrl : devUrl;
 const randomizeQuestions = (arrayToRandomize, limit) => {
