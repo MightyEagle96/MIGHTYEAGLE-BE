@@ -17,7 +17,7 @@ export const CreateCurrentTerm = catchAsync(async (req: any, res: any) => {
 });
 
 export const ListTerms = catchAsync(async (req: any, res: any) => {
-  const terms = await CurrentTerm.find();
+  const terms = await CurrentTerm.find(req.query);
   res.json({ terms });
 });
 

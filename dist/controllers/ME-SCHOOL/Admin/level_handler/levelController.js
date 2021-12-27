@@ -17,7 +17,6 @@ const user_1 = __importDefault(require("../../../../models/user"));
 const catchAsync_1 = require("../../../../shared/catchAsync");
 const levelModel_1 = __importDefault(require("./levelModel"));
 exports.CreateLevel = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     const level = yield levelModel_1.default.create(req.body);
     //update the user with the assigned class
     yield user_1.default.findByIdAndUpdate(req.body.levelTeacher, {
@@ -27,7 +26,18 @@ exports.CreateLevel = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, vo
 }));
 exports.ViewLevels = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const levels = yield levelModel_1.default.find().populate('levelTeacher');
-    res.json({ levels });
+    res.json({
+        levels: levels.sort((a, b) => {
+            let fa = a.level, fb = b.level;
+            if (fa < fb) {
+                return -1;
+            }
+            if (fa > fb) {
+                return 1;
+            }
+            return 0;
+        }),
+    });
 }));
 exports.ViewLevel = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const level = yield levelModel_1.default.findById(req.params.id);

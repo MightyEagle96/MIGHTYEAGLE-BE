@@ -9,8 +9,10 @@ const app_1 = require("./app");
 dotenv_1.default.config({ path: '.env' });
 let DATABASE = process.env.DATABASE || '';
 let DATABASE_LOCAL = process.env.DATABASE_LOCAL || '';
+//process.env.NODE_ENV = 'production';
+console.log(process.env.NODE_ENV);
 mongoose_1.default
-    .connect(DATABASE, {
+    .connect(process.env.NODE_ENV === 'production' ? DATABASE : DATABASE_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

@@ -19,6 +19,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "csv-parse": "^5.0.3",
+    "docx": "^7.3.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
@@ -29,12 +30,16 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "node-csv": "^0.1.2",
+    "node-stream-zip": "^1.15.0",
     "nodemon": "^2.0.15",
     "paystack-node": "^0.3.0",
+    "pdfreader": "^1.2.14",
     "slugify": "^1.5.3",
     "ts-node-dev": "^1.1.6",
     "unirest": "^0.6.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "word-extractor": "^1.0.4",
+    "xlsx": "^0.17.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

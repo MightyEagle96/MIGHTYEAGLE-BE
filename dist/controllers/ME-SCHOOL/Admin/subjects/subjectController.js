@@ -54,7 +54,18 @@ exports.ViewSubjects = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, v
         else {
             subjects = yield subjectModel_1.default.find();
         }
-        res.json({ subjects });
+        res.json({
+            subjects: subjects.sort((a, b) => {
+                let fa = a.title, fb = b.title;
+                if (fa < fb) {
+                    return -1;
+                }
+                if (fa > fb) {
+                    return 1;
+                }
+                return 0;
+            }),
+        });
     }
     catch (error) {
         console.log(error);

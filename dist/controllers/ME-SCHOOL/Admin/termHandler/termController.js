@@ -24,7 +24,7 @@ exports.CreateCurrentTerm = catchAsync_1.catchAsync((req, res) => __awaiter(void
     res.json({ message: 'New term created', currentTerm });
 }));
 exports.ListTerms = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const terms = yield termModel_1.default.find();
+    const terms = yield termModel_1.default.find(req.query);
     res.json({ terms });
 }));
 exports.UpdateTerm = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {

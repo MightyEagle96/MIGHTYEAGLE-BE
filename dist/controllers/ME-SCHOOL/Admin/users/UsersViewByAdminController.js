@@ -32,7 +32,19 @@ exports.ViewUsers = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void
             users = yield user_1.default.find(req.query);
             length = users.length;
         }
-        res.json({ length, users });
+        res.json({
+            length,
+            users: users.sort((a, b) => {
+                let fa = a.fullName, fb = b.fullName;
+                if (fa < fb) {
+                    return -1;
+                }
+                if (fa > fb) {
+                    return 1;
+                }
+                return 0;
+            }),
+        });
     }
     catch (error) {
         console.log(error);

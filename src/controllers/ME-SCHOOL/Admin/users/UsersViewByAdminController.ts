@@ -19,7 +19,22 @@ export const ViewUsers = catchAsync(async (req: any, res: any) => {
       users = await user.find(req.query);
       length = users.length;
     }
-    res.json({ length, users });
+    res.json({
+      length,
+      users: users.sort((a: any, b: any) => {
+        let fa = a.fullName,
+          fb = b.fullName;
+
+        if (fa < fb) {
+          return -1;
+        }
+
+        if (fa > fb) {
+          return 1;
+        }
+        return 0;
+      }),
+    });
   } catch (error) {
     console.log(error);
     res.json({ message: 'yawa don gas' });

@@ -43,7 +43,21 @@ export const ViewSubjects = catchAsync(async (req: any, res: any) => {
       subjects = await Subject.find();
     }
 
-    res.json({ subjects });
+    res.json({
+      subjects: subjects.sort((a: any, b: any) => {
+        let fa = a.title,
+          fb = b.title;
+
+        if (fa < fb) {
+          return -1;
+        }
+
+        if (fa > fb) {
+          return 1;
+        }
+        return 0;
+      }),
+    });
   } catch (error) {
     console.log(error);
   }

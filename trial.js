@@ -1,11 +1,12 @@
-let friends = [
-  { name: 'Joy', age: 25 },
-  { name: 'Favour', age: 22 },
-  { name: 'Dubem', age: 25 },
-];
+const fs = require('fs');
 
-const index = friends.findIndex((d) => d.name === 'Dubem' && d.age === 25);
-console.log(index);
-
-friends.splice(index, 1);
-console.log(friends);
+fs.writeFile(
+  'date.docx',
+  'What have you not done for me ',
+  function (err, data) {
+    if (err) {
+      console.error(err);
+    }
+    console.log('Hallelujah o ');
+  }
+);
