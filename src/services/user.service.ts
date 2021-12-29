@@ -47,7 +47,6 @@ export const Login = catchAsync(async (req: any, res: any) => {
     const refreshToken = createRefreshToken({ id: user._id });
     await User.findByIdAndUpdate(user._id, {
       refreshToken: refreshToken,
-      isNewAccount: false,
     });
     sendRefreshToken(res, refreshToken);
     sendAccessToken(user, req, res, accessToken);

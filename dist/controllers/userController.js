@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FIND_USER = exports.CREATE_USER = exports.UPLOAD_PHOTO = exports.GET_ME = void 0;
+exports.UPDATE_PASSWORD = exports.FIND_USER = exports.CREATE_USER = exports.UPLOAD_PHOTO = exports.GET_ME = void 0;
 const user_1 = __importDefault(require("../models/user"));
 const fs_1 = __importDefault(require("fs"));
 const catchAsync_1 = require("../shared/catchAsync");
 const path_1 = __importDefault(require("path"));
 const labels_1 = require("../utils/labels");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const sessionModel_1 = __importDefault(require("./ME-SCHOOL/Admin/session_handler/sessionModel"));
 const termModel_1 = __importDefault(require("./ME-SCHOOL/Admin/termHandler/termModel"));
 exports.GET_ME = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -34,6 +35,7 @@ exports.UPLOAD_PHOTO = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, v
     res.json({ message: 'image uploaded' });
 }));
 exports.CREATE_USER = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    req.body.isNewAccount = true;
     //if the the account is or me-school do the following
     try {
         if (req.body.account_type == labels_1.ACCOUNT_LABEL.me_school) {
@@ -54,4 +56,18 @@ exports.CREATE_USER = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, vo
 exports.FIND_USER = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_1.default.findById(req.params.id);
     res.json({ user });
+}));
+exports.UPDATE_PASSWORD = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_1.default.findById(req.user._id);
+    //confirm between the old password and the user old password
+    if (yield user.comparePasswords(req.body.oldPassword)) {
+        const newPassword = yield bcrypt_1.default.hash(req.body.newPassword, 12);
+        yield user_1.default.findByIdAndUpdate(req.user._id, {
+            password: newPassword,
+            isNewAccount: false,
+        });
+        res.json({ success: 'Password changed successfully' });
+    }
+    else
+        return res.status(200).json({ failed: 'Your old password is incorrect' });
 }));

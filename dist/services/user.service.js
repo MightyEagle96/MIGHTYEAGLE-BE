@@ -50,7 +50,6 @@ exports.Login = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, 
         const refreshToken = tokens_1.createRefreshToken({ id: user._id });
         yield user_1.default.findByIdAndUpdate(user._id, {
             refreshToken: refreshToken,
-            isNewAccount: false,
         });
         tokens_1.sendRefreshToken(res, refreshToken);
         tokens_1.sendAccessToken(user, req, res, accessToken);

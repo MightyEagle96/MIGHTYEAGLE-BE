@@ -3,7 +3,7 @@ import fs from 'fs';
 import { catchAsync } from '../shared/catchAsync';
 import path from 'path';
 import { ACCOUNT_LABEL } from '../utils/labels';
-import user from '../models/user';
+import bcrypt from 'bcrypt';
 import sessionModel from './ME-SCHOOL/Admin/session_handler/sessionModel';
 import termModel from './ME-SCHOOL/Admin/termHandler/termModel';
 
@@ -27,6 +27,7 @@ export const UPLOAD_PHOTO = catchAsync(async (req: any, res: any) => {
 });
 
 export const CREATE_USER = catchAsync(async (req: any, res: any) => {
+  req.body.isNewAccount = true;
   //if the the account is or me-school do the following
   try {
     if (req.body.account_type == ACCOUNT_LABEL.me_school) {
@@ -48,4 +49,20 @@ export const CREATE_USER = catchAsync(async (req: any, res: any) => {
 export const FIND_USER = catchAsync(async (req: any, res: any) => {
   const user = await User.findById(req.params.id);
   res.json({ user });
+});
+
+export const UPDATE_PASSWORD = catchAsync(async (req: any, res: any) => {
+  const user = await User.findById(req.user._id);
+
+  //confirm between the old password and the user old password
+  if (await user.comparePasswords(req.body.oldPassword)) {
+    const newPassword = await bcrypt.hash(req.body.newPassword, 12);
+    await User.findByIdAndUpdate(req.user._id, {
+      password: newPassword,
+      isNewAccount: false,
+    });
+
+    res.json({ success: 'Password changed successfully' });
+  } else
+    return res.status(200).json({ failed: 'Your old password is incorrect' });
 });
