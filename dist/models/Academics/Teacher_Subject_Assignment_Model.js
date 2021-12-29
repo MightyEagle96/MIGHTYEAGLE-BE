@@ -10,4 +10,16 @@ const teacherSubjectAssignmentSchema = new mongoose_1.Schema({
         },
     ],
 });
+// teacherSubjectAssignmentSchema.pre(
+//   'find',
+//   function (this: any, next: mongoose.HookNextFunction) {
+//     this.where({
+//       $and: [
+//         { 'subjectAndLevel.subject': { $ne: null } },
+//         { 'subjectAndLevel.level': { $ne: null } },
+//       ],
+//     });
+//     next();
+//   }
+// );
 exports.default = mongoose_1.model('TeacherSubjectAssignment', teacherSubjectAssignmentSchema);

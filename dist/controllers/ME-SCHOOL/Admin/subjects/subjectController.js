@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteSubject = exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
+exports.UpdateSubject = exports.DeleteSubject = exports.ViewSubject = exports.ViewSubjects = exports.CreateSubject = void 0;
 const catchAsync_1 = require("../../../../shared/catchAsync");
 const labels_1 = require("../../../../utils/labels");
 const levelModel_1 = __importDefault(require("../level_handler/levelModel"));
@@ -78,4 +78,12 @@ exports.ViewSubject = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, vo
 exports.DeleteSubject = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield subjectModel_1.default.findByIdAndDelete(req.params.subjectId);
     res.json({ message: 'Subject Deleted' });
+}));
+exports.UpdateSubject = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    yield subjectModel_1.default.findByIdAndUpdate(req.params.subjectId, {
+        title: req.body.title,
+        category: req.body.category,
+    });
+    res.json({ message: 'Subject Updated' });
 }));

@@ -14,4 +14,8 @@ const subjectSchema = new mongoose_1.Schema({
         required: true,
     },
 });
+subjectSchema.pre('find', function (next) {
+    // this.where({})
+    next();
+});
 exports.default = mongoose_1.model('Subject', subjectSchema);

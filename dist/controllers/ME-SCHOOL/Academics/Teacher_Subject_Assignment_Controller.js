@@ -36,7 +36,8 @@ exports.AvailableSubjectsWithClasses = catchAsync_1.catchAsync((req, res) => __a
                 category: subjects[i].category,
             });
         }
-        combination.push(subject);
+        if (subject.subjectId && subject.levels)
+            combination.push(subject);
     }
     res.json({ combination });
 }));

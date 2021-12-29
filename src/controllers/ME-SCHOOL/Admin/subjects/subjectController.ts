@@ -72,3 +72,12 @@ export const DeleteSubject = catchAsync(async (req: any, res: any) => {
   await Subject.findByIdAndDelete(req.params.subjectId);
   res.json({ message: 'Subject Deleted' });
 });
+
+export const UpdateSubject = catchAsync(async (req: any, res: any) => {
+  console.log(req.body);
+  await Subject.findByIdAndUpdate(req.params.subjectId, {
+    title: req.body.title,
+    category: req.body.category,
+  });
+  res.json({ message: 'Subject Updated' });
+});

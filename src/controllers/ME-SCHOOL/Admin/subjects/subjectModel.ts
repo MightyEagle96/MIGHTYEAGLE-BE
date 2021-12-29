@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import {
   BOTH_LABEL,
   JUNIOR_LABEL,
@@ -17,5 +17,13 @@ const subjectSchema = new Schema({
     required: true,
   },
 });
+
+subjectSchema.pre(
+  'find',
+  function (this: any, next: mongoose.HookNextFunction) {
+    // this.where({})
+    next();
+  }
+);
 
 export default model('Subject', subjectSchema);

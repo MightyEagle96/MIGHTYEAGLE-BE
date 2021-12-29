@@ -12,5 +12,6 @@ subjectRouter
     .get('/view', subjectController_1.ViewSubjects)
     .get('/view/:id', subjectController_1.ViewSubject)
     .post('/add', user_service_1.RestrictTo('admin'), subjectController_1.CreateSubject)
+    .patch('/update/:subjectId', subjectController_1.UpdateSubject)
     .delete('/delete/:subjectId', subjectController_1.DeleteSubject);
 exports.default = subjectRouter;

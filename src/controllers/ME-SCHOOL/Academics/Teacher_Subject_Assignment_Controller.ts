@@ -29,7 +29,7 @@ export const AvailableSubjectsWithClasses = catchAsync(
         });
       }
 
-      combination.push(subject);
+      if (subject.subjectId && subject.levels) combination.push(subject);
     }
 
     res.json({ combination });
