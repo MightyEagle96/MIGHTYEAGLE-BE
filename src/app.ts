@@ -39,6 +39,7 @@ import teacherSubjectAssignmentRouter from './routers/me-school/Academics/teache
 import studentsPerformanceRouter from './routers/me-school/Academics/studentsPerformanceRouter';
 import storeManagementRouter from './routers/me-school/Store/StoreManagementRouter';
 import graduationRouter from './routers/me-school/Academics/GraduationRouter';
+import jambRouter from './routers/jamb/jambRouter';
 
 //import unirest from 'unirest';
 
@@ -89,6 +90,7 @@ app
   .use('/academics', studentsPerformanceRouter)
   .use('/academics', graduationRouter)
   .use('/store', storeManagementRouter)
+  .use('/jamb', jambRouter)
   .use('/*', (req: any, res: any) => {
     res.status(404).json({ message: "Can't find this route on this server" });
   });

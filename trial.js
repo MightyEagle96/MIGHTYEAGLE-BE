@@ -1,12 +1,5 @@
-const fs = require('fs');
+import { randomUUID } from 'crypto';
 
-fs.writeFile(
-  'date.docx',
-  'What have you not done for me ',
-  function (err, data) {
-    if (err) {
-      console.error(err);
-    }
-    console.log('Hallelujah o ');
-  }
-);
+const uud = randomUUID().split('-')[0];
+
+console.log(uud);
