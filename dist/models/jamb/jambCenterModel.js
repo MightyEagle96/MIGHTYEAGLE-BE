@@ -10,6 +10,7 @@ const jambCenterSchema = new mongoose_1.Schema({
     address: { type: String },
     computers: { type: Number },
     backupComputers: { type: Number },
+    createdOn: { type: Date, default: Date.now() },
 });
 jambCenterSchema.pre('save', function (next) {
     try {

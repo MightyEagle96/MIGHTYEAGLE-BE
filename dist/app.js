@@ -44,7 +44,6 @@ const teacherSubjectAssignmentRouter_1 = __importDefault(require("./routers/me-s
 const studentsPerformanceRouter_1 = __importDefault(require("./routers/me-school/Academics/studentsPerformanceRouter"));
 const StoreManagementRouter_1 = __importDefault(require("./routers/me-school/Store/StoreManagementRouter"));
 const GraduationRouter_1 = __importDefault(require("./routers/me-school/Academics/GraduationRouter"));
-const jambRouter_1 = __importDefault(require("./routers/jamb/jambRouter"));
 //import unirest from 'unirest';
 const app = express_1.default();
 exports.app = app;
@@ -91,7 +90,6 @@ app
     .use('/academics', studentsPerformanceRouter_1.default)
     .use('/academics', GraduationRouter_1.default)
     .use('/store', StoreManagementRouter_1.default)
-    .use('/jamb', jambRouter_1.default)
     .use('/*', (req, res) => {
     res.status(404).json({ message: "Can't find this route on this server" });
 });
