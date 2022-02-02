@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.randomizeQuestions = exports.originUrl = void 0;
 const prodUrl = 'https://me-school4u.firebaseapp.com';
-const devUrl = 'http://localhost:3000';
+//const devUrl = 'http://localhost:3000';
+const devUrl = 'http://192.168.111.1:3000';
 exports.originUrl = process.env.NODE_ENV === 'production' ? prodUrl : devUrl;
 const randomizeQuestions = (arrayToRandomize, limit) => {
     let randomizedArray = [];

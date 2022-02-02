@@ -3,7 +3,6 @@ import Session from './sessionModel';
 import User from '../../../../models/user';
 
 export const CreateSession = catchAsync(async (req: any, res: any) => {
-  console.log(req.body);
   //first of all set all active sessions from true to false
   await Session.updateMany({ activeSession: true }, { activeSession: false });
 

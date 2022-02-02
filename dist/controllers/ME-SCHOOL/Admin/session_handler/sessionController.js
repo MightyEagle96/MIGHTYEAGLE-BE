@@ -17,7 +17,6 @@ const catchAsync_1 = require("../../../../shared/catchAsync");
 const sessionModel_1 = __importDefault(require("./sessionModel"));
 const user_1 = __importDefault(require("../../../../models/user"));
 exports.CreateSession = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     //first of all set all active sessions from true to false
     yield sessionModel_1.default.updateMany({ activeSession: true }, { activeSession: false });
     req.body.activeSession = true;

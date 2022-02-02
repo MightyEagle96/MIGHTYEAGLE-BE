@@ -1,6 +1,7 @@
 const prodUrl = 'https://me-school4u.firebaseapp.com';
 
-const devUrl = 'http://localhost:3000';
+//const devUrl = 'http://localhost:3000';
+const devUrl = 'http://192.168.111.1:3000';
 
 export const originUrl =
   process.env.NODE_ENV === 'production' ? prodUrl : devUrl;

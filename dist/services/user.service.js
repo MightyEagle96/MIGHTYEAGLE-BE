@@ -23,6 +23,9 @@ exports.GetUsers = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 
     res.json({ users });
 }));
 exports.SignUp = catchAsync_1.catchAsync((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.body.account_type) {
+        return res.status(400).json({ message: 'An Account type is required' });
+    }
     if (!req.body.email)
         return res.status(400).json({ message: 'Email is required' });
     if (!req.body.password)

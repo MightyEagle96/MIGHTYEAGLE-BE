@@ -15,6 +15,9 @@ export const GetUsers = catchAsync(async (req: any, res: any) => {
 });
 
 export const SignUp = catchAsync(async (req: any, res: any) => {
+  if (!req.body.account_type) {
+    return res.status(400).json({ message: 'An Account type is required' });
+  }
   if (!req.body.email)
     return res.status(400).json({ message: 'Email is required' });
   if (!req.body.password)

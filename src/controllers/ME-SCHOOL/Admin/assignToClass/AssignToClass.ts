@@ -6,19 +6,14 @@ export const AssignToClass = catchAsync(async (req: any, res: any) => {
     { _id: req.body.userId },
     {
       level: req.body.level,
-      currentSession: req.user.currentSession,
-      currentTerm: req.user.currentTerm,
     }
   );
   res.json({ message: 'Assigned to class' });
 });
 
 export const YetToBeAssigned = catchAsync(async (req: any, res: any) => {
-
   const awaitingUsers = await User.find({
     $and: [{ role: req.query.role, level: null }],
   });
   res.json({ count: awaitingUsers.length, awaitingUsers });
 });
-
-
